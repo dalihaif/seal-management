@@ -585,6 +585,14 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div id="approverList" style="max-height:200px;overflow-y:auto;font-size:12px;line-height:2;"></div>
     </div>
     <div class="setting-card">
+      <h3>⭐ 默认印章配置</h3>
+      <p style="font-size:11px;color:var(--g500);margin-bottom:8px;">勾选的印章将在扫码登记页（usage.html）中优先展示，方便快速选择高频使用的印章。</p>
+      <div style="margin-bottom:8px;display:flex;gap:6px;">
+        <input type="text" id="defaultSealSearch" class="form-input" placeholder="🔍 搜索印章..." style="padding:5px 10px;font-size:12px;flex:1;" oninput="renderDefaultSealList()">
+      </div>
+      <div id="defaultSealList" style="max-height:220px;overflow-y:auto;font-size:12px;line-height:2.2;"></div>
+    </div>
+    <div class="setting-card">
       <h3>📊 数据管理</h3>
       <div style="display:flex;flex-direction:column;gap:6px;">
         <button class="btn btn-info btn-sm" onclick="exportAllData()">💾 导出全部数据备份（JSON）</button>
@@ -983,7 +991,7 @@ let DATA = {
   destroys: [],    // 作废销毁
   archives: [],    // 归档记录
   logs: [],        // 操作日志
-  settings: { departments: ['院办公室','党委办公室','财务科','人事科','医务科','护理部','科研科','教学科','总务科','基建科','保卫科','审计科','纪检监察室','工会','团委'], approvers: [{name:'院长',level:2},{name:'分管副院长',level:2},{name:'办公室主任',level:1},{name:'档案科科长',level:1}] }
+  settings: { departments: ['院办公室','党委办公室','财务科','人事科','医务科','护理部','科研科','教学科','总务科','基建科','保卫科','审计科','纪检监察室','工会','团委'], approvers: [{name:'院长',level:2},{name:'分管副院长',level:2},{name:'办公室主任',level:1},{name:'档案科科长',level:1}], default_seals: [], doc_types: ['证明','合同','报告','申请','函件','其他'] }
 };
 let CURRENT_ROLE = 'admin';
 let sealFilter = { search:'', status:'', type:'', dept:'', page:1, pageSize:20, sort:'id', sortDir:'asc' };
@@ -1034,7 +1042,7 @@ async function saveData(category) {
 function saveAll() {
   const cats = ['seals','carvings','usages','loans','recoveries','destroys','archives','logs'];
   for (const k of cats) saveData(k);
-  if (serverReady) apiPost('/settings', {departments: DATA.settings.departments, approvers: DATA.settings.approvers}).catch(()=>{});
+  if (serverReady) apiPost('/settings', {departments: DATA.settings.departments, approvers: DATA.settings.approvers, default_seals: DATA.settings.default_seals, doc_types: DATA.settings.doc_types}).catch(()=>{});
 }
 
 async function loadAll() {
@@ -1047,6 +1055,8 @@ async function loadAll() {
     const settings = await apiGet('/settings');
     if (settings && settings.departments) {
       DATA.settings = settings;
+      DATA.settings.default_seals = settings.default_seals || [];
+      DATA.settings.doc_types = settings.doc_types || ['证明','合同','报告','申请','函件','其他'];
     }
     serverReady = true;
     return true;
@@ -2035,6 +2045,7 @@ function renderSettings(){
   document.getElementById('deptList').innerHTML=depts.map((d,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;"><span>${escapeHtml(d)}</span><button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="removeDept(${i})">✕</button></div>`).join('');
   const approvers=DATA.settings.approvers||[];
   document.getElementById('approverList').innerHTML=approvers.map((a,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;"><span>${escapeHtml(a.name)} <span style="color:var(--g400);font-size:10px;">${a.level===2?'二级(院领导)':'一级(部门)'}</span></span><button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="removeApprover(${i})">✕</button></div>`).join('');
+  renderDefaultSealList();
 }
 
 function addDept(){
@@ -2059,6 +2070,64 @@ function addApprover(){
   document.getElementById('newApprover').value=''; toast('审批人已添加','success');
 }
 function removeApprover(i){ DATA.settings.approvers.splice(i,1); saveData('settings'); renderSettings(); toast('已删除','success'); }
+
+function renderDefaultSealList(){
+  const container = document.getElementById('defaultSealList');
+  if (!container) return;
+  const defaultIds = DATA.settings.default_seals || [];
+  const q = (document.getElementById('defaultSealSearch')?.value || '').toLowerCase().trim();
+  let seals = [...DATA.seals].filter(s => s.status !== '已销毁' && s.status !== '已废止');
+  if (q) {
+    seals = seals.filter(s =>
+      (s.name && s.name.toLowerCase().includes(q)) ||
+      (s.dept && s.dept.toLowerCase().includes(q)) ||
+      (s.type && s.type.toLowerCase().includes(q))
+    );
+  }
+  // 默认印章排在前面
+  seals.sort((a, b) => {
+    const aDef = defaultIds.includes(a.id) ? 0 : 1;
+    const bDef = defaultIds.includes(b.id) ? 0 : 1;
+    return aDef - bDef;
+  });
+  // 最多显示50条
+  seals = seals.slice(0, 50);
+  if (!seals.length) {
+    container.innerHTML = '<div style="text-align:center;color:var(--g400);padding:12px;font-size:12px;">未找到匹配的印章</div>';
+    return;
+  }
+  container.innerHTML = seals.map(s => {
+    const checked = defaultIds.includes(s.id);
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:2px 0;">
+      <label style="cursor:pointer;display:flex;align-items:center;gap:6px;font-size:12px;">
+        <input type="checkbox" ${checked?'checked':''} onchange="toggleDefaultSeal(${s.id},this.checked)" style="cursor:pointer;accent-color:var(--pri);">
+        <span>${escapeHtml(s.name)}</span>
+        <span style="color:var(--g400);font-size:10px;">${escapeHtml(s.type||'')} · ${escapeHtml(s.dept||'')}</span>
+      </label>
+      <span style="font-size:10px;color:var(--g400);">${escapeHtml(s.status||'')}</span>
+    </div>`;
+  }).join('');
+}
+
+async function toggleDefaultSeal(sealId, checked) {
+  if (!DATA.settings.default_seals) DATA.settings.default_seals = [];
+  if (checked) {
+    if (!DATA.settings.default_seals.includes(sealId)) {
+      DATA.settings.default_seals.push(sealId);
+    }
+  } else {
+    DATA.settings.default_seals = DATA.settings.default_seals.filter(id => id !== sealId);
+  }
+  // 同步到服务器
+  if (serverReady) {
+    try {
+      await apiPost('/settings/default-seals', DATA.settings.default_seals);
+    } catch(e) {
+      console.warn('保存默认印章失败:', e);
+    }
+  }
+  renderDefaultSealList();
+}
 
 function exportAllData(){
   const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
