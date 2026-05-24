@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>大理大学第一附属医院 — 印章使用登记</title>
+<style>
+:root{
+  --pri:#1a56a0;--pri2:#2563eb;--suc:#16a34a;--warn:#d97706;--dan:#dc2626;--pur:#7c3aed;--inf:#0891b2;
+  --g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;
+  --shadow:0 2px 12px rgba(0,0,0,.08);--radius:10px;
+  --bg:#f0f4f8;--card:#fff;--text:#1f2937;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 16px;}
+.container{width:100%;max-width:480px;}
+.header{text-align:center;margin-bottom:20px;}
+.header h1{font-size:18px;color:var(--pri);margin-bottom:4px;}
+.header p{font-size:12px;color:var(--g500);}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:14px;}
+.card h2{font-size:14px;color:var(--pri);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--g200);}
+.form-group{margin-bottom:14px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--g600);margin-bottom:5px;}
+.form-input{width:100%;padding:10px 12px;border:1px solid var(--g300);border-radius:6px;font-size:14px;font-family:inherit;transition:border-color 0.2s;}
+.form-input:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(26,86,160,.1);}
+.form-input[readonly]{background:var(--g100);color:var(--g500);}
+select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px;}
+.req{color:var(--dan);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.btn-primary{background:var(--pri);color:#fff;width:100%;}
+.btn-primary:hover{background:#154584;}
+.btn-ghost{background:transparent;color:var(--g500);font-size:12px;}
+.btn-ghost:hover{color:var(--g700);}
+.btn-full{width:100%;}
+.suggest-wrap{position:relative;}
+.suggest-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--g300);border-top:none;border-radius:0 0 6px 6px;max-height:200px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+.suggest-item{padding:10px 12px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--g100);}
+.suggest-item:hover{background:var(--g50);color:var(--pri);}
+.suggest-item:last-child{border-bottom:none;}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--g800);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:9999;animation:fadeIn 0.3s;pointer-events:none;}
+.toast-success{border-left:3px solid var(--suc);}
+.toast-error{border-left:3px solid var(--dan);}
+.toast-info{border-left:3px solid var(--inf);}
+@keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(-10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+.recent-list{margin-top:6px;}
+.recent-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--g100);font-size:13px;cursor:pointer;border-radius:4px;}
+.recent-item:hover{background:var(--g50);}
+.recent-item .name{font-weight:600;color:var(--g700);}
+.recent-item .time{font-size:11px;color:var(--g400);}
+.recent-item .status{font-size:11px;padding:2px 8px;border-radius:10px;}
+.status-using{background:#fef3c7;color:#92400e;}
+.status-done{background:#d1fae5;color:#065f46;}
+.summary{display:flex;gap:10px;margin-bottom:14px;}
+.summary-item{flex:1;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;text-align:center;}
+.summary-item .num{font-size:24px;font-weight:700;color:var(--pri);}
+.summary-item .label{font-size:11px;color:var(--g500);margin-top:2px;}
+.footer{text-align:center;font-size:11px;color:var(--g400);margin-top:20px;padding-bottom:40px;}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>📝 大理大学第一附属医院<br>印章使用登记</h1>
+    <p>扫码快速登记 · 印章领用/盖章/归还</p>
+  </div>
+
+  <div class="summary" id="summaryRow">
+    <div class="summary-item"><div class="num" id="sumUsing">0</div><div class="label">使用中</div></div>
+    <div class="summary-item"><div class="num" id="sumToday">0</div><div class="label">今日登记</div></div>
+    <div class="summary-item"><div class="num" id="sumTotal">0</div><div class="label">累计记录</div></div>
+  </div>
+
+  <div class="card">
+    <h2>➕ 快速登记领用</h2>
+    <div class="form-group">
+      <label class="form-label">印章名称 <span class="req">*</span></label>
+      <div class="suggest-wrap">
+        <input type="text" id="ugSealInput" class="form-input" placeholder="🔍 输入名称搜索..." oninput="suggestSeals()" autocomplete="off">
+        <div class="suggest-dropdown" id="ugSealSuggest"></div>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">使用人 <span class="req">*</span></label><input type="text" id="ugUser" class="form-input" placeholder="使用人姓名"></div>
+    <div class="form-group"><label class="form-label">部门</label><input type="text" id="ugDept" class="form-input" list="deptOptions" placeholder="选择或输入部门名称" autocomplete="off"></div>
+    <div class="form-group"><label class="form-label">文件类型</label><select id="ugDocType" class="form-input"><option value="证明">证明</option><option value="合同">合同</option><option value="报告">报告</option><option value="申请">申请</option><option value="函件">函件</option><option value="其他">其他</option></select></div>
+    <div class="form-group"><label class="form-label">用途说明 <span class="req">*</span></label><input type="text" id="ugPurpose" class="form-input" placeholder="简要说明盖章用途"></div>
+    <div class="form-group"><label class="form-label">审批人</label><input type="text" id="ugApprover" class="form-input" placeholder="批准人姓名"></div>
+    <button class="btn btn-primary" onclick="saveUsage()">✅ 登记领用</button>
+    <datalist id="deptOptions"></datalist>
+  </div>
+
+  <div class="card">
+    <h2>📋 使用中印章</h2>
+    <div class="recent-list" id="activeUsages"><div style="text-align:center;color:var(--g400);padding:16px;font-size:13px;">暂无使用中的印章</div></div>
+  </div>
+
+  <div class="card">
+    <h2>🕐 最近归还记录</h2>
+    <div class="recent-list" id="recentUsages"><div style="text-align:center;color:var(--g400);padding:16px;font-size:13px;">暂无归还记录</div></div>
+  </div>
+
+  <div class="footer">大理大学第一附属医院印章管理系统 · 扫码登记端</div>
+</div>
+
+<script>
+const LS_PREFIX='seal_mgmt_';
+function lsGet(k){ try{return JSON.parse(localStorage.getItem(LS_PREFIX+k))||[]}catch(e){return[]} }
+function lsSet(k,v){ localStorage.setItem(LS_PREFIX+k,JSON.stringify(v)); }
+function today(){ return new Date().toISOString().slice(0,10); }
+function now(){ return new Date().toLocaleString('zh-CN'); }
+function genId(){ return 'U'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+function toast(msg,type){
+  type=type||'info'; const el=document.createElement('div');
+  el.className='toast toast-'+type; el.textContent=msg; document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2500);
+}
+
+function suggestSeals(){
+  const seals=lsGet('seals'); const input=document.getElementById('ugSealInput');
+  const dropdown=document.getElementById('ugSealSuggest');
+  const q=input.value.toLowerCase(); dropdown.innerHTML='';
+  if(!q||q.length<1){ dropdown.style.display='none'; return; }
+  const matches=seals.filter(s=>s.name&&s.name.toLowerCase().includes(q)&&s.status!=='已销毁'&&s.status!=='已废止').slice(0,8);
+  if(!matches.length){ dropdown.style.display='none'; return; }
+  dropdown.innerHTML=matches.map(s=>`<div class="suggest-item" onclick="selectSeal('${s.name.replace(/'/g,"\\'")}')">${s.name} <span style="color:var(--g400);font-size:11px;">${s.dept||''} ${s.status||''}</span></div>`).join('');
+  dropdown.style.display='block';
+}
+function selectSeal(name){
+  document.getElementById('ugSealInput').value=name;
+  document.getElementById('ugSealSuggest').style.display='none';
+}
+document.addEventListener('click',e=>{
+  const dd=document.getElementById('ugSealSuggest');
+  if(dd&&!e.target.closest('.suggest-wrap')) dd.style.display='none';
+});
+
+function saveUsage(){
+  const sealName=document.getElementById('ugSealInput').value.trim();
+  const user=document.getElementById('ugUser').value.trim();
+  const dept=document.getElementById('ugDept').value.trim();
+  const docType=document.getElementById('ugDocType').value;
+  const purpose=document.getElementById('ugPurpose').value.trim();
+  const approver=document.getElementById('ugApprover').value.trim();
+  if(!sealName||!user||!purpose){ toast('请填写印章名称、使用人和用途','error'); return; }
+  const usages=lsGet('usages');
+  usages.unshift({
+    id:genId(), sealName, user, dept, docType, purpose, approver,
+    checkOut:now(), checkIn:'', status:'使用中'
+  });
+  lsSet('usages',usages);
+  toast('登记成功','success');
+  document.getElementById('ugSealInput').value='';
+  document.getElementById('ugUser').value='';
+  document.getElementById('ugPurpose').value='';
+  document.getElementById('ugApprover').value='';
+  renderAll();
+}
+
+function returnSeal(id){
+  const usages=lsGet('usages');
+  const u=usages.find(v=>v.id===id);
+  if(!u)return;
+  u.status='已归还'; u.checkIn=now();
+  lsSet('usages',usages);
+  toast('已归还','success');
+  renderAll();
+}
+
+function renderAll(){
+  const usages=lsGet('usages');
+  const seals=lsGet('seals');
+  const depts=lsGet('settings').departments||[];
+  // Datalist
+  const dl=document.getElementById('deptOptions');
+  if(dl) dl.innerHTML=depts.map(d=>`<option value="${d}">`).join('');
+
+  const active=usages.filter(u=>u.status==='使用中');
+  const todayStr=today();
+  const todayCount=usages.filter(u=>u.checkOut&&u.checkOut.includes(todayStr)).length;
+
+  document.getElementById('sumUsing').textContent=active.length;
+  document.getElementById('sumToday').textContent=todayCount;
+  document.getElementById('sumTotal').textContent=usages.length;
+
+  // Active usages
+  document.getElementById('activeUsages').innerHTML=active.length
+    ? active.map(u=>`<div class="recent-item"><div><div class="name">${u.sealName||''}</div><div style="font-size:11px;color:var(--g500);">${u.user||''} · ${u.dept||''} · ${u.purpose||''}</div></div><div><div class="status status-using">使用中</div><div style="margin-top:4px;"><button class="btn btn-ghost" style="color:var(--suc);font-size:11px;padding:4px 8px;" onclick="returnSeal('${u.id}')">✅ 归还</button></div></div></div>`).join('')
+    : '<div style="text-align:center;color:var(--g400);padding:16px;font-size:13px;">暂无使用中的印章</div>';
+
+  // Recent returned
+  const returned=usages.filter(u=>u.status==='已归还').slice(0,10);
+  document.getElementById('recentUsages').innerHTML=returned.length
+    ? returned.map(u=>`<div class="recent-item"><div><div class="name">${u.sealName||''}</div><div style="font-size:11px;color:var(--g500);">${u.user||''} · ${u.dept||''}</div></div><div><div class="status status-done">已归还</div><div class="time">${u.checkIn||''}</div></div></div>`).join('')
+    : '<div style="text-align:center;color:var(--g400);padding:16px;font-size:13px;">暂无归还记录</div>';
+}
+
+// Init
+function init(){
+  // Ensure settings exist
+  let settings=lsGet('settings');
+  if(!settings||!settings.departments){ settings=settings||{}; settings.departments=[]; lsSet('settings',settings); }
+  renderAll();
+}
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>

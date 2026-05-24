@@ -1,0 +1,27 @@
+# 数据库文件（含敏感数据，不纳入版本控制）
+*.db
+seal_archive.db
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# 临时文件
+*.tmp
+*.bak
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 虚拟环境
+venv/
+env/
+.env

@@ -1,0 +1,2412 @@
+[
+  {
+    "id": 1,
+    "name": "大理医学院附属医院筹备组",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 2,
+    "name": "大理医学院附属医院筹备组",
+    "material": "木质",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 3,
+    "name": "大理医学院附属医院筹建办公室",
+    "material": "木质",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 4,
+    "name": "大理医学院附属医院筹备组财务科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 5,
+    "name": "大理医学院附属医院筹备组办公室",
+    "material": "木质",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 6,
+    "name": "大理医学院附属医院筹备组人事科",
+    "material": "木质",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 7,
+    "name": "大理医学院附属医院筹备组财务科",
+    "material": "木质",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 8,
+    "name": "大理医学院附属医院筹备组基建科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 9,
+    "name": "大理医学院附属医院",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 10,
+    "name": "中国共产党大理医学院附属医院委员会办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 11,
+    "name": "大理医学院附属医院办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 12,
+    "name": "中国共产党大理医学院附属医院纪律检查委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 13,
+    "name": "中国教育工会大理医学院附属医院委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 14,
+    "name": "大理医学院附属医院财务专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 15,
+    "name": "大理医学院附属医院职称改革工作领导小组办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 16,
+    "name": "大理医学院附属医院计生委",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 17,
+    "name": "罗兆文   罗志勇（有机玻璃）",
+    "material": "金属",
+    "shape": "方形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 18,
+    "name": "大理医学院附属医院综合服务公司财务专用章",
+    "material": "牛角",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 19,
+    "name": "大理医学院附属医院医疗保险管理办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 20,
+    "name": "大理医学院附属医院出生医学证明专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 21,
+    "name": "大理医学院附属医院监查审计科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 22,
+    "name": "大理医学院附属医院监查审计科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 23,
+    "name": "中国共产党大理医学院附属医院纪律检查委员会办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 24,
+    "name": "大理医学院附属医院保卫科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 25,
+    "name": "大理医学院附属医院财务科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 26,
+    "name": "大理医学院附属医院人事科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 27,
+    "name": "大理医学院附属医院总务科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 28,
+    "name": "大理医学院附属医院基建科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 29,
+    "name": "大理医学院附属医院护理部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 30,
+    "name": "大理医学院附属医院房产管理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 31,
+    "name": "大理医学院附属医院门诊部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 32,
+    "name": "大理医学院附属医院后勤保障部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 33,
+    "name": "大理医学院附属医院预防保健科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 34,
+    "name": "大理医学院附属医院感染管理委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 35,
+    "name": "大理医学院附属医院综合服务公司经营部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 36,
+    "name": "大理医学院附属医院专家医疗中心财务科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 37,
+    "name": "大理医学院附属医院质量监控科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 38,
+    "name": "大理医学院附属医院医务科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 39,
+    "name": "大理医学院附属医院动力科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 40,
+    "name": "大理医学院附属医院筹备组基建科",
+    "material": "木质",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 41,
+    "name": "大理医学院附属医院科教科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 42,
+    "name": "大理医学院附属医院爱国卫生运动委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 43,
+    "name": "大理医学院附属医院专家医疗中心",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 44,
+    "name": "大理医学院附属医院医疗证明章",
+    "material": "牛角",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 45,
+    "name": "大理医学院附属医院机要文件收发章",
+    "material": "橡胶",
+    "shape": "椭圆",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 46,
+    "name": "大理医学院附属医院专家医疗中心财务专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 47,
+    "name": "大理医学院附属医院综合服务公司经营部发票专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 48,
+    "name": "大理学院临床医学院学生工作办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 49,
+    "name": "大理学院附属医院生殖助孕中心",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 50,
+    "name": "大理医学院附属医院漾江医院",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 51,
+    "name": "大理医学院附属医院第二门诊部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 52,
+    "name": "大理医学院附属医院生殖助孕中心",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 53,
+    "name": "大理医学院附属医院外三科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 54,
+    "name": "大理医学院附属医院脑系科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 55,
+    "name": "大理学院附属医院脑系科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 56,
+    "name": "大理医学院附属医院外四科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 57,
+    "name": "大理医学院附属医院中医科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 58,
+    "name": "大理医学院附属医院放射科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 59,
+    "name": "大理医学院附属医院儿科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 60,
+    "name": "大理医学院附属医院ICU",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 61,
+    "name": "大理学院附属医院眼科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 62,
+    "name": "大理医学院附属医院外二科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 63,
+    "name": "大理医学院附属医院急诊科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 64,
+    "name": "大理医学院附属医院手术麻醉科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 65,
+    "name": "大理医学院附属医院-德国FMC血液净化中心",
+    "material": "橡胶",
+    "shape": "方形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 66,
+    "name": "大理医学院附属医院内一科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 67,
+    "name": "大理医学院附属医院内二科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 68,
+    "name": "大理医学院附属医院妇产科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 69,
+    "name": "大理医学院附属医院外一科",
+    "material": "橡胶",
+    "shape": "椭圆",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 70,
+    "name": "大理医学院附属医院输血科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 71,
+    "name": "大理医学院附属医院血液肿瘤科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 72,
+    "name": "大理医学院附属医院五官科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 73,
+    "name": "大理医学院附属医院收费专用章",
+    "material": "牛角",
+    "shape": "椭圆",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 74,
+    "name": "大理医学院附属医院专家医疗中心住院部收费专用章",
+    "material": "橡胶",
+    "shape": "椭圆",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 75,
+    "name": "大理医学院附属医院机要文件收发章",
+    "material": "橡胶",
+    "shape": "椭圆",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 76,
+    "name": "大理医学院附属医院病历复印专用章",
+    "material": "橡胶",
+    "shape": "长方形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 77,
+    "name": "大理学院附属医院体检专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "2枚",
+    "status": "在用"
+  },
+  {
+    "id": 78,
+    "name": "大理学院附属医院继续医学教育委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 79,
+    "name": "大理学院临床技能培训中心",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 80,
+    "name": "大理学院临床医学院皮肤护理美容学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 81,
+    "name": "大理学院临床医学院皮肤病学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 82,
+    "name": "大理学院附属医院信息科 ",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "2012年3月收回重新启用",
+    "status": "在用"
+  },
+  {
+    "id": 83,
+    "name": "大理学院附属医院现代技术服务部",
+    "material": "木质",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 84,
+    "name": "大理学院附属医院工会委员会财务专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 85,
+    "name": "大理学院附属医院财务专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 86,
+    "name": "大理学院附属医院医疗管理办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2013-02-27",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 87,
+    "name": "云南省出生医学证明专用章（大理医学院附属医院）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 88,
+    "name": "云南省出生医学证明专用章（大理学院附属医院）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 89,
+    "name": "云南省出生医学证明大理州专用章（大理医学院附属医院）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 90,
+    "name": "大理学院附属医院医务科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2014-04-11",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 91,
+    "name": "大理学院附属医院财务科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2014-04-11",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 92,
+    "name": "大理学院附属医院人力资源部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2014-04-11",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 93,
+    "name": "空号",
+    "material": "",
+    "shape": "",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 94,
+    "name": "大理学院附属医院宣传科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 95,
+    "name": "大理学院附属医院思想政治工作研究会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 96,
+    "name": "大理学院临床医学院核医学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 97,
+    "name": "中国共产党大理学院附属医院委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "带编号",
+    "status": "在用"
+  },
+  {
+    "id": 98,
+    "name": "中国共产党大理学院附属医院纪律检查委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 99,
+    "name": "中国教育工会大理学院附属医院委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 100,
+    "name": "大理学院附属医院计划生育委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 101,
+    "name": "中国共产党大理学院附属医院委员会办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 102,
+    "name": "中国共产党大理学院附属医院纪律检查委员会办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 103,
+    "name": "中国共青团大理学院附属医院委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 104,
+    "name": "大理学院附属医院组织科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 105,
+    "name": "大理学院附属医院人事科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 106,
+    "name": "大理学院附属医院监察审计科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 107,
+    "name": "大理学院附属医院绩效管理办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 108,
+    "name": "大理学院附属医院后勤保障部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 109,
+    "name": "大理学院附属医院设备管理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 110,
+    "name": "大理学院附属医院护理部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 111,
+    "name": "大理学院附属医院感染管理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 112,
+    "name": "大理学院附属医院预防保健科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 113,
+    "name": "大理学院附属医院营养科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 114,
+    "name": "大理学院附属医院供应室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 115,
+    "name": "大理学院附属医院病理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 116,
+    "name": "大理学院附属医院核医学科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 117,
+    "name": "大理学院附属医院药剂科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 118,
+    "name": "大理学院附属医院检验科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 119,
+    "name": "大理学院附属医院功能科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 120,
+    "name": "大理学院附属医院制剂质量管理领导小组",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 121,
+    "name": "大理学院附属医院康复医学科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 122,
+    "name": "大理学院附属医院康复医学科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 123,
+    "name": "大理学院附属医院内一科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 124,
+    "name": "大理学院附属医院内二科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 125,
+    "name": "大理学院附属医院内分泌科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 126,
+    "name": "大理学院附属医院消化内科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 127,
+    "name": "大理学院附属医院内四科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 128,
+    "name": "大理学院附属医院血液肿瘤科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 129,
+    "name": "大理学院附属医院皮肤科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 130,
+    "name": "大理学院附属医院妇产科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 131,
+    "name": "大理学院附属医院手术麻醉科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 132,
+    "name": "大理学院附属医院外五科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 133,
+    "name": "大理学院附属医院外六科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 134,
+    "name": "大理学院附属医院神经外科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 135,
+    "name": "大理学院附属医院口腔颌面外科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 136,
+    "name": "大理学院附属医院门诊部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 137,
+    "name": "大理学院附属医院医学伦理委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 138,
+    "name": "大理大学第一附属医院医保与新农合办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 139,
+    "name": "大理大学第一附属医院学科发展和人才队伍建设指导委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 140,
+    "name": "大理大学第一附属医院制剂质量管理领导小组",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 141,
+    "name": "外科-胸心外科方向住院医师规范化培训基地",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 142,
+    "name": "大理大学第一附属医院财务部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 143,
+    "name": "大理大学第一附属医院宣传科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 144,
+    "name": "大理大学第一附属医院康复科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 145,
+    "name": "大理学院临床医学院法医学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 146,
+    "name": "大理学院临床医学院儿科学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 147,
+    "name": "大理学院临床医学院检验诊断学实验室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 148,
+    "name": "大理学院临床医学院超声学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 149,
+    "name": "大理学院临床医学院神经精神病学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 150,
+    "name": "大理学院临床医学院医学美容学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 151,
+    "name": "大理学院临床医学院妇产科学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 152,
+    "name": "大理学院临床医学院口腔学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 153,
+    "name": "大理学院临床医学院放射学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 154,
+    "name": "大理学院临床医学院外科学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 155,
+    "name": "大理学院临床医学院传染病学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 156,
+    "name": "大理学院临床医学院耳鼻喉科学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 157,
+    "name": "大理学院临床医学院耳鼻喉科学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 158,
+    "name": "大理学院临床医学院内科学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 159,
+    "name": "大理学院临床医学院中医学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 160,
+    "name": "大理学院临床医学院皮肤病学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 161,
+    "name": "大理学院临床医学院急症医学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 162,
+    "name": "大理学院临床医学院综合办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 163,
+    "name": "大理学院临床医学院临床医学研究中心",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 164,
+    "name": "大理学院附属医院药事管理委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 165,
+    "name": "大理学院附属医院医学质监控科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 166,
+    "name": "大理学院附属医院医护质量管理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 167,
+    "name": "大理学院临床医学院",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "公章",
+    "status": "在用"
+  },
+  {
+    "id": 168,
+    "name": "大理学院附属医院门诊收费专用章（1）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 169,
+    "name": "大理学院附属医院门诊收费专用章（2）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 170,
+    "name": "大理学院附属医院门诊收费专用章（3）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 171,
+    "name": "大理学院附属医院门诊收费专用章（4）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 172,
+    "name": "大理学院附属医院门诊收费专用章（5）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 173,
+    "name": "大理学院附属医院门诊收费专用章（6）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 174,
+    "name": "大理学院附属医院门诊收费专用章（7）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 175,
+    "name": "大理学院附属医院门诊收费专用章（8）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 176,
+    "name": "大理学院附属医院门诊收费专用章（9）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 177,
+    "name": "大理学院附属医院门诊收费专用章（10）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 178,
+    "name": "大理学院附属医院门诊收费专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 179,
+    "name": "大理学院附属医院门诊收费专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 180,
+    "name": "大理学院附属医院发票专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 181,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 182,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 183,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 184,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 185,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 186,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 187,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 188,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 189,
+    "name": "大理学院附属医院住院结算专用章",
+    "material": "橡胶",
+    "shape": "椭圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 190,
+    "name": "大理学院附属医院财务专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 191,
+    "name": "大理学院附属医院财务部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 192,
+    "name": "大理学院附属医院",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2021-12-31",
+    "remark": "公章",
+    "status": "已废止"
+  },
+  {
+    "id": 193,
+    "name": "中国共产党大理大学第一附属医院委员会办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 194,
+    "name": "大理大学第一附属医院院长办公室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 195,
+    "name": "大理大学第一附属医院护理部",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 196,
+    "name": "大理大学第一附属医院眼科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 197,
+    "name": "大理大学第一附属医院眼科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 198,
+    "name": "大理大学第一附属医院血液肿瘤科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 199,
+    "name": "大理大学第一附属医院胸心外科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 200,
+    "name": "大理大学第一附属医院皮肤科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 201,
+    "name": "大理大学第一附属医院呼吸内科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 202,
+    "name": "大理学院附属医院生殖医学伦理委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 203,
+    "name": "大理大学第一附属医院住院结算专用章（1）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 204,
+    "name": "大理大学第一附属医院住院结算专用章（2）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 205,
+    "name": "大理大学第一附属医院住院结算专用章（3）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 206,
+    "name": "大理大学第一附属医院住院结算专用章（4）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 207,
+    "name": "大理大学第一附属医院住院结算专用章（5）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 208,
+    "name": "大理大学第一附属医院住院结算专用章（6）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 209,
+    "name": "大理大学第一附属医院住院结算专用章（7）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 210,
+    "name": "大理大学第一附属医院住院结算专用章（8）",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 211,
+    "name": "大理学院附属医院内六科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 212,
+    "name": "大理学院临床医学院检验诊断学教研室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 213,
+    "name": "大理学院附属医院保卫科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 214,
+    "name": "大理大学第一附属医院重症转化病区",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2023-08-02",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 215,
+    "name": "大理大学第一附属医院感染管理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2023-11-08",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 216,
+    "name": "大理学院附属医院感染管理委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2023-11-08",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 217,
+    "name": "大理大学第一附属医院急诊科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2024-05-29",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 218,
+    "name": "大理大学第一附属医院神经外科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2024-05-29",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 219,
+    "name": "大理大学第一附属医院关节外科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2024-05-29",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 220,
+    "name": "大理大学第一附属医院信息科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2024-08-18",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 221,
+    "name": "大理大学第一附属医院综合ICU",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2024-08-18",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 222,
+    "name": "大理大学第一附属医院院长办公室",
+    "material": "自动印章",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 223,
+    "name": "大理大学第一附属医院设备管理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 224,
+    "name": "大理大学第一附属医院出生医学证明专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 225,
+    "name": "大理大学第一附属医院病案室",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 226,
+    "name": "大理大学第一附属医院资产管理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 227,
+    "name": "大理大学第一附属医院急诊ICU",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 228,
+    "name": "大理大学第一附属医院重症医学科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 229,
+    "name": "大理大学第一附属医院医务科",
+    "material": "自动印章",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 230,
+    "name": "大理大学第一附属医院研究生与规培生管理科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 231,
+    "name": "大理大学第一附属医院经济合同专用章",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 232,
+    "name": "大理大学第一附属医院业主委员会",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 233,
+    "name": "大理大学临床医学院",
+    "material": "自动印章",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-03-03",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 234,
+    "name": "大理大学临床医学院教学科",
+    "material": "自动印章",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-09-30",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 235,
+    "name": "大理大学临床医学院学生科",
+    "material": "自动印章",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-09-30",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 236,
+    "name": "大理大学第一附属医院绩效办",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-09-30",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 237,
+    "name": "大理大学第一附属医院普外一科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-09-30",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 238,
+    "name": "大理大学第一附属医院普外二科",
+    "material": "橡胶",
+    "shape": "圆形",
+    "startDate": "",
+    "endDate": "2025-09-30",
+    "remark": "",
+    "status": "已废止"
+  },
+  {
+    "id": 239,
+    "name": "",
+    "material": "",
+    "shape": "",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 240,
+    "name": "",
+    "material": "",
+    "shape": "",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  },
+  {
+    "id": 241,
+    "name": "",
+    "material": "",
+    "shape": "",
+    "startDate": "",
+    "endDate": "",
+    "remark": "",
+    "status": "在用"
+  }
+]
