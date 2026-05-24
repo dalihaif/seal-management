@@ -350,12 +350,13 @@ def record_usage():
 
     user = data.get('user', '').strip()
     purpose = data.get('purpose', '').strip()
-    usage_type = data.get('usageType', 'use')  # 'use'=领用使用, 'loan'=借出外带
+    usage_type = data.get('usageType', 'use')  # 'stamp'=盖章使用, 'use'=领用使用, 'loan'=借出外带
 
     if not seal_names or not user or not purpose:
         return jsonify({'error': '印章名称、使用人和用途为必填项'}), 400
 
-    status = '借出中' if usage_type == 'loan' else '使用中'
+    # 盖章使用类型直接标记为已完成，无需归还
+    status = '借出中' if usage_type == 'loan' else ('已完成' if usage_type == 'stamp' else '使用中')
     batch_id = 'B' + datetime.now().strftime('%Y%m%d%H%M%S') + str(int(datetime.now().timestamp() * 1000) % 10000).zfill(4)
     records = []
     db = get_db()
@@ -369,7 +370,7 @@ def record_usage():
             'dept': data.get('dept', ''), 'docType': data.get('docType', '证明'),
             'purpose': purpose, 'approver': data.get('approver', ''),
             'checkOut': data.get('checkOut', datetime.now().strftime('%Y/%m/%d %H:%M:%S')),
-            'checkIn': '', 'status': status, 'copies': '', 'sealId': '',
+            'checkIn': '', 'status': status, 'copies': data.get('copies', '1'), 'sealId': '',
             'usageType': usage_type, 'batchId': batch_id,
             'contactPhone': data.get('contactPhone', ''), 'expectedReturn': data.get('expectedReturn', '')
         }

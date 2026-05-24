@@ -114,7 +114,8 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
     <div class="form-group">
       <label class="form-label">使用类型</label>
       <div class="type-tabs" id="typeTabs">
-        <button class="type-tab active" data-type="use" onclick="switchType('use')">📋 领用使用</button>
+        <button class="type-tab active" data-type="stamp" onclick="switchType('stamp')">🖊 盖章使用</button>
+        <button class="type-tab" data-type="use" onclick="switchType('use')">📋 领用使用</button>
         <button class="type-tab" data-type="loan" onclick="switchType('loan')">🚪 借出外带</button>
       </div>
     </div>
@@ -133,6 +134,7 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
     <div class="form-group"><label class="form-label">部门</label><input type="text" id="ugDept" class="form-input" list="deptOptions" placeholder="选择或输入部门名称" autocomplete="off"></div>
     <div class="form-group"><label class="form-label">文件类型</label><select id="ugDocType" class="form-input"></select></div>
     <div class="form-group"><label class="form-label">用途说明 <span class="req">*</span></label><input type="text" id="ugPurpose" class="form-input" placeholder="简要说明盖章用途"></div>
+    <div class="form-group"><label class="form-label">用印次数</label><input type="number" id="ugCopies" class="form-input" placeholder="默认1份" value="1" min="1" max="999"></div>
     <div class="form-group"><label class="form-label">审批人</label><input type="text" id="ugApprover" class="form-input" placeholder="批准人姓名"></div>
 
     <!-- 借出专属字段 -->
@@ -162,7 +164,7 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 
 <script>
 // ==================== API 通信 ====================
-const API_BASE = (window.location.port === '5100') ? '' : 'http://localhost:5100';
+const API_BASE = (window.location.port === '5100') ? '/api' : 'http://localhost:5100/api';
 let serverReady = false;
 
 async function apiGet(path) {
@@ -195,7 +197,7 @@ let docTypes = ['证明','合同','报告','申请','函件','其他'];
 let activeUsages = [];
 let returnedUsages = [];
 let selectedSeals = [];  // [{id, name, type, dept}]
-let currentUsageType = 'use'; // 'use' | 'loan'
+let currentUsageType = 'stamp'; // 'stamp' | 'use' | 'loan'
 
 // ==================== UI 工具 ====================
 function now() { return new Date().toLocaleString('zh-CN'); }
@@ -230,7 +232,7 @@ function updateSubmitBtn() {
   const btn = document.getElementById('btnSubmit');
   if (!serverReady) { btn.textContent = '🔗 等待服务器连接...'; btn.disabled = true; return; }
   const count = selectedSeals.length;
-  const typeLabel = currentUsageType === 'loan' ? '借出' : '领用';
+  const typeLabel = currentUsageType === 'loan' ? '借出' : currentUsageType === 'stamp' ? '盖章' : '领用';
   btn.textContent = count ? '✅ 登记' + typeLabel + '（' + count + '枚印章）' : '✅ 登记' + typeLabel;
   btn.disabled = false;
 }
@@ -288,7 +290,7 @@ async function suggestSeals() {
   }
 
   try {
-    const res = await apiGet('/api/usage/search-seals?q=' + encodeURIComponent(q));
+    const res = await apiGet('/usage/search-seals?q=' + encodeURIComponent(q));
     // 过滤已选中的
     const filtered = res.filter(s => !selectedSeals.find(sel => sel.name === s.name));
     if (!filtered.length) {
@@ -351,6 +353,7 @@ async function saveUsage() {
   const body = {
     sealNames, user, dept, docType, purpose, approver,
     usageType: currentUsageType,
+    copies: document.getElementById('ugCopies').value || '1',
     checkOut: now()
   };
   if (currentUsageType === 'loan') {
@@ -359,8 +362,8 @@ async function saveUsage() {
   }
 
   try {
-    const res = await apiPost('/api/usage/record', body);
-    const typeLabel = currentUsageType === 'loan' ? '借出' : '登记';
+    const res = await apiPost('/usage/record', body);
+    const typeLabel = currentUsageType === 'loan' ? '借出' : currentUsageType === 'stamp' ? '盖章' : '登记';
     toast(typeLabel + '成功（' + res.count + '枚印章）', 'success');
     // 清空表单
     selectedSeals = [];
@@ -370,6 +373,7 @@ async function saveUsage() {
     document.getElementById('ugApprover').value = '';
     document.getElementById('ugContactPhone').value = '';
     document.getElementById('ugExpectedReturn').value = '';
+    document.getElementById('ugCopies').value = '1';
     // 刷新列表
     await loadSummaryAndLists();
   } catch(e) {
@@ -383,7 +387,7 @@ async function saveUsage() {
 async function returnSeal(id) {
   if (!serverReady) { toast('服务器未连接', 'error'); return; }
   try {
-    const res = await apiPut('/api/usage/return/' + id);
+    const res = await apiPut('/usage/return/' + id);
     toast('已归还 (' + res.checkIn + ')', 'success');
     await loadSummaryAndLists();
   } catch(e) {
@@ -395,7 +399,7 @@ async function returnBatch(batchId) {
   if (!serverReady) { toast('服务器未连接', 'error'); return; }
   if (!confirm('确定要批量归还该批次所有印章吗？')) return;
   try {
-    const res = await apiPut('/api/usage/return-batch/' + batchId);
+    const res = await apiPut('/usage/return-batch/' + batchId);
     toast('批量归还成功（' + res.returnedCount + '枚印章）', 'success');
     await loadSummaryAndLists();
   } catch(e) {
@@ -406,7 +410,7 @@ async function returnBatch(batchId) {
 // ==================== 数据加载 ====================
 async function loadSummaryAndLists() {
   try {
-    const data = await apiGet('/api/usage/summary');
+    const data = await apiGet('/usage/summary');
     document.getElementById('sumUsing').textContent = data.activeCount;
     document.getElementById('sumToday').textContent = data.todayCount;
     document.getElementById('sumTotal').textContent = data.totalCount;
@@ -446,8 +450,9 @@ function renderActiveUsages() {
     const items = groups[bid];
     const first = items[0];
     const isLoan = first.usageType === 'loan';
-    const statusClass = isLoan ? 'status-loan' : 'status-using';
-    const statusText = isLoan ? '借出中' : '使用中';
+    const isStamp = first.usageType === 'stamp';
+    const statusClass = isLoan ? 'status-loan' : isStamp ? 'status-done' : 'status-using';
+    const statusText = isLoan ? '借出中' : isStamp ? '已完成' : '使用中';
     const singleItem = items.length === 1;
 
     if (singleItem) {
@@ -460,9 +465,7 @@ function renderActiveUsages() {
         </div>
         <div style="text-align:right;">
           <div class="status ${statusClass}">${statusText}</div>
-          <div style="margin-top:4px;">
-            <button class="btn btn-success" onclick="returnSeal('${escapeHtml(first.id)}')">✅ 归还</button>
-          </div>
+          ${!isStamp ? `<div style="margin-top:4px;"><button class="btn btn-success" onclick="returnSeal('${escapeHtml(first.id)}')">✅ 归还</button></div>` : '<div style="margin-top:4px;font-size:11px;color:var(--suc);">🖊 已完成</div>'}
         </div>
       </div>`;
     } else {
@@ -477,7 +480,7 @@ function renderActiveUsages() {
         <div style="font-size:10px;color:var(--g400);margin-top:2px;">用途：${escapeHtml(first.purpose || '')} · ${escapeHtml(first.checkOut || '')}</div>
         ${isLoan && first.expectedReturn ? '<div style="font-size:10px;color:var(--warn);">⚠ 预计归还：' + escapeHtml(first.expectedReturn) + ' | 📞 ' + escapeHtml(first.contactPhone || '') + '</div>' : ''}
         <div style="margin-top:6px;display:flex;gap:4px;">
-          <button class="btn btn-success" onclick="returnBatch('${escapeHtml(bid)}')">✅ 批量归还（${items.length}枚）</button>
+          ${!isLoan ? (isStamp ? '<span style="font-size:11px;color:var(--suc);padding:4px 0;">🖊 盖章完成</span>' : '') : `<button class="btn btn-success" onclick="returnBatch('${escapeHtml(bid)}')">✅ 批量归还（${items.length}枚）</button>`}
         </div>
       </div>`;
     }
@@ -514,7 +517,7 @@ function escapeHtml(s) {
 async function init() {
   // 1. 测试服务器连接
   try {
-    const status = await apiGet('/api/init-status');
+    const status = await apiGet('/init-status');
     console.log('服务器连接成功，已初始化:', status.initialized, '印章数:', status.sealCount);
     setConnStatus(true);
   } catch(e) {

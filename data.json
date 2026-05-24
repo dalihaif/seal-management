@@ -7,7 +7,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 2,
@@ -17,7 +23,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 3,
@@ -27,7 +39,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 4,
@@ -37,7 +55,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 5,
@@ -47,7 +71,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 6,
@@ -57,7 +87,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 7,
@@ -67,7 +103,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 8,
@@ -77,7 +119,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 9,
@@ -87,7 +135,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 10,
@@ -97,7 +151,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "党委办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 11,
@@ -107,7 +167,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 12,
@@ -117,7 +183,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "纪检监察室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 13,
@@ -127,7 +199,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 14,
@@ -137,7 +215,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "财务专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 15,
@@ -147,7 +231,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 16,
@@ -157,7 +247,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "计划生育办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 17,
@@ -167,7 +263,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 18,
@@ -177,7 +279,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "财务专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 19,
@@ -187,7 +295,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 20,
@@ -197,7 +311,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "出生医学证明专用章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 21,
@@ -207,7 +327,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "审计科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 22,
@@ -217,7 +343,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "审计科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 23,
@@ -227,7 +359,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "纪检监察室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 24,
@@ -237,7 +375,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "保卫科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 25,
@@ -247,7 +391,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 26,
@@ -257,7 +407,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "人事科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 27,
@@ -267,7 +423,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "总务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 28,
@@ -277,7 +439,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 29,
@@ -287,7 +455,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "护理部",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 30,
@@ -297,7 +471,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "总务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 31,
@@ -307,7 +487,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "门诊部",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 32,
@@ -317,7 +503,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "总务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 33,
@@ -327,7 +519,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "预防保健科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 34,
@@ -337,7 +535,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "感染管理科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 35,
@@ -347,7 +551,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "其他",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 36,
@@ -357,7 +567,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 37,
@@ -367,7 +583,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "质量监控科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 38,
@@ -377,7 +599,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "医务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 39,
@@ -387,7 +615,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "总务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 40,
@@ -397,7 +631,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 41,
@@ -407,7 +647,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 42,
@@ -417,7 +663,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "预防保健科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 43,
@@ -427,7 +679,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "专家医疗中心",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 44,
@@ -437,7 +695,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "医疗证明章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 45,
@@ -447,7 +711,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "机要文件收发章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 46,
@@ -457,7 +727,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "财务专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 47,
@@ -467,7 +743,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "发票专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 48,
@@ -477,7 +759,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 49,
@@ -487,7 +775,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "生殖助孕中心",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 50,
@@ -497,7 +791,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "门诊部",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 51,
@@ -507,7 +807,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "门诊部",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 52,
@@ -517,7 +823,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "生殖助孕中心",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 53,
@@ -527,7 +839,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 54,
@@ -537,7 +855,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "神经外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 55,
@@ -547,7 +871,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "神经外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 56,
@@ -557,7 +887,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 57,
@@ -567,7 +903,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "中医科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 58,
@@ -577,7 +919,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "放射科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 59,
@@ -587,7 +935,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "儿科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 60,
@@ -597,7 +951,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "重症医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 61,
@@ -607,7 +967,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "眼科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 62,
@@ -617,7 +983,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 63,
@@ -627,7 +999,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "急诊科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 64,
@@ -637,7 +1015,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "手术麻醉科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 65,
@@ -647,7 +1031,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "肾脏内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 66,
@@ -657,7 +1047,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 67,
@@ -667,7 +1063,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 68,
@@ -677,7 +1079,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "妇产科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 69,
@@ -687,7 +1095,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 70,
@@ -697,7 +1111,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "输血科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 71,
@@ -707,7 +1127,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "血液肿瘤科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 72,
@@ -717,7 +1143,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "五官科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 73,
@@ -727,7 +1159,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 74,
@@ -737,7 +1175,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 75,
@@ -747,7 +1191,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "机要文件收发章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 76,
@@ -757,7 +1207,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "病历复印专用章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 77,
@@ -767,7 +1223,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "2枚",
-    "status": "在用"
+    "status": "在用",
+    "type": "体检专用章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 78,
@@ -777,7 +1239,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "教学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 79,
@@ -787,7 +1255,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "教学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 80,
@@ -797,7 +1271,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 81,
@@ -807,7 +1287,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 82,
@@ -817,7 +1303,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "2012年3月收回重新启用",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "信息科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 83,
@@ -827,7 +1319,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "信息科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 84,
@@ -837,7 +1335,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "财务专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 85,
@@ -847,7 +1351,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "财务专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 86,
@@ -857,7 +1367,13 @@
     "startDate": "",
     "endDate": "2013-02-27",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2013-02-27",
+    "carvingDate": ""
   },
   {
     "id": 87,
@@ -867,7 +1383,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "出生医学证明专用章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 88,
@@ -877,7 +1399,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "出生医学证明专用章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 89,
@@ -887,7 +1415,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 90,
@@ -897,7 +1431,13 @@
     "startDate": "",
     "endDate": "2014-04-11",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "医务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2014-04-11",
+    "carvingDate": ""
   },
   {
     "id": 91,
@@ -907,7 +1447,13 @@
     "startDate": "",
     "endDate": "2014-04-11",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2014-04-11",
+    "carvingDate": ""
   },
   {
     "id": 92,
@@ -917,7 +1463,13 @@
     "startDate": "",
     "endDate": "2014-04-11",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "人事科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2014-04-11",
+    "carvingDate": ""
   },
   {
     "id": 93,
@@ -927,7 +1479,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 94,
@@ -937,7 +1495,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "宣传科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 95,
@@ -947,7 +1511,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "宣传科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 96,
@@ -957,7 +1527,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 97,
@@ -967,7 +1543,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "带编号",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "党委办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 98,
@@ -977,7 +1559,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "纪检监察室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 99,
@@ -987,7 +1575,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 100,
@@ -997,7 +1591,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "计划生育办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 101,
@@ -1007,7 +1607,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "党委办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 102,
@@ -1017,7 +1623,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "纪检监察室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 103,
@@ -1027,7 +1639,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "团委",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 104,
@@ -1037,7 +1655,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "人事科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 105,
@@ -1047,7 +1671,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "人事科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 106,
@@ -1057,7 +1687,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "审计科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 107,
@@ -1067,7 +1703,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 108,
@@ -1077,7 +1719,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "总务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 109,
@@ -1087,7 +1735,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "设备科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 110,
@@ -1097,7 +1751,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "护理部",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 111,
@@ -1107,7 +1767,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "感染管理科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 112,
@@ -1117,7 +1783,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "预防保健科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 113,
@@ -1127,7 +1799,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "总务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 114,
@@ -1137,7 +1815,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "护理部",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 115,
@@ -1147,7 +1831,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "病理科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 116,
@@ -1157,7 +1847,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "核医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 117,
@@ -1167,7 +1863,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "药剂科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 118,
@@ -1177,7 +1879,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "检验科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 119,
@@ -1187,7 +1895,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "功能科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 120,
@@ -1197,7 +1911,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "药剂科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 121,
@@ -1207,7 +1927,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "康复医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 122,
@@ -1217,7 +1943,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "康复医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 123,
@@ -1227,7 +1959,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 124,
@@ -1237,7 +1975,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 125,
@@ -1247,7 +1991,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "内分泌科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 126,
@@ -1257,7 +2007,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "消化内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 127,
@@ -1267,7 +2023,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 128,
@@ -1277,7 +2039,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "血液肿瘤科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 129,
@@ -1287,7 +2055,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "皮肤科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 130,
@@ -1297,7 +2071,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "妇产科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 131,
@@ -1307,7 +2087,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "手术麻醉科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 132,
@@ -1317,7 +2103,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 133,
@@ -1327,7 +2119,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 134,
@@ -1337,7 +2135,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "神经外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 135,
@@ -1347,7 +2151,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "口腔颌面外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 136,
@@ -1357,7 +2167,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "门诊部",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 137,
@@ -1367,7 +2183,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "医务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 138,
@@ -1377,7 +2199,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 139,
@@ -1387,7 +2215,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "教学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 140,
@@ -1397,7 +2231,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "药剂科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 141,
@@ -1407,7 +2247,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "胸心外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 142,
@@ -1417,7 +2263,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 143,
@@ -1427,7 +2279,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "宣传科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 144,
@@ -1437,7 +2295,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "康复医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 145,
@@ -1447,7 +2311,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 146,
@@ -1457,7 +2327,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 147,
@@ -1467,7 +2343,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 148,
@@ -1477,7 +2359,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 149,
@@ -1487,7 +2375,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 150,
@@ -1497,7 +2391,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 151,
@@ -1507,7 +2407,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 152,
@@ -1517,7 +2423,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 153,
@@ -1527,7 +2439,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 154,
@@ -1537,7 +2455,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 155,
@@ -1547,7 +2471,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 156,
@@ -1557,7 +2487,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 157,
@@ -1567,7 +2503,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 158,
@@ -1577,7 +2519,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 159,
@@ -1587,7 +2535,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 160,
@@ -1597,7 +2551,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 161,
@@ -1607,7 +2567,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 162,
@@ -1617,7 +2583,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 163,
@@ -1627,7 +2599,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 164,
@@ -1637,7 +2615,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "药剂科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 165,
@@ -1647,7 +2631,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "质量监控科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 166,
@@ -1657,7 +2647,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "质量监控科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 167,
@@ -1667,7 +2663,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "公章",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 168,
@@ -1677,7 +2679,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 169,
@@ -1687,7 +2695,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 170,
@@ -1697,7 +2711,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 171,
@@ -1707,7 +2727,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 172,
@@ -1717,7 +2743,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 173,
@@ -1727,7 +2759,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 174,
@@ -1737,7 +2775,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 175,
@@ -1747,7 +2791,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 176,
@@ -1757,7 +2807,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 177,
@@ -1767,7 +2823,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 178,
@@ -1777,7 +2839,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 179,
@@ -1787,7 +2855,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "收费专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 180,
@@ -1797,7 +2871,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "发票专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 181,
@@ -1807,7 +2887,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 182,
@@ -1817,7 +2903,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 183,
@@ -1827,7 +2919,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 184,
@@ -1837,7 +2935,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 185,
@@ -1847,7 +2951,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 186,
@@ -1857,7 +2967,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 187,
@@ -1867,7 +2983,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 188,
@@ -1877,7 +2999,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 189,
@@ -1887,7 +3015,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 190,
@@ -1897,7 +3031,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "财务专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 191,
@@ -1907,7 +3047,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 192,
@@ -1917,7 +3063,13 @@
     "startDate": "",
     "endDate": "2021-12-31",
     "remark": "公章",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2021-12-31",
+    "carvingDate": ""
   },
   {
     "id": 193,
@@ -1927,7 +3079,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "党委办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 194,
@@ -1937,7 +3095,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 195,
@@ -1947,7 +3111,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "护理部",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 196,
@@ -1957,7 +3127,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "眼科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 197,
@@ -1967,7 +3143,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "眼科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 198,
@@ -1977,7 +3159,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "血液肿瘤科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 199,
@@ -1987,7 +3175,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "胸心外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 200,
@@ -1997,7 +3191,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "皮肤科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 201,
@@ -2007,7 +3207,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "呼吸内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 202,
@@ -2017,7 +3223,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "生殖助孕中心",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 203,
@@ -2027,7 +3239,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 204,
@@ -2037,7 +3255,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 205,
@@ -2047,7 +3271,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 206,
@@ -2057,7 +3287,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 207,
@@ -2067,7 +3303,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 208,
@@ -2077,7 +3319,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 209,
@@ -2087,7 +3335,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 210,
@@ -2097,7 +3351,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "住院结算专用章",
+    "dept": "财务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 211,
@@ -2107,7 +3367,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "内科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 212,
@@ -2117,7 +3383,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 213,
@@ -2127,7 +3399,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "保卫科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 214,
@@ -2137,7 +3415,13 @@
     "startDate": "",
     "endDate": "2023-08-02",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "重症医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2023-08-02",
+    "carvingDate": ""
   },
   {
     "id": 215,
@@ -2147,7 +3431,13 @@
     "startDate": "",
     "endDate": "2023-11-08",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "感染管理科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2023-11-08",
+    "carvingDate": ""
   },
   {
     "id": 216,
@@ -2157,7 +3447,13 @@
     "startDate": "",
     "endDate": "2023-11-08",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "感染管理科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2023-11-08",
+    "carvingDate": ""
   },
   {
     "id": 217,
@@ -2167,7 +3463,13 @@
     "startDate": "",
     "endDate": "2024-05-29",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "急诊科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2024-05-29",
+    "carvingDate": ""
   },
   {
     "id": 218,
@@ -2177,7 +3479,13 @@
     "startDate": "",
     "endDate": "2024-05-29",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "神经外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2024-05-29",
+    "carvingDate": ""
   },
   {
     "id": 219,
@@ -2187,7 +3495,13 @@
     "startDate": "",
     "endDate": "2024-05-29",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "关节外科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2024-05-29",
+    "carvingDate": ""
   },
   {
     "id": 220,
@@ -2197,7 +3511,13 @@
     "startDate": "",
     "endDate": "2024-08-18",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "信息科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2024-08-18",
+    "carvingDate": ""
   },
   {
     "id": 221,
@@ -2207,7 +3527,13 @@
     "startDate": "",
     "endDate": "2024-08-18",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "重症医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2024-08-18",
+    "carvingDate": ""
   },
   {
     "id": 222,
@@ -2217,7 +3543,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 223,
@@ -2227,7 +3559,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "设备科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 224,
@@ -2237,7 +3575,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "出生医学证明专用章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 225,
@@ -2247,7 +3591,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "医务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 226,
@@ -2257,7 +3607,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "总务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 227,
@@ -2267,7 +3623,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "重症医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 228,
@@ -2277,7 +3639,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "重症医学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 229,
@@ -2287,7 +3655,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "医务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 230,
@@ -2297,7 +3671,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "教学科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 231,
@@ -2307,7 +3687,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "经济合同专用章",
+    "dept": "院办公室",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 232,
@@ -2317,7 +3703,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "总务科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 233,
@@ -2327,7 +3719,13 @@
     "startDate": "",
     "endDate": "2025-03-03",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-03-03",
+    "carvingDate": ""
   },
   {
     "id": 234,
@@ -2337,7 +3735,13 @@
     "startDate": "",
     "endDate": "2025-09-30",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-09-30",
+    "carvingDate": ""
   },
   {
     "id": 235,
@@ -2347,7 +3751,13 @@
     "startDate": "",
     "endDate": "2025-09-30",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "临床医学院",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-09-30",
+    "carvingDate": ""
   },
   {
     "id": 236,
@@ -2357,7 +3767,13 @@
     "startDate": "",
     "endDate": "2025-09-30",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "绩效办",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-09-30",
+    "carvingDate": ""
   },
   {
     "id": 237,
@@ -2367,7 +3783,13 @@
     "startDate": "",
     "endDate": "2025-09-30",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "普外一科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-09-30",
+    "carvingDate": ""
   },
   {
     "id": 238,
@@ -2377,7 +3799,13 @@
     "startDate": "",
     "endDate": "2025-09-30",
     "remark": "",
-    "status": "已废止"
+    "status": "已废止",
+    "type": "公章",
+    "dept": "普外二科",
+    "keeper": "",
+    "location": "",
+    "validUntil": "2025-09-30",
+    "carvingDate": ""
   },
   {
     "id": 239,
@@ -2387,7 +3815,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 240,
@@ -2397,7 +3831,13 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   },
   {
     "id": 241,
@@ -2407,6 +3847,12 @@
     "startDate": "",
     "endDate": "",
     "remark": "",
-    "status": "在用"
+    "status": "在用",
+    "type": "公章",
+    "dept": "",
+    "keeper": "",
+    "location": "",
+    "validUntil": "",
+    "carvingDate": ""
   }
 ]

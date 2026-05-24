@@ -265,8 +265,9 @@ textarea.form-input{resize:vertical;min-height:70px;}
 /* ==================== PRINT MEDIA ==================== */
 @media print{
   body *{visibility:hidden;}
-  #printArea,#printArea *,#archiveCertArea,#archiveCertArea *{visibility:visible;}
+  #printArea,#printArea *,#archiveCertArea,#archiveCertArea *,#bulkCertArea,#bulkCertArea *{visibility:visible;}
   #printArea{position:fixed;inset:0;padding:8mm;}
+  #archiveCertArea,#bulkCertArea{position:fixed;inset:0;padding:15mm;overflow:visible;}
   .label-grid{page-break-inside:avoid;}
   .label-cell{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 }
@@ -393,7 +394,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="sealSearch" placeholder="搜索印章名称/部门/管理人..." oninput="applySealFilter()"></div>
     <select class="filter-select" id="sealFilterStatus" onchange="applySealFilter()"><option value="">全部状态</option><option value="在用">在用</option><option value="停用">停用</option><option value="已废止">已废止</option><option value="已销毁">已销毁</option></select>
-    <select class="filter-select" id="sealFilterType" onchange="applySealFilter()"><option value="">全部类型</option><option value="公章">公章</option><option value="法人章">法人章</option><option value="财务章">财务章</option><option value="合同章">合同章</option><option value="部门章">部门章</option><option value="其他">其他</option></select>
+    <select class="filter-select" id="sealFilterType" onchange="applySealFilter()"><option value="">全部类型</option></select>
     <select class="filter-select" id="sealFilterDept" onchange="applySealFilter()"><option value="">全部部门</option></select>
     <button class="btn btn-ghost btn-sm" onclick="resetSealFilter()">重置</button>
     <span style="margin-left:auto;font-size:12px;color:var(--g500)">共 <strong id="sealFilterCount">0</strong> 条</span>
@@ -411,7 +412,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
 
   <div class="table-wrap">
     <div class="table-header">
-      <span class="table-title">印章档案台账</span>
+      <span class="table-title">印章目录台账</span>
       <div class="table-actions">
         <button class="btn btn-ghost btn-sm" onclick="openSealForm()">＋ 新增</button>
         <button class="btn btn-ghost btn-sm" onclick="openImportSealModal()">📥 批量导入</button>
@@ -456,7 +457,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
 <!-- ==================== TAB 3: 使用登记 ==================== -->
 <div id="tabUsage" class="content" style="display:none">
   <div class="dual-toolbar">
-    <div><h2 style="font-size:15px;font-weight:700;">📝 印章使用登记</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">印章领用 / 借出 / 盖章 / 归还记录</p></div>
+    <div><h2 style="font-size:15px;font-weight:700;">📝 印章使用登记</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">印章使用/ 借出 / 盖章 / 归还记录</p></div>
     <div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" onclick="openQRModal()">📱 扫码登记</button><button class="btn btn-info" onclick="openUsageForm()">＋ 登记领用</button></div>
   </div>
   <div class="quick-actions">
@@ -468,7 +469,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
     <select class="filter-select" id="usageFilter" onchange="renderUsageList()"><option value="">全部状态</option><option value="使用中">使用中</option><option value="借出中">借出中</option><option value="已归还">已归还</option></select>
   </div>
   <div class="table-wrap"><table><thead><tr>
-    <th>使用人</th><th>部门</th><th>印章名称</th><th>类型</th><th>用途</th><th>领用/借出时间</th><th>归还时间</th><th>审批人</th><th style="width:110px;">状态</th><th style="width:130px;">操作</th>
+    <th>使用人</th><th>部门</th><th>印章名称</th><th>类型</th><th>用途</th><th>领用/借出时间</th><th>归还时间</th><th>审批人</th><th style="width:110px;">状态</th><th style="width:130px;">操作</th><th>用印次数</th>
   </tr></thead><tbody id="usageTableBody"></tbody></table></div>
 </div>
 
@@ -493,7 +494,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
   </div>
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="recoverySearch" placeholder="搜索印章名称..." oninput="renderRecoveryList()"></div>
-    <select class="filter-select" id="recoveryFilter" onchange="renderRecoveryList()"><option value="">全部结果</option><option value="通过">通过</option><option value="需修复">需修复</option><option value="直接报废">直接报废</option></select>
+    <select class="filter-select" id="recoveryFilter" onchange="renderRecoveryList()"><option value="">全部结果</option><option value="通过">通过</option><option value="需更换">需更换</option><option value="直接报废">直接报废</option><option value="归档">📚 归档</option></select>
   </div>
   <div class="card-list" id="recoveryList"></div>
 </div>
@@ -619,7 +620,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
         <div>版本：v3.3 API版（SQLite数据库）</div>
         <div>数据存储：SQLite 数据库（seal_archive.db）</div>
         <div>部署方式：Python Flask + SQLite，运行 start.bat 启动</div>
-        <div>印章数据源：印章档案目录.xlsx</div>
+        <div>印章数据源：印章目录.xlsx</div>
         <div>印章总数：<strong id="sysTotalSeals">0</strong></div>
         <div>操作日志：<strong id="sysLogCount">0</strong> 条</div>
       </div>
@@ -648,7 +649,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <input type="hidden" id="sealEditId">
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">编号</label><input type="number" id="sfId" class="form-input" placeholder="自动分配"></div>
-        <div class="form-group"><label class="form-label">印章类型</label><select id="sfType" class="form-input"><option value="公章">公章</option><option value="法人章">法人章</option><option value="财务章">财务章</option><option value="合同章">合同章</option><option value="部门章">部门章</option><option value="其他">其他</option></select></div>
+        <div class="form-group"><label class="form-label">印章类型</label><select id="sfType" class="form-input"></select></div>
         <div class="form-group"><label class="form-label">状态</label><select id="sfStatus" class="form-input"><option value="在用">在用</option><option value="停用">停用</option><option value="已废止">已废止</option><option value="已销毁">已销毁</option></select></div>
       </div>
       <div class="form-group"><label class="form-label">印章名称 <span class="req">*</span></label><input type="text" id="sfName" class="form-input" placeholder="请输入印章全称"></div>
@@ -663,7 +664,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">刻印时间</label><input type="date" id="sfCarvingDate" class="form-input"></div>
         <div class="form-group"><label class="form-label">启用时间</label><input type="date" id="sfStart" class="form-input"></div>
-        <div class="form-group"><label class="form-label">有效期至</label><input type="date" id="sfValidUntil" class="form-input"></div>
+        <div class="form-group"><label class="form-label">停用时间</label><input type="date" id="sfValidUntil" class="form-input"></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">存放位置</label><input type="text" id="sfLocation" class="form-input" placeholder="物理存放位置"></div>
@@ -698,10 +699,11 @@ textarea.form-input{resize:vertical;min-height:70px;}
     <div class="modal-header"><span class="modal-title">✏️ 批量修改印章</span><button class="btn-icon" onclick="closeSealBulkEdit()">✕</button></div>
     <div class="modal-body">
       <div class="info-box">将对已选 <strong id="beCnt">0</strong> 条记录修改，空白字段保持不变。</div>
-      <div class="form-group"><label class="form-label">印章类型</label><select id="beType" class="form-input"><option value="">— 不修改 —</option><option value="公章">公章</option><option value="法人章">法人章</option><option value="财务章">财务章</option><option value="合同章">合同章</option><option value="部门章">部门章</option><option value="其他">其他</option></select></div>
+      <div class="form-group"><label class="form-label">印章类型</label><select id="beType" class="form-input"></select></div>
       <div class="form-group"><label class="form-label">保管部门</label><input type="text" id="beDept" class="form-input" list="deptOptions" placeholder="留空不修改" autocomplete="off"></div>
       <div class="form-group"><label class="form-label">管理人</label><input type="text" id="beKeeper" class="form-input" placeholder="留空不改"></div>
       <div class="form-group"><label class="form-label">追加备注</label><input type="text" id="beRemark" class="form-input" placeholder="在原备注后追加"></div>
+      <div class="form-group"><label class="form-label">印章状态</label><select id="beStatus" class="form-input"><option value="">— 不修改 —</option><option value="在用">在用</option><option value="停用">停用</option><option value="已废止">已废止</option><option value="已销毁">已销毁</option><option value="已归档">已归档</option></select></div>
     </div>
     <div class="modal-footer"><button class="btn btn-ghost" onclick="closeSealBulkEdit()">取消</button><button class="btn btn-warn" onclick="confirmSealBulkEdit()">✏️ 确认修改</button></div>
   </div>
@@ -730,7 +732,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
     <div class="modal-body">
       <input type="hidden" id="cvId">
       <div class="form-group"><label class="form-label">印章名称 <span class="req">*</span></label><input type="text" id="cvName" class="form-input" placeholder="申请刻制的印章全称"></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">印章类型</label><select id="cvType" class="form-input"><option value="公章">公章</option><option value="法人章">法人章</option><option value="财务章">财务章</option><option value="合同章">合同章</option><option value="部门章">部门章</option><option value="其他">其他</option></select></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">印章类型</label><select id="cvType" class="form-input"></select></div>
       <div class="form-group"><label class="form-label">保管部门</label><input type="text" id="cvDept" class="form-input" list="deptOptions" placeholder="选择或输入部门名称" autocomplete="off"></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">材质</label><select id="cvMaterial" class="form-input"><option value="橡胶">橡胶</option><option value="木质">木质</option><option value="金属">金属</option><option value="牛角">牛角</option><option value="自动印章">自动印章</option></select></div>
       <div class="form-group"><label class="form-label">形状</label><select id="cvShape" class="form-input"><option value="圆形">圆形</option><option value="椭圆">椭圆</option><option value="方形">方形</option><option value="长方形">长方形</option></select></div></div>
@@ -794,7 +796,8 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-group">
         <label class="form-label">使用类型</label>
         <div class="type-tabs" id="ugTypeTabs">
-          <button class="type-tab active" data-type="use" onclick="switchUgType('use')">📋 领用使用</button>
+          <button class="type-tab active" data-type="stamp" onclick="switchUgType('stamp')">🖊 盖章使用</button>
+          <button class="type-tab" data-type="use" onclick="switchUgType('use')">📋 领用登记</button>
           <button class="type-tab" data-type="loan" onclick="switchUgType('loan')">🚪 借出外带</button>
         </div>
       </div>
@@ -808,6 +811,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-group"><label class="form-label">部门</label><input type="text" id="ugDept" class="form-input" list="deptOptions" placeholder="选择或输入部门名称" autocomplete="off"></div>
       <div class="form-group"><label class="form-label">文件类型</label><select id="ugDocType" class="form-input"><option value="证明">证明</option><option value="合同">合同</option><option value="报告">报告</option><option value="申请">申请</option><option value="函件">函件</option><option value="其他">其他</option></select></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">用途说明 <span class="req">*</span></label><input type="text" id="ugPurpose" class="form-input" placeholder="简要说明盖章用途"></div>
+      <div class="form-group"><label class="form-label">用印次数</label><input type="number" id="ugCopies" class="form-input" value="1" min="1" max="999" style="width:100px;"></div>
       <div class="form-group"><label class="form-label">审批人</label><input type="text" id="ugApprover" class="form-input" placeholder="批准本次使用的审批人"></div></div>
       <div class="form-group"><label class="form-label">使用时间 <span class="req">*</span></label><input type="datetime-local" id="ugCheckOut" class="form-input"></div>
       <!-- 借出字段 -->
@@ -859,7 +863,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-row"><div class="form-group"><label class="form-label">回收日期 <span class="req">*</span></label><input type="date" id="rcDate" class="form-input"></div>
       <div class="form-group"><label class="form-label">核验人 <span class="req">*</span></label><input type="text" id="rcChecker" class="form-input"></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">印章状况</label><select id="rcCondition" class="form-input"><option value="完好">完好</option><option value="轻微磨损">轻微磨损</option><option value="严重磨损">严重磨损</option><option value="损毁">损毁</option></select></div>
-      <div class="form-group"><label class="form-label">核验结果</label><select id="rcResult" class="form-input"><option value="通过">✅ 通过（可继续使用）</option><option value="需修复">🔧 需修复</option><option value="直接报废">🗑️ 直接报废</option></select></div></div>
+      <div class="form-group"><label class="form-label">核验结果</label><select id="rcResult" class="form-input"><option value="通过">✅ 通过（可继续使用）</option><option value="需更换">🔧 需更换</option><option value="直接报废">🗑️ 直接报废</option><option value="归档">📚 归档</option></select></div></div>
       <div class="form-group"><label class="form-label">备注说明</label><textarea id="rcNote" class="form-input" rows="2"></textarea></div>
     </div>
     <div class="modal-footer"><button class="btn btn-ghost" onclick="closeRecoveryModal()">取消</button><button class="btn btn-info" onclick="saveRecovery()">✅ 提交核验</button></div>
@@ -893,8 +897,30 @@ textarea.form-input{resize:vertical;min-height:70px;}
 </div>
 
 <!-- ============================================ -->
-<!-- MODALS: 归档 -->
+<!-- MODALS: 批量归档 -->
 <!-- ============================================ -->
+<div class="modal-overlay" id="bulkArchiveModal" onclick="if(event.target===this)closeBulkArchiveModal()">
+  <div class="modal modal-lg">
+    <div class="modal-header"><span class="modal-title">🗄️ 批量归档印章</span><button class="btn-icon" onclick="closeBulkArchiveModal()">✕</button></button></div>
+    <div class="modal-body">
+      <div class="info-box" style="border-left-color:var(--pur);">即将归档 <strong id="baCount">0</strong> 枚印章，以下为选中列表：</div>
+      <div id="baSealList" style="max-height:200px;overflow-y:auto;border:1px solid var(--g200);border-radius:var(--rad);padding:8px;margin-bottom:12px;font-size:12px;line-height:1.9;"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">废止日期</label><input type="date" id="baEndDate" class="form-input"></div>
+      <div class="form-group"><label class="form-label">归档日期 <span class="req">*</span></label><input type="date" id="baArchiveDate" class="form-input"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">经办人</label><input type="text" id="baHandler" class="form-input"></div>
+      <div class="form-group"><label class="form-label">原因</label><select id="baReason" class="form-input"><option value="机构撤销">机构撤销</option><option value="更名换章">更名换章</option><option value="印章损毁">印章损毁</option><option value="职能调整">职能调整</option><option value="已销毁">已销毁</option><option value="其他">其他</option></select></div></div>
+      <div class="form-group"><label class="form-label">归档说明</label><textarea id="baNote" class="form-input" rows="2" placeholder="可选，将应用到所有条目"></textarea></div>
+      <div class="form-group"><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;"><input type="checkbox" id="baUpdateSeal" checked> 同步更新档案目录中所有印章状态为「已归档」</label></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeBulkArchiveModal()">取消</button>
+      <button class="btn btn-purple" onclick="exportBulkArchiveCerts()" style="margin-right:auto;">📄 导出归档证明</button>
+      <button class="btn btn-success" onclick="confirmBulkArchive()">💾 确认批量归档</button>
+    </div>
+  </div>
+</div>
+
+<!-- 单条归档弹窗（从归档记录页或单条操作使用） -->
 <div class="modal-overlay" id="archiveModal" onclick="if(event.target===this)closeArchiveModal()">
   <div class="modal">
     <div class="modal-header"><span class="modal-title">🗄️ 印章归档</span><button class="btn-icon" onclick="closeArchiveModal()">✕</button></div>
@@ -983,7 +1009,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
 </div>
 
 <!-- ============================================ -->
-<!-- ARCHIVE CERT PRINT AREA -->
+<!-- ARCHIVE CERT PRINT AREA (单条) -->
 <!-- ============================================ -->
 <div id="archiveCertArea" style="display:none;">
   <div style="font-family:'Microsoft YaHei',sans-serif;padding:20mm 25mm;font-size:14pt;">
@@ -1002,14 +1028,60 @@ textarea.form-input{resize:vertical;min-height:70px;}
   </div>
 </div>
 
+<!-- ============================================ -->
+<!-- BULK ARCHIVE CERT PRINT AREA (批量) -->
+<!-- ============================================ -->
+<div id="bulkCertArea" style="display:none;">
+  <div style="font-family:'Microsoft YaHei',sans-serif;padding:15mm 20mm;font-size:12pt;">
+    <h2 style="text-align:center;font-size:16pt;margin-bottom:6px;">印章批量归档证明</h2>
+    <p style="text-align:center;font-size:10.5pt;color:#555;margin-bottom:16px;">归档日期：<span id="bCertDate"></span> &nbsp;|&nbsp; 经办人：<span id="bCertHandler"></span> &nbsp;|&nbsp; 共 <span id="bCertCount"></span> 枚</p>
+    <table style="width:100%;border-collapse:collapse;font-size:11pt;" id="bCertTable">
+      <thead><tr style="background:#f0f0f0;">
+        <th style="padding:6px;border:1px solid #333;width:6%;">序号</th>
+        <th style="padding:6px;border:1px solid #333;width:28%;">印章名称</th>
+        <th style="padding:6px;border:1px solid #333;width:12%;">编号</th>
+        <th style="padding:6px;border:1px solid #333;width:14%;">废止日期</th>
+        <th style="padding:6px;border:1px solid #333;width:14%;">归档原因</th>
+        <th style="padding:6px;border:1px solid #333;">备注</th>
+      </tr></thead>
+      <tbody id="bCertBody"></tbody>
+    </table>
+    <p style="margin-top:24px;font-size:10pt;color:#555;text-align:center;">本证明由大理大学第一附属医院印章管理系统自动生成，打印时间：<span id="bCertPrintTime"></span></p>
+    <div style="display:flex;justify-content:flex-end;margin-top:40px;"><div style="text-align:center;"><p style="border-top:1px solid #333;padding-top:4px;width:160px;">档案管理员（签字）</p></div></div>
+  </div>
+</div>
+
 <script>
 /* ================================================================
-   印章全生命周期管理系统 v3.3 — JavaScript 业务逻辑 (API版)
+   印章全生命周期管理系统 v3.4 — JavaScript 业务逻辑 (API版)
    ================================================================ */
+
+// ==================== 全局常量：印章类型（单一数据源） ====================
+// 所有类型下拉框统一使用此数组，以刻制申请页定义为准
+const SEAL_TYPES = [
+  '公章','法人章','财务章','合同章','部门章','其他',
+  '住院结算专用章','收费专用章','财务专用章',
+  '出生医学证明专用章','发票专用章','机要文件收发章',
+  '病历复印专用章','医疗证明章','经济合同专用章','体检专用章'
+];
+
+// 生成类型选项HTML的辅助函数
+function typeOptionsHTML(selectedValue, placeholder){
+  if(!placeholder) placeholder = '';
+  let html = placeholder ? `<option value="">${placeholder}</option>` : '';
+  for(const t of SEAL_TYPES){
+    const sel = (t === selectedValue) ? ' selected' : '';
+    html += `<option value="${t}"${sel}>${t}</option>`;
+  }
+  return html;
+}
+function typeOptionsWithBlank(selectedValue, blankText){
+  return `<option value="">${blankText||'— 不修改 —'}</option>` + SEAL_TYPES.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
 
 // ==================== 数据模型 ====================
 let DATA = {
-  seals: [],       // 印章档案
+  seals: [],       // 印章目录
   carvings: [],    // 刻制申请
   usages: [],      // 使用登记
   loans: [],       // 借用管理
@@ -1147,7 +1219,7 @@ function switchTab(tab,el){
   if(tab==='list') applySealFilter();
 }
 
-// ==================== 印章档案 CRUD ====================
+// ==================== 印章目录 CRUD ====================
 function applySealFilter(){
   sealFilter.search=document.getElementById('sealSearch')?.value||'';
   sealFilter.status=document.getElementById('sealFilterStatus')?.value||'';
@@ -1197,7 +1269,7 @@ function renderSealTable(){
     const statusCls=r.status==='在用'?'badge-success':r.status==='停用'?'badge-warn':r.status==='已废止'?'badge-danger':'badge-danger';
     const checked=sealSelection.has(r.id)?' checked':'';
     html+=`<tr>
-      <td><input type="checkbox" ${checked} onchange="toggleSealCheck('${r.id}',this.checked)"></td>
+      <td><input type="checkbox" ${checked} onchange="toggleSealCheck(${r.id},this.checked)"></td>
       <td>${r.id||''}</td>
       <td><strong>${escapeHtml(r.name||'')}</strong></td>
       <td>${escapeHtml(r.type||'')}</td>
@@ -1208,9 +1280,9 @@ function renderSealTable(){
       <td>${fmtDate(r.startDate)||fmtDate(r.carvingDate)}</td>
       <td><span class="${statusCls}">${r.status||'在用'}</span></td>
       <td>
-        <button class="btn btn-ghost btn-sm" onclick="editSeal('${r.id}')" title="编辑">✏️</button>
-        <button class="btn btn-ghost btn-sm" onclick="quickUseSeal('${r.id}')" title="使用">📝</button>
-        <button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteSeal('${r.id}')" title="删除">🗑️</button>
+        <button class="btn btn-ghost btn-sm" onclick="editSeal(${r.id})" title="编辑">✏️</button>
+        <button class="btn btn-ghost btn-sm" onclick="quickUseSeal(${r.id})" title="使用">📝</button>
+        <button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteSeal(${r.id})" title="删除">🗑️</button>
       </td></tr>`;
   }
   document.getElementById('sealTableBody').innerHTML=html||'<tr><td colspan="11" style="text-align:center;color:var(--g400);padding:32px;">暂无数据</td></tr>';
@@ -1238,6 +1310,10 @@ function updateSealStats(){
   const depts=[...new Set(s.map(r=>r.dept).filter(Boolean))].sort();
   const sel=document.getElementById('sealFilterDept');
   if(sel){ const cv=sel.value; sel.innerHTML='<option value="">全部部门</option>'+depts.map(d=>`<option value="${d}">${d}</option>`).join(''); sel.value=cv; }
+  // Populate type filter
+  const types=[...new Set(s.map(r=>r.type).filter(Boolean))].sort();
+  const tsel=document.getElementById('sealFilterType');
+  if(tsel){ const cv=tsel.value; tsel.innerHTML='<option value="">全部类型</option>'+types.map(t=>`<option value="${t}">${t}</option>`).join(''); tsel.value=cv; }
 }
 
 function openSealForm(id){
@@ -1245,8 +1321,9 @@ function openSealForm(id){
   document.getElementById('sealModalTitle').textContent=id?'编辑印章':'新增印章';
   document.getElementById('sealModal').style.display='flex';
   populateDeptSelects();
+  document.getElementById('sfType').innerHTML = typeOptionsHTML('', '请选择');
   if(id){
-    const r=DATA.seals.find(s=>s.id===id); if(!r)return;
+    const r=DATA.seals.find(s=>String(s.id)===String(id)); if(!r)return;
     document.getElementById('sfId').value=r.id||'';
     document.getElementById('sfType').value=r.type||'公章';
     document.getElementById('sfStatus').value=r.status||'在用';
@@ -1288,7 +1365,7 @@ function saveSeal(){
   };
   if(!d.name){ toast('请输入印章名称','error'); return; }
   if(sealEditId){
-    const idx=DATA.seals.findIndex(s=>s.id===sealEditId);
+    const idx=DATA.seals.findIndex(s=>String(s.id)===String(sealEditId));
     if(idx>=0){ DATA.seals[idx]={...DATA.seals[idx],...d,id:sealEditId}; log('编辑印章',d.name); }
   }else{
     DATA.seals.push(d); log('新增印章',d.name);
@@ -1299,9 +1376,9 @@ function saveSeal(){
 
 function deleteSeal(id){
   if(!can('sealDelete')){ toast('权限不足','error'); return; }
-  const r=DATA.seals.find(s=>s.id===id); if(!r)return;
+  const r=DATA.seals.find(s=>String(s.id)===String(id)); if(!r)return;
   if(!confirmDialog(`确定删除「${r.name}」？此操作不可撤销。`)) return;
-  DATA.seals=DATA.seals.filter(s=>s.id!==id); log('删除印章',r.name);
+  DATA.seals=DATA.seals.filter(s=>String(s.id)!==String(id)); log('删除印章',r.name);
   saveData('seals'); renderSealTable(); updateSealStats(); toast('已删除','success');
 }
 
@@ -1324,15 +1401,17 @@ function openSealBulkEdit(){
   const ids=[...sealSelection]; if(!ids.length){ toast('请先选择印章','error'); return; }
   document.getElementById('beCnt').textContent=ids.length;
   const ds=document.getElementById('beDept'); ds.innerHTML='<option value="">— 不修改 —</option>'+[...new Set(DATA.seals.map(s=>s.dept).filter(Boolean))].sort().map(d=>`<option value="${d}">${d}</option>`).join('');
+  const ts=document.getElementById('beType'); ts.innerHTML = typeOptionsWithBlank('', '— 不修改 —');
   document.getElementById('sealBulkEditModal').style.display='flex';
 }
 function closeSealBulkEdit(){ document.getElementById('sealBulkEditModal').style.display='none'; }
 function confirmSealBulkEdit(){
-  const type=document.getElementById('beType').value, dept=document.getElementById('beDept').value, keeper=document.getElementById('beKeeper').value.trim(), remark=document.getElementById('beRemark').value.trim();
+  const type=document.getElementById('beType').value, dept=document.getElementById('beDept').value, keeper=document.getElementById('beKeeper').value.trim(), remark=document.getElementById('beRemark').value.trim(), status=document.getElementById('beStatus').value;
   const ids=[...sealSelection]; let chg=0;
   for(const id of ids){
-    const s=DATA.seals.find(r=>r.id===id); if(!s)continue;
+    const s=DATA.seals.find(r=>String(r.id)===String(id)); if(!s)continue;
     if(type) s.type=type; if(dept) s.dept=dept; if(keeper) s.keeper=keeper;
+    if(status) s.status=status;
     if(remark) s.remark=s.remark?(s.remark+'; '+remark):remark;
     chg++;
   }
@@ -1349,22 +1428,116 @@ function sealBulkPrint(){
 }
 function sealBulkArchive(){
   if(!sealSelection.size){ toast('请先选择印章','error'); return; }
-  const firstId=[...sealSelection][0]; const r=DATA.seals.find(s=>s.id===firstId);
-  document.getElementById('arName').value=r?r.name:''; document.getElementById('arSealId').value=firstId;
-  document.getElementById('arEndDate').value=today(); document.getElementById('arArchiveDate').value=today();
-  document.getElementById('archiveModal').style.display='flex';
+  const ids=[...sealSelection];
+  const seals=ids.map(id=>DATA.seals.find(s=>String(s.id)===String(id))).filter(Boolean);
+  if(!seals.length){ toast('未找到有效印章','error'); return; }
+  // 填充批量归档弹窗
+  document.getElementById('baCount').textContent=seals.length;
+  document.getElementById('baSealList').innerHTML=seals.map((s,i)=>`<div style="display:flex;justify-content:space-between;padding:2px 4px;border-bottom:1px dotted var(--g200);"><span>${i+1}. ${escapeHtml(s.name)}</span><span style="color:var(--g500);">${s.type||'—'} · ${s.dept||'—'}</span></div>`).join('');
+  document.getElementById('baEndDate').value=today();
+  document.getElementById('baArchiveDate').value=today();
+  document.getElementById('baHandler').value='';
+  document.getElementById('baReason').value='其他';
+  document.getElementById('baNote').value='';
+  document.getElementById('baUpdateSeal').checked=true;
+  // 暂存选中的ID列表供后续使用
+  window._bulkArchiveIds=ids;
+  document.getElementById('bulkArchiveModal').style.display='flex';
+}
+function closeBulkArchiveModal(){ document.getElementById('bulkArchiveModal').style.display='none'; window._bulkArchiveIds=null; }
+
+// 确认批量归档
+function confirmBulkArchive(){
+  const ids=window._bulkArchiveIds;
+  if(!ids||!ids.length){ toast('批量归档数据丢失，请重新选择','error'); return; }
+  const endDate=document.getElementById('baEndDate').value;
+  const archiveDate=document.getElementById('baArchiveDate').value;
+  if(!archiveDate){ toast('请填写归档日期','error'); return; }
+  const handler=document.getElementById('baHandler').value.trim();
+  const reason=document.getElementById('baReason').value;
+  const note=document.getElementById('baNote').value.trim();
+  const updateSeal=document.getElementById('baUpdateSeal').checked;
+  let cnt=0;
+  for(const id of ids){
+    const s=DATA.seals.find(r=>String(r.id)===String(id));
+    if(!s) continue;
+    DATA.archives.unshift({
+      id: genId(), sealId: String(id), sealName: s.name,
+      endDate: endDate, archiveDate: archiveDate,
+      handler: handler, reason: reason, note: note
+    });
+    if(updateSeal){
+      s.status='已归档';
+      if(endDate) s.validUntil=endDate;
+    }
+    cnt++;
+  }
+  saveData('archives');
+  if(updateSeal) saveData('seals');
+  closeBulkArchiveModal();
+  sealSelection.clear(); renderSealTable();
+  renderArchiveList(); updateSealStats(); updateAllBadges();
+  log('批量归档印章',`${cnt}枚`);
+  toast(`已成功归档 ${cnt} 枚印章`,'success');
+}
+
+// 导出批量归档证明（生成HTML新窗口打印/另存）
+function exportBulkArchiveCerts(){
+  const ids=window._bulkArchiveIds;
+  if(!ids||!ids.length){ toast('请先选择印章并打开归档窗口','error'); return; }
+  const seals=ids.map(id=>DATA.seals.find(s=>String(s.id)===String(id))).filter(Boolean);
+  const archiveDate=document.getElementById('baArchiveDate').value||today();
+  const handler=document.getElementById('baHandler').value.trim()||'—';
+  const reason=document.getElementById('baReason').value||'—';
+  const endDate=document.getElementById('baEndDate').value||'—';
+  const note=document.getElementById('baNote').value.trim()||'—';
+
+  // 填充打印区域
+  document.getElementById('bCertDate').textContent=archiveDate;
+  document.getElementById('bCertHandler').textContent=handler;
+  document.getElementById('bCertCount').textContent=seals.length;
+  document.getElementById('bCertBody').innerHTML=seals.map((s,i)=>`<tr>
+    <td style="padding:6px;border:1px solid #333;text-align:center;">${i+1}</td>
+    <td style="padding:6px;border:1px solid #333;">${escapeHtml(s.name)}</td>
+    <td style="padding:6px;border:1px solid #333;text-align:center;">${s.id||'—'}</td>
+    <td style="padding:6px;border:1px solid #333;text-align:center;">${endDate}</td>
+    <td style="padding:6px;border:1px solid #333;">${reason}</td>
+    <td style="padding:6px;border:1px solid #333;">${note}</td>
+  </tr>`).join('');
+  document.getElementById('bCertPrintTime').textContent=new Date().toLocaleString('zh-CN');
+
+  // 隐藏单条区域，显示批量区域
+  document.getElementById('archiveCertArea').style.display='none';
+  document.getElementById('bulkCertArea').style.display='block';
+  window.print();
+
+  // 打印完成后恢复（延迟确保打印对话框已弹出）
+  setTimeout(()=>{
+    document.getElementById('bulkCertArea').style.display='none';
+  },500);
+}
+
+// 导出归档记录为CSV
+function exportArchiveCSV(){
+  if(!DATA.archives.length){ toast('暂无归档记录可导出','warn'); return; }
+  const hdr='\uFEFF序号,印章名称,印章编号,废止日期,归档日期,废止原因,经办人,归档说明\n';
+  const rows=DATA.archives.map((a,i)=>
+    `${i+1},"${a.sealName||''}","${a.sealId||''}","${a.endDate||''}","${a.archiveDate||''}","${a.reason||''}","${a.handler||''}","${a.note||''}"\n`
+  ).join('');
+  downloadFile('印章归档记录_'+today()+'.csv', hdr+rows, 'text/csv;charset=utf-8');
+  toast(`已导出 ${DATA.archives.length} 条归档记录`,'success');
 }
 function sealBulkDelete(){
   if(!sealSelection.size){ toast('请先选择印章','error'); return; }
   document.getElementById('bdCnt').textContent=sealSelection.size;
-  const names=[...sealSelection].map(id=>{ const s=DATA.seals.find(r=>r.id===id); return s?s.name:id; });
+  const names=[...sealSelection].map(id=>{ const s=DATA.seals.find(r=>String(r.id)===String(id)); return s?s.name:id; });
   document.getElementById('bdList').innerHTML=names.map(n=>`<div>• ${escapeHtml(n)}</div>`).join('');
   document.getElementById('sealBulkDelModal').style.display='flex';
 }
 function closeSealBulkDel(){ document.getElementById('sealBulkDelModal').style.display='none'; }
 function confirmSealBulkDel(){
   const ids=[...sealSelection]; let cnt=0;
-  for(const id of ids){ const before=DATA.seals.length; DATA.seals=DATA.seals.filter(s=>s.id!==id); cnt+=before-DATA.seals.length; }
+  for(const id of ids){ const before=DATA.seals.length; DATA.seals=DATA.seals.filter(s=>String(s.id)!==String(id)); cnt+=before-DATA.seals.length; }
   saveData('seals'); closeSealBulkDel(); sealSelection.clear();
   log('批量删除印章',`${cnt}条`);
   toast(`已删除 ${cnt} 条记录`,'success');
@@ -1372,7 +1545,7 @@ function confirmSealBulkDel(){
 }
 
 function quickUseSeal(id){
-  const s=DATA.seals.find(r=>r.id===id); if(!s)return;
+  const s=DATA.seals.find(r=>String(r.id)===String(id)); if(!s)return;
   if(s.status!=='在用'){ toast('该印章当前不可用','error'); return; }
   document.getElementById('ugSealInput').value=s.name; document.getElementById('ugSealId').value=s.id;
   document.getElementById('ugCheckOut').value=now();
@@ -1441,6 +1614,7 @@ function openCarvingForm(id){
   document.getElementById('carvingModal').style.display='flex';
   document.getElementById('carvingModalTitle').textContent=id?'编辑刻制申请':'新增刻制申请';
   populateDeptSelects();
+  document.getElementById('cvType').innerHTML = typeOptionsHTML('', '请选择');
   if(id){
     const r=DATA.carvings.find(c=>c.id===id); if(!r)return;
     document.getElementById('cvId').value=r.id; document.getElementById('cvName').value=r.name||''; document.getElementById('cvType').value=r.type||'公章'; document.getElementById('cvDept').value=r.dept||'';
@@ -1553,7 +1727,7 @@ function deleteCarving(id){
 
 // ==================== 使用登记 ====================
 let ugSelectedSeals = []; // 模态框多印章标签
-let ugCurrentType = 'use'; // 当前使用类型
+let ugCurrentType = 'stamp'; // 当前使用类型: 'stamp' | 'use' | 'loan'
 
 function switchUgType(type) {
   ugCurrentType = type;
@@ -1590,7 +1764,7 @@ function updateUgSubmitBtn() {
   const btn = document.getElementById('ugSubmitBtn');
   if (!btn) return;
   const count = ugSelectedSeals.length;
-  const typeLabel = ugCurrentType === 'loan' ? '借出' : '登记';
+  const typeLabel = ugCurrentType === 'loan' ? '借出' : ugCurrentType === 'stamp' ? '盖章' : '登记';
   btn.textContent = count ? '✅ ' + typeLabel + '（' + count + '枚）' : '✅ ' + typeLabel;
 }
 
@@ -1605,29 +1779,32 @@ function renderUsageList(){
     let st='badge-warn';
     if(r.status==='已归还') st='badge-success';
     else if(r.usageType==='loan'||r.status==='借出中') st='badge-loan';
-    const typeLabel = r.usageType==='loan' ? '🚪借出' : '📋领用';
+    else if(r.usageType==='stamp'||r.status==='已完成') st='badge-success';
+    const typeLabel = r.usageType==='loan' ? '🚪借出' : r.usageType==='stamp' ? '🖊盖章' : '📋领用';
     return `<tr>
       <td>${escapeHtml(r.user||'')}</td><td>${escapeHtml(r.dept||'')}</td><td>${escapeHtml(r.sealName||'')}</td>
       <td style="font-size:11px;">${typeLabel}</td>
       <td>${escapeHtml(r.purpose||'')}</td><td>${r.checkOut?r.checkOut.replace('T',' '):''}</td>
       <td>${r.checkIn?r.checkIn.replace('T',' '):'—'}</td><td>${escapeHtml(r.approver||'')}</td>
       <td><span class="${st}">${r.status}</span></td>
-      <td>${(r.status==='使用中'||r.status==='借出中')?`<button class="btn btn-ghost btn-sm" style="color:var(--suc)" onclick="returnUsage('${r.id}')">✅归还</button><button class="btn btn-ghost btn-sm" style="color:var(--warn)" onclick="returnUsageBatch('${r.batchId||r.id}')">📦批量</button>`:`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteUsage('${r.id}')">🗑️</button>`}</td></tr>`;
+      <td>${(r.status==='使用中'||r.status==='借出中')?`<button class="btn btn-ghost btn-sm" style="color:var(--suc)" onclick="returnUsage('${r.id}')">✅归还</button><button class="btn btn-ghost btn-sm" style="color:var(--warn)" onclick="returnUsageBatch('${r.batchId||r.id}')">📦批量</button>`:`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteUsage('${r.id}')">🗑️</button>`}</td>
+      <td>${r.copies||'—'}</td></tr>`;
   }).join('')||'<tr><td colspan="10" style="text-align:center;color:var(--g400);padding:24px;">暂无使用记录</td></tr>';
 }
 
 function openUsageForm(){
   ugSelectedSeals = [];
-  ugCurrentType = 'use';
+  ugCurrentType = 'stamp';
   renderUgSealTags();
   document.querySelectorAll('#ugTypeTabs .type-tab').forEach(t => t.classList.remove('active'));
-  const useTab = document.querySelector('#ugTypeTabs [data-type="use"]');
+  const useTab = document.querySelector('#ugTypeTabs [data-type="stamp"]');
   if (useTab) useTab.classList.add('active');
   document.getElementById('ugLoanFields').style.display = 'none';
   document.getElementById('ugSealInput').value='';
   document.getElementById('ugUser').value=''; document.getElementById('ugPurpose').value=''; document.getElementById('ugApprover').value='';
   document.getElementById('ugCheckOut').value=now();
   document.getElementById('ugContactPhone').value=''; document.getElementById('ugExpectedReturn').value='';
+  document.getElementById('ugCopies').value='1';
   populateDeptSelects();
   updateUgSubmitBtn();
   document.getElementById('usageModal').style.display='flex';
@@ -1639,7 +1816,7 @@ function saveUsage(){
   if(!ugSelectedSeals.length){ toast('请至少选择一枚印章','error'); return; }
   if(!user||!purpose){ toast('请填写使用人和用途','error'); return; }
   const sealNames = ugSelectedSeals.map(s => s.name).join(',');
-  const status = ugCurrentType === 'loan' ? '借出中' : '使用中';
+  const status = ugCurrentType === 'loan' ? '借出中' : (ugCurrentType === 'stamp' ? '已完成' : '使用中');
   const batchId = 'B' + new Date().toISOString().replace(/[-:T.]/g,'').slice(0,14) + String(Math.floor(Math.random()*9000)+1000);
   const checkOut = document.getElementById('ugCheckOut').value.replace('T',' ') || now();
   ugSelectedSeals.forEach(s => {
@@ -1648,6 +1825,7 @@ function saveUsage(){
       user, dept: document.getElementById('ugDept').value, docType: document.getElementById('ugDocType').value,
       purpose, approver: document.getElementById('ugApprover').value.trim(),
       checkOut, checkIn: '', status,
+      copies: document.getElementById('ugCopies')?.value || '1',
       usageType: ugCurrentType, batchId,
       contactPhone: ugCurrentType==='loan'?document.getElementById('ugContactPhone').value.trim():'',
       expectedReturn: ugCurrentType==='loan'?document.getElementById('ugExpectedReturn').value:''
@@ -1655,7 +1833,7 @@ function saveUsage(){
     DATA.usages.unshift(rec);
   });
   saveData('usages');
-  const typeLabel = ugCurrentType === 'loan' ? '借出' : '领用';
+  const typeLabel = ugCurrentType === 'loan' ? '借出' : ugCurrentType === 'stamp' ? '盖章' : '领用';
   log('印章'+typeLabel, user+' '+typeLabel+' '+sealNames);
   closeUsageModal(); renderUsageList(); updateAllBadges(); updateSealStats();
   toast(typeLabel+'登记成功（'+ugSelectedSeals.length+'枚印章）','success');
@@ -1780,7 +1958,7 @@ function renderRecoveryList(){
   if(q) list=list.filter(r=>r.sealName&&r.sealName.toLowerCase().includes(q));
   if(f) list=list.filter(r=>r.result===f);
   list.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
-  const resultMap={通过:'status-approved',需修复:'status-review',直接报废:'status-rejected'};
+  const resultMap={通过:'status-approved',需更换:'status-review',直接报废:'status-rejected'};
   document.getElementById('recoveryList').innerHTML=list.map(r=>{
     let actions=''; actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteRecovery('${r.id}')">🗑️</button>`;
     return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:start;">
@@ -1951,7 +2129,7 @@ function saveArchive(){
   DATA.archives.unshift(d); saveData('archives');
   if(document.getElementById('arUpdateSeal').checked){
     const seal=DATA.seals.find(s=>s.name===d.sealName||s.id===d.sealId);
-    if(seal){ seal.status='已废止'; if(d.endDate) seal.validUntil=d.endDate; saveData('seals'); renderSealTable(); updateSealStats(); }
+    if(seal){ seal.status='已归档'; if(d.endDate) seal.validUntil=d.endDate; saveData('seals'); renderSealTable(); updateSealStats(); }
   }
   log('印章归档',d.sealName);
   closeArchiveModal(); renderArchiveList(); toast('归档成功','success');
@@ -1963,20 +2141,29 @@ function deleteArchive(id){
 }
 function viewArchiveCert(id){
   const r=DATA.archives.find(a=>a.id===id); if(!r)return;
+  document.getElementById('bulkCertArea').style.display='none';
   document.getElementById('certName').textContent=r.sealName||''; document.getElementById('certSealId').textContent=r.sealId||'';
   document.getElementById('certEndDate').textContent=r.endDate||''; document.getElementById('certArchiveDate').textContent=r.archiveDate||'';
   document.getElementById('certReason').textContent=r.reason||''; document.getElementById('certHandler').textContent=r.handler||'';
   document.getElementById('certNote').textContent=r.note||''; document.getElementById('certPrintTime').textContent=new Date().toLocaleString('zh-CN');
+  document.getElementById('archiveCertArea').style.display='block';
   window.print();
+  setTimeout(()=>{ document.getElementById('archiveCertArea').style.display='none'; },500);
 }
 function printArchiveCert(){
   const sealName=document.getElementById('arName').value;
   if(!sealName){ toast('请先填写印章名称','error'); return; }
+  // 先隐藏批量区域
+  document.getElementById('bulkCertArea').style.display='none';
+  // 填充单条证明数据
   document.getElementById('certName').textContent=sealName; document.getElementById('certSealId').textContent=document.getElementById('arSealId').value||'';
   document.getElementById('certEndDate').textContent=document.getElementById('arEndDate').value||''; document.getElementById('certArchiveDate').textContent=document.getElementById('arArchiveDate').value||'';
   document.getElementById('certReason').textContent=document.getElementById('arReason').value||''; document.getElementById('certHandler').textContent=document.getElementById('arHandler').value||'';
   document.getElementById('certNote').textContent=document.getElementById('arNote').value||''; document.getElementById('certPrintTime').textContent=new Date().toLocaleString('zh-CN');
+  // 显示证明区域并打印（display:none → display:block，配合print CSS visibility覆盖）
+  document.getElementById('archiveCertArea').style.display='block';
   window.print();
+  setTimeout(()=>{ document.getElementById('archiveCertArea').style.display='none'; },500);
 }
 
 // ==================== 标签打印 ====================
@@ -2112,7 +2299,7 @@ function suggestSeals(prefix){
   const existingIds = prefix==='ug' ? ugSelectedSeals.map(s=>s.id) : [];
   const matches=DATA.seals.filter(s=>s.name&&s.name.toLowerCase().includes(q)&&!existingIds.includes(s.id)).slice(0,8);
   if(!matches.length){ dropdown.innerHTML='<div class="suggest-item" style="color:var(--g400);">未找到匹配印章'+(existingIds.length?'（或已添加）':'')+'</div>'; dropdown.style.display='block'; return; }
-  dropdown.innerHTML=matches.map(s=>`<div class="suggest-item" onclick="selectSuggest('${prefix}','${escapeHtml(s.name).replace(/'/g,"\\'")}','${s.id||''}','${escapeHtml(s.type||'').replace(/'/g,"\\'")}')">${escapeHtml(s.name)} <span style="color:var(--g400);font-size:11px;">${escapeHtml(s.dept||'')} ${escapeHtml(s.status||'')}</span></div>`).join('');
+  dropdown.innerHTML=matches.map(s=>`<div class="suggest-item" onclick="selectSuggest('${prefix}','${escapeHtml(s.name).replace(/'/g,"\\'")}',${s.id||'null'},'${escapeHtml(s.type||'').replace(/'/g,"\\'")}')">${escapeHtml(s.name)} <span style="color:var(--g400);font-size:11px;">${escapeHtml(s.dept||'')} ${escapeHtml(s.status||'')}</span></div>`).join('');
   dropdown.style.display='block';
 }
 function selectSuggest(prefix,name,id,typeName){
@@ -2289,18 +2476,18 @@ function exportCSV(){
   csvExport(DATA.seals,[
     {label:'编号',key:'id'},{label:'印章名称',key:'name'},{label:'类型',key:'type'},{label:'保管部门',key:'dept'},
     {label:'管理人',key:'keeper'},{label:'材质',key:'material'},{label:'形状',key:'shape'},
-    {label:'启用时间',key:'startDate'},{label:'有效期至',key:'validUntil'},{label:'存放位置',key:'location'},
+    {label:'启用时间',key:'startDate'},{label:'停用时间',key:'validUntil'},{label:'存放位置',key:'location'},
     {label:'状态',key:'status'},{label:'备注',key:'remark'}
-  ],'印章档案台账');
+  ],'印章目录台账');
   toast('印章台账已导出','success');
 }
 function exportUsageReport(){
   csvExport(DATA.usages,[
     {label:'使用人',key:'user'},{label:'部门',key:'dept'},{label:'印章名称',key:'sealName'},
-    {label:'使用类型',key:'usageType',fmt:v=>v==='loan'?'借出外带':'领用使用'},
+    {label:'使用类型',key:'usageType',fmt:v=>v==='loan'?'借出外带':v==='stamp'?'盖章使用':'领用登记'},
     {label:'文件类型',key:'docType'},{label:'用途',key:'purpose'},{label:'审批人',key:'approver'},
     {label:'领用时间',key:'checkOut'},{label:'归还时间',key:'checkIn'},{label:'状态',key:'status'},
-    {label:'批次编号',key:'batchId'},{label:'联系电话',key:'contactPhone'},{label:'预计归还',key:'expectedReturn'}
+    {label:'批次编号',key:'batchId'},{label:'联系电话',key:'contactPhone'},{label:'预计归还',key:'expectedReturn'},{label:'用印次数',key:'copies'}
   ],'印章使用台账');
   toast('使用台账已导出','success');
 }
@@ -2583,7 +2770,11 @@ async function init(){
   // Close modals on escape
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ document.querySelectorAll('.modal-overlay').forEach(m=>m.style.display='none'); } });
   log('系统启动');
-  console.log('🔖 大理大学第一附属医院印章管理系统 v3.3 已就绪（API模式）');
+  console.log('🔖 大理大学第一附属医院印章管理系统 v3.4 已就绪（API模式）');
+  // 初始化所有类型下拉列表
+  document.getElementById('sfType').innerHTML = typeOptionsHTML('', '请选择');
+  document.getElementById('beType').innerHTML = typeOptionsWithBlank('', '— 不修改 —');
+  document.getElementById('cvType').innerHTML = typeOptionsHTML('', '请选择');
 }
 document.addEventListener('DOMContentLoaded',init);
 </script>
