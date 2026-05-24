@@ -1,27 +1,11 @@
-# 数据库文件（含敏感数据，不纳入版本控制）
-*.db
-seal_archive.db
-
-# Python 缓存
-__pycache__/
+# 忽略临时文件和系统文件
 *.pyc
-*.pyo
-*.egg-info/
-
-# 临时文件
-*.tmp
-*.bak
+__pycache__/
+*.db-shm
+*.db-wal
+.workbuddy/
+印章目录.xlsx
+*.bundle
 *.log
 .DS_Store
 Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# 虚拟环境
-venv/
-env/
-.env
