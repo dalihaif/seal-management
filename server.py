@@ -47,7 +47,9 @@ def init_db():
         user_name TEXT DEFAULT '', dept TEXT DEFAULT '', docType TEXT DEFAULT '',
         purpose TEXT DEFAULT '', approver TEXT DEFAULT '',
         checkOut TEXT DEFAULT '', checkIn TEXT DEFAULT '',
-        status TEXT DEFAULT '使用中', copies TEXT DEFAULT ''
+        status TEXT DEFAULT '使用中', copies TEXT DEFAULT '',
+        usageType TEXT DEFAULT 'use', batchId TEXT DEFAULT '',
+        contactPhone TEXT DEFAULT '', expectedReturn TEXT DEFAULT ''
     );
     CREATE TABLE IF NOT EXISTS loans (
         id TEXT PRIMARY KEY, sealId TEXT DEFAULT '', sealName TEXT DEFAULT '',
@@ -87,6 +89,16 @@ def init_db():
     INSERT OR IGNORE INTO settings (key, value) VALUES ('default_seals', '[]');
     INSERT OR IGNORE INTO settings (key, value) VALUES ('doc_types', '["证明","合同","报告","申请","函件","其他"]');
     ''')
+    # 兼容旧数据库：增量添加新列
+    migrations = [
+        "ALTER TABLE usages ADD COLUMN usageType TEXT DEFAULT 'use'",
+        "ALTER TABLE usages ADD COLUMN batchId TEXT DEFAULT ''",
+        "ALTER TABLE usages ADD COLUMN contactPhone TEXT DEFAULT ''",
+        "ALTER TABLE usages ADD COLUMN expectedReturn TEXT DEFAULT ''",
+    ]
+    for m in migrations:
+        try: db.execute(m)
+        except sqlite3.OperationalError: pass  # 列已存在则跳过
     db.commit()
     db.close()
 
@@ -302,19 +314,19 @@ def search_seals():
 def usage_summary():
     """获取使用登记摘要统计"""
     db = get_db()
-    active = db.execute("SELECT COUNT(*) as c FROM usages WHERE status='使用中'").fetchone()['c']
+    active = db.execute("SELECT COUNT(*) as c FROM usages WHERE status IN ('使用中','借出中')").fetchone()['c']
     today_str = datetime.now().strftime('%Y-%m-%d')
     today_count = db.execute(
         "SELECT COUNT(*) as c FROM usages WHERE checkOut LIKE ?", (f'{today_str}%',)
     ).fetchone()['c']
     total = db.execute("SELECT COUNT(*) as c FROM usages").fetchone()['c']
-    # 最近归还10条
+    # 最近归还20条
     returned = db.execute(
-        "SELECT * FROM usages WHERE status='已归还' ORDER BY checkIn DESC LIMIT 10"
+        "SELECT * FROM usages WHERE status='已归还' ORDER BY checkIn DESC LIMIT 20"
     ).fetchall()
-    # 使用中记录
+    # 使用中/借出中记录
     active_list = db.execute(
-        "SELECT * FROM usages WHERE status='使用中' ORDER BY checkOut DESC"
+        "SELECT * FROM usages WHERE status IN ('使用中','借出中') ORDER BY checkOut DESC"
     ).fetchall()
     result = {
         'activeCount': active, 'todayCount': today_count, 'totalCount': total,
@@ -325,32 +337,54 @@ def usage_summary():
 
 @app.route('/api/usage/record', methods=['POST'])
 def record_usage():
-    """登记一笔印章使用"""
+    """登记印章使用（支持多印章批量登记 + 借出类型）"""
     data = request.get_json()
-    seal_name = data.get('sealName', '').strip()
+    seal_names_input = data.get('sealNames', data.get('sealName', ''))
+    # 支持逗号/顿号分隔的多印章：公章,法人章
+    if isinstance(seal_names_input, str):
+        seal_names = [s.strip() for s in seal_names_input.replace('、', ',').split(',') if s.strip()]
+    elif isinstance(seal_names_input, list):
+        seal_names = [s.strip() for s in seal_names_input if s and s.strip()]
+    else:
+        seal_names = []
+
     user = data.get('user', '').strip()
     purpose = data.get('purpose', '').strip()
-    if not seal_name or not user or not purpose:
+    usage_type = data.get('usageType', 'use')  # 'use'=领用使用, 'loan'=借出外带
+
+    if not seal_names or not user or not purpose:
         return jsonify({'error': '印章名称、使用人和用途为必填项'}), 400
-    uid = 'U' + datetime.now().strftime('%Y%m%d%H%M%S') + str(int(datetime.now().timestamp() * 1000) % 10000).zfill(4)
-    record = {
-        'id': uid, 'sealName': seal_name, 'user_name': user,
-        'dept': data.get('dept', ''), 'docType': data.get('docType', '证明'),
-        'purpose': purpose, 'approver': data.get('approver', ''),
-        'checkOut': data.get('checkOut', datetime.now().strftime('%Y/%m/%d %H:%M:%S')),
-        'checkIn': '', 'status': '使用中', 'copies': '', 'sealId': ''
-    }
+
+    status = '借出中' if usage_type == 'loan' else '使用中'
+    batch_id = 'B' + datetime.now().strftime('%Y%m%d%H%M%S') + str(int(datetime.now().timestamp() * 1000) % 10000).zfill(4)
+    records = []
     db = get_db()
-    cols = ', '.join(record.keys())
-    placeholders = ', '.join('?' * len(record))
-    db.execute(f'INSERT INTO usages ({cols}) VALUES ({placeholders})', list(record.values()))
+
+    for seal_name in seal_names:
+        uid = 'U' + datetime.now().strftime('%Y%m%d%H%M%S') + str(int(datetime.now().timestamp() * 1000) % 10000).zfill(4)
+        # 略延迟以免毫秒级 ID 碰撞
+        import time; time.sleep(0.002)
+        record = {
+            'id': uid, 'sealName': seal_name, 'user_name': user,
+            'dept': data.get('dept', ''), 'docType': data.get('docType', '证明'),
+            'purpose': purpose, 'approver': data.get('approver', ''),
+            'checkOut': data.get('checkOut', datetime.now().strftime('%Y/%m/%d %H:%M:%S')),
+            'checkIn': '', 'status': status, 'copies': '', 'sealId': '',
+            'usageType': usage_type, 'batchId': batch_id,
+            'contactPhone': data.get('contactPhone', ''), 'expectedReturn': data.get('expectedReturn', '')
+        }
+        cols = ', '.join(record.keys())
+        placeholders = ', '.join('?' * len(record))
+        db.execute(f'INSERT INTO usages ({cols}) VALUES ({placeholders})', list(record.values()))
+        record['user'] = record.pop('user_name')
+        records.append(record)
+
     db.commit()
-    record['user'] = record.pop('user_name')
-    return jsonify({'success': True, 'record': record})
+    return jsonify({'success': True, 'batchId': batch_id, 'count': len(records), 'records': records})
 
 @app.route('/api/usage/return/<uid>', methods=['PUT'])
 def return_usage(uid):
-    """归还印章"""
+    """归还单个印章"""
     db = get_db()
     now_str = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
     db.execute("UPDATE usages SET status='已归还', checkIn=? WHERE id=?", (now_str, uid))
@@ -358,6 +392,21 @@ def return_usage(uid):
     if db.total_changes == 0:
         return jsonify({'error': '未找到该使用记录'}), 404
     return jsonify({'success': True, 'checkIn': now_str})
+
+@app.route('/api/usage/return-batch/<batch_id>', methods=['PUT'])
+def return_batch(batch_id):
+    """批量归还同一批次的所有印章"""
+    db = get_db()
+    now_str = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    db.execute(
+        "UPDATE usages SET status='已归还', checkIn=? WHERE batchId=? AND status IN ('使用中','借出中')",
+        (now_str, batch_id)
+    )
+    db.commit()
+    count = db.total_changes
+    if count == 0:
+        return jsonify({'error': '未找到该批次的在用记录'}), 404
+    return jsonify({'success': True, 'checkIn': now_str, 'returnedCount': count})
 
 
 def dict_fix_user(row_dict):
