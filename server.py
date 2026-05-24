@@ -84,6 +84,8 @@ def init_db():
     -- Default settings
     INSERT OR IGNORE INTO settings (key, value) VALUES ('departments', '["院办公室","党委办公室","财务科","人事科","医务科","护理部","科研科","教学科","总务科","基建科","保卫科","审计科","纪检监察室","工会","团委"]');
     INSERT OR IGNORE INTO settings (key, value) VALUES ('approvers', '[{"name":"院长","level":2},{"name":"分管副院长","level":2},{"name":"办公室主任","level":1},{"name":"档案科科长","level":1}]');
+    INSERT OR IGNORE INTO settings (key, value) VALUES ('default_seals', '[]');
+    INSERT OR IGNORE INTO settings (key, value) VALUES ('doc_types', '["证明","合同","报告","申请","函件","其他"]');
     ''')
     db.commit()
     db.close()
@@ -216,25 +218,154 @@ def batch_operation(category):
 @app.route('/api/settings', methods=['GET'])
 def get_settings():
     db = get_db()
-    depts = db.execute("SELECT value FROM settings WHERE key='departments'").fetchone()
-    approvers = db.execute("SELECT value FROM settings WHERE key='approvers'").fetchone()
+    def get_setting(key, default):
+        row = db.execute("SELECT value FROM settings WHERE key=?", (key,)).fetchone()
+        if row and row['value']:
+            try:
+                return json.loads(row['value'])
+            except Exception:
+                return default
+        return default
     return jsonify({
-        'departments': json.loads(depts['value']) if depts else [],
-        'approvers': json.loads(approvers['value']) if approvers else []
+        'departments': get_setting('departments', []),
+        'approvers': get_setting('approvers', []),
+        'default_seals': get_setting('default_seals', []),
+        'doc_types': get_setting('doc_types', ['证明','合同','报告','申请','函件','其他'])
     })
 
 @app.route('/api/settings', methods=['POST'])
 def save_settings():
     data = request.get_json()
     db = get_db()
-    if 'departments' in data:
-        db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('departments', ?)",
-                   (json.dumps(data['departments'], ensure_ascii=False),))
-    if 'approvers' in data:
-        db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('approvers', ?)",
-                   (json.dumps(data['approvers'], ensure_ascii=False),))
+    for key in ['departments', 'approvers', 'default_seals', 'doc_types']:
+        if key in data:
+            db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
+                       (key, json.dumps(data[key], ensure_ascii=False)))
     db.commit()
     return jsonify({'success': True})
+
+# ==================== 印章默认设置（管理员配置常用印章） ====================
+@app.route('/api/settings/default-seals', methods=['GET'])
+def get_default_seals():
+    """获取管理员设定的默认印章列表（供usage.html使用）"""
+    db = get_db()
+    row = db.execute("SELECT value FROM settings WHERE key='default_seals'").fetchone()
+    if row and row['value']:
+        return jsonify(json.loads(row['value']))
+    return jsonify([])
+
+@app.route('/api/settings/default-seals', methods=['POST'])
+def save_default_seals():
+    """管理员设定默认印章"""
+    data = request.get_json()
+    seals = data if isinstance(data, list) else []
+    db = get_db()
+    db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('default_seals', ?)",
+               (json.dumps(seals, ensure_ascii=False),))
+    db.commit()
+    return jsonify({'success': True, 'count': len(seals)})
+
+# ==================== Usage 专用 API（供 usage.html 扫码登记页使用） ====================
+@app.route('/api/usage/search-seals', methods=['GET'])
+def search_seals():
+    """搜索印章名称（usage.html下拉联想用）"""
+    q = request.args.get('q', '').strip()
+    db = get_db()
+    if q:
+        rows = db.execute(
+            "SELECT id, name, dept, type, status FROM seals WHERE name LIKE ? AND status NOT IN ('已销毁','已废止') LIMIT 10",
+            (f'%{q}%',)
+        ).fetchall()
+    else:
+        # 无关键词时返回默认印章（管理员设定的常用印章）
+        default_row = db.execute("SELECT value FROM settings WHERE key='default_seals'").fetchone()
+        if default_row and default_row['value']:
+            try:
+                default_ids = json.loads(default_row['value'])
+                if default_ids:
+                    placeholders = ','.join('?' * len(default_ids))
+                    rows = db.execute(
+                        f"SELECT id, name, dept, type, status FROM seals WHERE id IN ({placeholders}) AND status NOT IN ('已销毁','已废止')",
+                        default_ids
+                    ).fetchall()
+                    if rows:
+                        return jsonify([dict(r) for r in rows])
+            except Exception:
+                pass
+        # 回退：返回所有在用印章
+        rows = db.execute(
+            "SELECT id, name, dept, type, status FROM seals WHERE status NOT IN ('已销毁','已废止') LIMIT 50"
+        ).fetchall()
+    return jsonify([dict(r) for r in rows])
+
+@app.route('/api/usage/summary', methods=['GET'])
+def usage_summary():
+    """获取使用登记摘要统计"""
+    db = get_db()
+    active = db.execute("SELECT COUNT(*) as c FROM usages WHERE status='使用中'").fetchone()['c']
+    today_str = datetime.now().strftime('%Y-%m-%d')
+    today_count = db.execute(
+        "SELECT COUNT(*) as c FROM usages WHERE checkOut LIKE ?", (f'{today_str}%',)
+    ).fetchone()['c']
+    total = db.execute("SELECT COUNT(*) as c FROM usages").fetchone()['c']
+    # 最近归还10条
+    returned = db.execute(
+        "SELECT * FROM usages WHERE status='已归还' ORDER BY checkIn DESC LIMIT 10"
+    ).fetchall()
+    # 使用中记录
+    active_list = db.execute(
+        "SELECT * FROM usages WHERE status='使用中' ORDER BY checkOut DESC"
+    ).fetchall()
+    result = {
+        'activeCount': active, 'todayCount': today_count, 'totalCount': total,
+        'activeList': [dict_fix_user(r) for r in active_list],
+        'returnedList': [dict_fix_user(r) for r in returned]
+    }
+    return jsonify(result)
+
+@app.route('/api/usage/record', methods=['POST'])
+def record_usage():
+    """登记一笔印章使用"""
+    data = request.get_json()
+    seal_name = data.get('sealName', '').strip()
+    user = data.get('user', '').strip()
+    purpose = data.get('purpose', '').strip()
+    if not seal_name or not user or not purpose:
+        return jsonify({'error': '印章名称、使用人和用途为必填项'}), 400
+    uid = 'U' + datetime.now().strftime('%Y%m%d%H%M%S') + str(int(datetime.now().timestamp() * 1000) % 10000).zfill(4)
+    record = {
+        'id': uid, 'sealName': seal_name, 'user_name': user,
+        'dept': data.get('dept', ''), 'docType': data.get('docType', '证明'),
+        'purpose': purpose, 'approver': data.get('approver', ''),
+        'checkOut': data.get('checkOut', datetime.now().strftime('%Y/%m/%d %H:%M:%S')),
+        'checkIn': '', 'status': '使用中', 'copies': '', 'sealId': ''
+    }
+    db = get_db()
+    cols = ', '.join(record.keys())
+    placeholders = ', '.join('?' * len(record))
+    db.execute(f'INSERT INTO usages ({cols}) VALUES ({placeholders})', list(record.values()))
+    db.commit()
+    record['user'] = record.pop('user_name')
+    return jsonify({'success': True, 'record': record})
+
+@app.route('/api/usage/return/<uid>', methods=['PUT'])
+def return_usage(uid):
+    """归还印章"""
+    db = get_db()
+    now_str = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    db.execute("UPDATE usages SET status='已归还', checkIn=? WHERE id=?", (now_str, uid))
+    db.commit()
+    if db.total_changes == 0:
+        return jsonify({'error': '未找到该使用记录'}), 404
+    return jsonify({'success': True, 'checkIn': now_str})
+
+
+def dict_fix_user(row_dict):
+    """将 user_name 映射为 user 以兼容前端"""
+    d = dict(row_dict)
+    if 'user_name' in d:
+        d['user'] = d.pop('user_name')
+    return d
 
 # ==================== 数据初始化（从data.json导入） ====================
 @app.route('/api/init-status', methods=['GET'])
@@ -365,6 +496,8 @@ def reset_data():
     # Re-insert default settings
     db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('departments', '[\"院办公室\",\"党委办公室\",\"财务科\",\"人事科\",\"医务科\",\"护理部\",\"科研科\",\"教学科\",\"总务科\",\"基建科\",\"保卫科\",\"审计科\",\"纪检监察室\",\"工会\",\"团委\"]')")
     db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('approvers', '[{\"name\":\"院长\",\"level\":2},{\"name\":\"分管副院长\",\"level\":2},{\"name\":\"办公室主任\",\"level\":1},{\"name\":\"档案科科长\",\"level\":1}]')")
+    db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('default_seals', '[]')")
+    db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('doc_types', '[\"证明\",\"合同\",\"报告\",\"申请\",\"函件\",\"其他\"]')")
     db.commit()
     return jsonify({'success': True})
 
