@@ -17,6 +17,9 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg)
 .header{text-align:center;margin-bottom:20px;}
 .header h1{font-size:18px;color:var(--pri);margin-bottom:4px;}
 .header p{font-size:12px;color:var(--g500);}
+.conn-status{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600;margin-top:4px;}
+.conn-ok{background:var(--suc-l);color:#065f46;}
+.conn-err{background:var(--dan-l);color:#991b1b;}
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:14px;}
 .card h2{font-size:14px;color:var(--pri);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--g200);}
 .form-group{margin-bottom:14px;}
@@ -29,21 +32,22 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;}
 .btn-primary{background:var(--pri);color:#fff;width:100%;}
 .btn-primary:hover{background:#154584;}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;}
 .btn-ghost{background:transparent;color:var(--g500);font-size:12px;}
 .btn-ghost:hover{color:var(--g700);}
-.btn-full{width:100%;}
 .suggest-wrap{position:relative;}
-.suggest-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--g300);border-top:none;border-radius:0 0 6px 6px;max-height:200px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+.suggest-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--g300);border-top:none;border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.1);}
 .suggest-item{padding:10px 12px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--g100);}
 .suggest-item:hover{background:var(--g50);color:var(--pri);}
 .suggest-item:last-child{border-bottom:none;}
+.suggest-item .badge-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:999px;margin-left:4px;background:var(--g100);color:var(--g500);}
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--g800);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:9999;animation:fadeIn 0.3s;pointer-events:none;}
 .toast-success{border-left:3px solid var(--suc);}
 .toast-error{border-left:3px solid var(--dan);}
 .toast-info{border-left:3px solid var(--inf);}
 @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(-10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
 .recent-list{margin-top:6px;}
-.recent-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--g100);font-size:13px;cursor:pointer;border-radius:4px;}
+.recent-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--g100);font-size:13px;border-radius:4px;}
 .recent-item:hover{background:var(--g50);}
 .recent-item .name{font-weight:600;color:var(--g700);}
 .recent-item .time{font-size:11px;color:var(--g400);}
@@ -55,6 +59,8 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 .summary-item .num{font-size:24px;font-weight:700;color:var(--pri);}
 .summary-item .label{font-size:11px;color:var(--g500);margin-top:2px;}
 .footer{text-align:center;font-size:11px;color:var(--g400);margin-top:20px;padding-bottom:40px;}
+.loading-text{text-align:center;color:var(--g400);padding:16px;font-size:13px;}
+.empty-text{text-align:center;color:var(--g400);padding:16px;font-size:13px;}
 </style>
 </head>
 <body>
@@ -62,12 +68,13 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
   <div class="header">
     <h1>📝 大理大学第一附属医院<br>印章使用登记</h1>
     <p>扫码快速登记 · 印章领用/盖章/归还</p>
+    <p id="connStatus" class="conn-status conn-err">⏳ 正在连接服务器...</p>
   </div>
 
   <div class="summary" id="summaryRow">
-    <div class="summary-item"><div class="num" id="sumUsing">0</div><div class="label">使用中</div></div>
-    <div class="summary-item"><div class="num" id="sumToday">0</div><div class="label">今日登记</div></div>
-    <div class="summary-item"><div class="num" id="sumTotal">0</div><div class="label">累计记录</div></div>
+    <div class="summary-item"><div class="num" id="sumUsing">-</div><div class="label">使用中</div></div>
+    <div class="summary-item"><div class="num" id="sumToday">-</div><div class="label">今日登记</div></div>
+    <div class="summary-item"><div class="num" id="sumTotal">-</div><div class="label">累计记录</div></div>
   </div>
 
   <div class="card">
@@ -81,127 +88,319 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
     </div>
     <div class="form-group"><label class="form-label">使用人 <span class="req">*</span></label><input type="text" id="ugUser" class="form-input" placeholder="使用人姓名"></div>
     <div class="form-group"><label class="form-label">部门</label><input type="text" id="ugDept" class="form-input" list="deptOptions" placeholder="选择或输入部门名称" autocomplete="off"></div>
-    <div class="form-group"><label class="form-label">文件类型</label><select id="ugDocType" class="form-input"><option value="证明">证明</option><option value="合同">合同</option><option value="报告">报告</option><option value="申请">申请</option><option value="函件">函件</option><option value="其他">其他</option></select></div>
+    <div class="form-group"><label class="form-label">文件类型</label><select id="ugDocType" class="form-input"></select></div>
     <div class="form-group"><label class="form-label">用途说明 <span class="req">*</span></label><input type="text" id="ugPurpose" class="form-input" placeholder="简要说明盖章用途"></div>
     <div class="form-group"><label class="form-label">审批人</label><input type="text" id="ugApprover" class="form-input" placeholder="批准人姓名"></div>
-    <button class="btn btn-primary" onclick="saveUsage()">✅ 登记领用</button>
+    <button class="btn btn-primary" id="btnSubmit" onclick="saveUsage()" disabled>🔗 等待服务器连接...</button>
     <datalist id="deptOptions"></datalist>
   </div>
 
   <div class="card">
-    <h2>📋 使用中印章</h2>
-    <div class="recent-list" id="activeUsages"><div style="text-align:center;color:var(--g400);padding:16px;font-size:13px;">暂无使用中的印章</div></div>
+    <h2>📋 使用中印章 <span id="activeCountBadge" style="font-size:11px;color:var(--g400);"></span></h2>
+    <div class="recent-list" id="activeUsages"><div class="loading-text">加载中...</div></div>
   </div>
 
   <div class="card">
     <h2>🕐 最近归还记录</h2>
-    <div class="recent-list" id="recentUsages"><div style="text-align:center;color:var(--g400);padding:16px;font-size:13px;">暂无归还记录</div></div>
+    <div class="recent-list" id="recentUsages"><div class="loading-text">加载中...</div></div>
   </div>
 
-  <div class="footer">大理大学第一附属医院印章管理系统 · 扫码登记端</div>
+  <div class="footer">大理大学第一附属医院印章管理系统 · 扫码登记端 · 数据存储于 seal_archive.db</div>
 </div>
 
 <script>
-const LS_PREFIX='seal_mgmt_';
-function lsGet(k){ try{return JSON.parse(localStorage.getItem(LS_PREFIX+k))||[]}catch(e){return[]} }
-function lsSet(k,v){ localStorage.setItem(LS_PREFIX+k,JSON.stringify(v)); }
-function today(){ return new Date().toISOString().slice(0,10); }
-function now(){ return new Date().toLocaleString('zh-CN'); }
-function genId(){ return 'U'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+// ==================== API 通信 ====================
+// 自动检测：通过 Flask 访问时用同源，否则默认 localhost:5100
+const API_BASE = (window.location.port === '5100')
+  ? '' : 'http://localhost:5100';
+let serverReady = false;
 
-function toast(msg,type){
-  type=type||'info'; const el=document.createElement('div');
-  el.className='toast toast-'+type; el.textContent=msg; document.body.appendChild(el);
-  setTimeout(()=>el.remove(),2500);
+async function apiGet(path) {
+  const r = await fetch(API_BASE + path);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+async function apiPost(path, data) {
+  const r = await fetch(API_BASE + path, {
+    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+async function apiPut(path, data) {
+  const r = await fetch(API_BASE + path, {
+    method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data || {})
+  });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
 }
 
-function suggestSeals(){
-  const seals=lsGet('seals'); const input=document.getElementById('ugSealInput');
-  const dropdown=document.getElementById('ugSealSuggest');
-  const q=input.value.toLowerCase(); dropdown.innerHTML='';
-  if(!q||q.length<1){ dropdown.style.display='none'; return; }
-  const matches=seals.filter(s=>s.name&&s.name.toLowerCase().includes(q)&&s.status!=='已销毁'&&s.status!=='已废止').slice(0,8);
-  if(!matches.length){ dropdown.style.display='none'; return; }
-  dropdown.innerHTML=matches.map(s=>`<div class="suggest-item" onclick="selectSeal('${s.name.replace(/'/g,"\\'")}')">${s.name} <span style="color:var(--g400);font-size:11px;">${s.dept||''} ${s.status||''}</span></div>`).join('');
-  dropdown.style.display='block';
+// ==================== 全局状态 ====================
+let allSeals = [];
+let departments = [];
+let docTypes = ['证明','合同','报告','申请','函件','其他'];
+let activeUsages = [];
+let returnedUsages = [];
+
+// ==================== UI 工具 ====================
+function now() { return new Date().toLocaleString('zh-CN'); }
+function today() { return new Date().toISOString().slice(0,10); }
+
+function toast(msg, type) {
+  type = type || 'info';
+  const el = document.createElement('div');
+  el.className = 'toast toast-' + type;
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 2500);
 }
-function selectSeal(name){
-  document.getElementById('ugSealInput').value=name;
-  document.getElementById('ugSealSuggest').style.display='none';
+
+function setConnStatus(ok) {
+  serverReady = ok;
+  const el = document.getElementById('connStatus');
+  const btn = document.getElementById('btnSubmit');
+  if (ok) {
+    el.className = 'conn-status conn-ok';
+    el.textContent = '✅ 已连接服务器';
+    btn.textContent = '✅ 登记领用';
+    btn.disabled = false;
+  } else {
+    el.className = 'conn-status conn-err';
+    el.textContent = '❌ 服务器未连接';
+    btn.textContent = '🔗 等待服务器连接...';
+    btn.disabled = true;
+  }
 }
-document.addEventListener('click',e=>{
-  const dd=document.getElementById('ugSealSuggest');
-  if(dd&&!e.target.closest('.suggest-wrap')) dd.style.display='none';
+
+// ==================== 印章搜索联想 ====================
+async function suggestSeals() {
+  const input = document.getElementById('ugSealInput');
+  const dropdown = document.getElementById('ugSealSuggest');
+  const q = input.value.trim().toLowerCase();
+
+  if (!allSeals.length) {
+    // Seal list not yet loaded, try fetching on demand
+    try {
+      const res = await apiGet('/api/usage/search-seals?q=' + encodeURIComponent(q));
+      renderSuggestDropdown(dropdown, res, q);
+    } catch(e) {
+      dropdown.style.display = 'none';
+    }
+    return;
+  }
+
+  if (q.length < 1) {
+    dropdown.style.display = 'none';
+    return;
+  }
+
+  const matches = allSeals
+    .filter(s => s.name && s.name.toLowerCase().includes(q))
+    .slice(0, 8);
+
+  renderSuggestDropdown(dropdown, matches, q);
+}
+
+function renderSuggestDropdown(dropdown, matches, q) {
+  if (!matches.length) {
+    dropdown.style.display = 'none';
+    return;
+  }
+  dropdown.innerHTML = matches.map(s =>
+    `<div class="suggest-item" onclick="selectSeal('${s.name.replace(/'/g,"\\'")}')">
+      ${highlightMatch(s.name, q)}
+      <span class="badge-tag">${s.type||''}</span>
+      <span class="badge-tag">${s.dept||''}</span>
+    </div>`
+  ).join('');
+  dropdown.style.display = 'block';
+}
+
+function highlightMatch(text, q) {
+  if (!q) return text;
+  const idx = text.toLowerCase().indexOf(q.toLowerCase());
+  if (idx === -1) return text;
+  return text.slice(0, idx) + '<strong style="color:var(--pri);">' + text.slice(idx, idx + q.length) + '</strong>' + text.slice(idx + q.length);
+}
+
+function selectSeal(name) {
+  document.getElementById('ugSealInput').value = name;
+  document.getElementById('ugSealSuggest').style.display = 'none';
+}
+
+document.addEventListener('click', e => {
+  const dd = document.getElementById('ugSealSuggest');
+  if (dd && !e.target.closest('.suggest-wrap')) dd.style.display = 'none';
 });
 
-function saveUsage(){
-  const sealName=document.getElementById('ugSealInput').value.trim();
-  const user=document.getElementById('ugUser').value.trim();
-  const dept=document.getElementById('ugDept').value.trim();
-  const docType=document.getElementById('ugDocType').value;
-  const purpose=document.getElementById('ugPurpose').value.trim();
-  const approver=document.getElementById('ugApprover').value.trim();
-  if(!sealName||!user||!purpose){ toast('请填写印章名称、使用人和用途','error'); return; }
-  const usages=lsGet('usages');
-  usages.unshift({
-    id:genId(), sealName, user, dept, docType, purpose, approver,
-    checkOut:now(), checkIn:'', status:'使用中'
-  });
-  lsSet('usages',usages);
-  toast('登记成功','success');
-  document.getElementById('ugSealInput').value='';
-  document.getElementById('ugUser').value='';
-  document.getElementById('ugPurpose').value='';
-  document.getElementById('ugApprover').value='';
-  renderAll();
+// ==================== 登记使用 & 归还 ====================
+async function saveUsage() {
+  const sealName = document.getElementById('ugSealInput').value.trim();
+  const user = document.getElementById('ugUser').value.trim();
+  const dept = document.getElementById('ugDept').value.trim();
+  const docType = document.getElementById('ugDocType').value;
+  const purpose = document.getElementById('ugPurpose').value.trim();
+  const approver = document.getElementById('ugApprover').value.trim();
+
+  if (!sealName || !user || !purpose) {
+    toast('请填写印章名称、使用人和用途', 'error');
+    return;
+  }
+  if (!serverReady) {
+    toast('服务器未连接，无法登记', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true;
+  btn.textContent = '⏳ 保存中...';
+
+  try {
+    await apiPost('/api/usage/record', {
+      sealName, user, dept, docType, purpose, approver,
+      checkOut: now()
+    });
+    toast('登记成功', 'success');
+    // 清空表单
+    document.getElementById('ugSealInput').value = '';
+    document.getElementById('ugUser').value = '';
+    document.getElementById('ugPurpose').value = '';
+    document.getElementById('ugApprover').value = '';
+    // 刷新列表
+    await loadSummaryAndLists();
+  } catch(e) {
+    toast('登记失败：' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✅ 登记领用';
+  }
 }
 
-function returnSeal(id){
-  const usages=lsGet('usages');
-  const u=usages.find(v=>v.id===id);
-  if(!u)return;
-  u.status='已归还'; u.checkIn=now();
-  lsSet('usages',usages);
-  toast('已归还','success');
-  renderAll();
+async function returnSeal(id) {
+  if (!serverReady) { toast('服务器未连接', 'error'); return; }
+  try {
+    const res = await apiPut('/api/usage/return/' + id);
+    toast('已归还 (' + res.checkIn + ')', 'success');
+    await loadSummaryAndLists();
+  } catch(e) {
+    toast('归还失败：' + e.message, 'error');
+  }
 }
 
-function renderAll(){
-  const usages=lsGet('usages');
-  const seals=lsGet('seals');
-  const depts=lsGet('settings').departments||[];
-  // Datalist
-  const dl=document.getElementById('deptOptions');
-  if(dl) dl.innerHTML=depts.map(d=>`<option value="${d}">`).join('');
+// ==================== 数据加载 ====================
+async function loadSummaryAndLists() {
+  try {
+    const data = await apiGet('/api/usage/summary');
+    document.getElementById('sumUsing').textContent = data.activeCount;
+    document.getElementById('sumToday').textContent = data.todayCount;
+    document.getElementById('sumTotal').textContent = data.totalCount;
 
-  const active=usages.filter(u=>u.status==='使用中');
-  const todayStr=today();
-  const todayCount=usages.filter(u=>u.checkOut&&u.checkOut.includes(todayStr)).length;
+    activeUsages = data.activeList || [];
+    returnedUsages = data.returnedList || [];
 
-  document.getElementById('sumUsing').textContent=active.length;
-  document.getElementById('sumToday').textContent=todayCount;
-  document.getElementById('sumTotal').textContent=usages.length;
-
-  // Active usages
-  document.getElementById('activeUsages').innerHTML=active.length
-    ? active.map(u=>`<div class="recent-item"><div><div class="name">${u.sealName||''}</div><div style="font-size:11px;color:var(--g500);">${u.user||''} · ${u.dept||''} · ${u.purpose||''}</div></div><div><div class="status status-using">使用中</div><div style="margin-top:4px;"><button class="btn btn-ghost" style="color:var(--suc);font-size:11px;padding:4px 8px;" onclick="returnSeal('${u.id}')">✅ 归还</button></div></div></div>`).join('')
-    : '<div style="text-align:center;color:var(--g400);padding:16px;font-size:13px;">暂无使用中的印章</div>';
-
-  // Recent returned
-  const returned=usages.filter(u=>u.status==='已归还').slice(0,10);
-  document.getElementById('recentUsages').innerHTML=returned.length
-    ? returned.map(u=>`<div class="recent-item"><div><div class="name">${u.sealName||''}</div><div style="font-size:11px;color:var(--g500);">${u.user||''} · ${u.dept||''}</div></div><div><div class="status status-done">已归还</div><div class="time">${u.checkIn||''}</div></div></div>`).join('')
-    : '<div style="text-align:center;color:var(--g400);padding:16px;font-size:13px;">暂无归还记录</div>';
+    renderActiveUsages();
+    renderReturnedUsages();
+  } catch(e) {
+    console.error('加载摘要失败:', e);
+    document.getElementById('sumUsing').textContent = '!';
+    document.getElementById('sumToday').textContent = '!';
+    document.getElementById('sumTotal').textContent = '!';
+  }
 }
 
-// Init
-function init(){
-  // Ensure settings exist
-  let settings=lsGet('settings');
-  if(!settings||!settings.departments){ settings=settings||{}; settings.departments=[]; lsSet('settings',settings); }
-  renderAll();
+function renderActiveUsages() {
+  const container = document.getElementById('activeUsages');
+  if (!activeUsages.length) {
+    container.innerHTML = '<div class="empty-text">暂无使用中的印章</div>';
+    document.getElementById('activeCountBadge').textContent = '';
+    return;
+  }
+  document.getElementById('activeCountBadge').textContent = '(' + activeUsages.length + ')';
+  container.innerHTML = activeUsages.map(u =>
+    `<div class="recent-item">
+      <div>
+        <div class="name">${escapeHtml(u.sealName || '')}</div>
+        <div style="font-size:11px;color:var(--g500);">${escapeHtml(u.user || '')} · ${escapeHtml(u.dept || '')} · ${escapeHtml(u.purpose || '')}</div>
+        <div style="font-size:10px;color:var(--g400);">${escapeHtml(u.checkOut || '')}</div>
+      </div>
+      <div>
+        <div class="status status-using">使用中</div>
+        <div style="margin-top:4px;">
+          <button class="btn btn-ghost" style="color:var(--suc);font-size:11px;padding:4px 8px;" onclick="returnSeal('${escapeHtml(u.id)}')">✅ 归还</button>
+        </div>
+      </div>
+    </div>`
+  ).join('');
 }
-document.addEventListener('DOMContentLoaded',init);
+
+function renderReturnedUsages() {
+  const container = document.getElementById('recentUsages');
+  const list = returnedUsages.slice(0, 10);
+  if (!list.length) {
+    container.innerHTML = '<div class="empty-text">暂无归还记录</div>';
+    return;
+  }
+  container.innerHTML = list.map(u =>
+    `<div class="recent-item">
+      <div>
+        <div class="name">${escapeHtml(u.sealName || '')}</div>
+        <div style="font-size:11px;color:var(--g500);">${escapeHtml(u.user || '')} · ${escapeHtml(u.dept || '')}</div>
+      </div>
+      <div>
+        <div class="status status-done">已归还</div>
+        <div class="time">${escapeHtml(u.checkIn || '')}</div>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// ==================== 初始化 ====================
+async function init() {
+  // 1. 测试服务器连接
+  try {
+    const status = await apiGet('/api/init-status');
+    console.log('服务器连接成功，已初始化:', status.initialized, '印章数:', status.sealCount);
+    setConnStatus(true);
+  } catch(e) {
+    console.error('服务器连接失败:', e);
+    setConnStatus(false);
+    toast('无法连接服务器，请确认 start.bat 已启动', 'error');
+    return;
+  }
+
+  // 2. 加载印章列表（用于搜索联想）
+  try {
+    allSeals = await apiGet('/data/seals');
+  } catch(e) {
+    console.warn('加载印章列表失败:', e);
+    allSeals = [];
+  }
+
+  // 3. 加载系统设置（部门、文件类型）
+  try {
+    const settings = await apiGet('/settings');
+    departments = settings.departments || [];
+    docTypes = settings.doc_types || ['证明','合同','报告','申请','函件','其他'];
+    // 填充部门 datalist
+    const dl = document.getElementById('deptOptions');
+    dl.innerHTML = departments.map(d => '<option value="' + escapeHtml(d) + '">').join('');
+    // 填充文件类型下拉
+    const dtSelect = document.getElementById('ugDocType');
+    dtSelect.innerHTML = docTypes.map(t => '<option value="' + escapeHtml(t) + '">' + escapeHtml(t) + '</option>').join('');
+  } catch(e) {
+    console.warn('加载设置失败:', e);
+  }
+
+  // 4. 加载使用登记摘要
+  await loadSummaryAndLists();
+}
+
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
