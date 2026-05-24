@@ -324,6 +324,17 @@ textarea.form-input{resize:vertical;min-height:70px;}
 /* ==================== ROW ERROR ==================== */
 .row-error{background:#fff5f5!important;}
 .row-error td{color:var(--dan);}
+/* 类型切换 + 多印章标签 */
+.type-tabs{display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid var(--g200);}
+.type-tab{flex:1;text-align:center;padding:8px 0;font-size:13px;font-weight:600;cursor:pointer;background:var(--g50);color:var(--g500);border:none;font-family:inherit;transition:all 0.2s;}
+.type-tab.active{background:var(--pri);color:#fff;}
+.type-tab:first-child{border-right:1px solid var(--g200);}
+.type-tab.active:first-child{border-color:var(--pri);}
+.tag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0;min-height:24px;}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;background:#dbeafe;color:var(--pri);}
+.tag .tag-remove{cursor:pointer;font-size:14px;line-height:1;opacity:.6;}
+.tag .tag-remove:hover{opacity:1;color:var(--dan);}
+.badge-loan{background:#fce7f3!important;color:#9d174d!important;}
 </style>
 </head>
 <body>
@@ -445,7 +456,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
 <!-- ==================== TAB 3: 使用登记 ==================== -->
 <div id="tabUsage" class="content" style="display:none">
   <div class="dual-toolbar">
-    <div><h2 style="font-size:15px;font-weight:700;">📝 印章使用登记</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">印章领用 / 盖章 / 归还记录</p></div>
+    <div><h2 style="font-size:15px;font-weight:700;">📝 印章使用登记</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">印章领用 / 借出 / 盖章 / 归还记录</p></div>
     <div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" onclick="openQRModal()">📱 扫码登记</button><button class="btn btn-info" onclick="openUsageForm()">＋ 登记领用</button></div>
   </div>
   <div class="quick-actions">
@@ -454,10 +465,10 @@ textarea.form-input{resize:vertical;min-height:70px;}
   </div>
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="usageSearch" placeholder="搜索使用人/印章名称..." oninput="renderUsageList()"></div>
-    <select class="filter-select" id="usageFilter" onchange="renderUsageList()"><option value="">全部状态</option><option value="使用中">使用中</option><option value="已归还">已归还</option></select>
+    <select class="filter-select" id="usageFilter" onchange="renderUsageList()"><option value="">全部状态</option><option value="使用中">使用中</option><option value="借出中">借出中</option><option value="已归还">已归还</option></select>
   </div>
   <div class="table-wrap"><table><thead><tr>
-    <th>使用人</th><th>部门</th><th>印章名称</th><th>用途</th><th>领用时间</th><th>归还时间</th><th>审批人</th><th>状态</th><th style="width:100px;">操作</th>
+    <th>使用人</th><th>部门</th><th>印章名称</th><th>类型</th><th>用途</th><th>领用/借出时间</th><th>归还时间</th><th>审批人</th><th style="width:110px;">状态</th><th style="width:130px;">操作</th>
   </tr></thead><tbody id="usageTableBody"></tbody></table></div>
 </div>
 
@@ -776,21 +787,36 @@ textarea.form-input{resize:vertical;min-height:70px;}
 <!-- MODALS: 使用登记 -->
 <!-- ============================================ -->
 <div class="modal-overlay" id="usageModal" onclick="if(event.target===this)closeUsageModal()">
-  <div class="modal">
-    <div class="modal-header"><span class="modal-title">📝 印章领用登记</span><button class="btn-icon" onclick="closeUsageModal()">✕</button></div>
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header"><span class="modal-title">📝 印章使用登记</span><button class="btn-icon" onclick="closeUsageModal()">✕</button></div>
     <div class="modal-body">
-      <div class="form-row"><div class="form-group"><label class="form-label">选择印章 <span class="req">*</span></label>
-        <div style="position:relative"><input type="text" id="ugSealInput" class="form-input" placeholder="输入印章名称搜索..." oninput="suggestSeals('ug')" autocomplete="off"><div class="suggest-dropdown" id="ugSealSuggest"></div></div>
+      <!-- 使用类型 -->
+      <div class="form-group">
+        <label class="form-label">使用类型</label>
+        <div class="type-tabs" id="ugTypeTabs">
+          <button class="type-tab active" data-type="use" onclick="switchUgType('use')">📋 领用使用</button>
+          <button class="type-tab" data-type="loan" onclick="switchUgType('loan')">🚪 借出外带</button>
+        </div>
       </div>
-      <div class="form-group"><label class="form-label">印章编号</label><input type="text" id="ugSealId" class="form-input" readonly></div></div>
+      <!-- 多印章选择 -->
+      <div class="form-group">
+        <label class="form-label">印章名称 <span class="req">*</span> <span style="font-size:11px;color:var(--g400);">（支持多选，如公章+法人章）</span></label>
+        <div class="tag-wrap" id="ugSelectedSeals"></div>
+        <div style="position:relative"><input type="text" id="ugSealInput" class="form-input" placeholder="输入印章名称搜索并点击添加..." oninput="suggestSeals('ug')" autocomplete="off"><div class="suggest-dropdown" id="ugSealSuggest"></div></div>
+      </div>
       <div class="form-row-3"><div class="form-group"><label class="form-label">使用人 <span class="req">*</span></label><input type="text" id="ugUser" class="form-input" placeholder="使用人姓名"></div>
       <div class="form-group"><label class="form-label">部门</label><input type="text" id="ugDept" class="form-input" list="deptOptions" placeholder="选择或输入部门名称" autocomplete="off"></div>
       <div class="form-group"><label class="form-label">文件类型</label><select id="ugDocType" class="form-input"><option value="证明">证明</option><option value="合同">合同</option><option value="报告">报告</option><option value="申请">申请</option><option value="函件">函件</option><option value="其他">其他</option></select></div></div>
       <div class="form-row"><div class="form-group"><label class="form-label">用途说明 <span class="req">*</span></label><input type="text" id="ugPurpose" class="form-input" placeholder="简要说明盖章用途"></div>
       <div class="form-group"><label class="form-label">审批人</label><input type="text" id="ugApprover" class="form-input" placeholder="批准本次使用的审批人"></div></div>
-      <div class="form-group"><label class="form-label">领用时间 <span class="req">*</span></label><input type="datetime-local" id="ugCheckOut" class="form-input"></div>
+      <div class="form-group"><label class="form-label">使用时间 <span class="req">*</span></label><input type="datetime-local" id="ugCheckOut" class="form-input"></div>
+      <!-- 借出字段 -->
+      <div id="ugLoanFields" style="display:none;">
+        <div class="form-row"><div class="form-group"><label class="form-label">联系电话</label><input type="text" id="ugContactPhone" class="form-input" placeholder="13800138000"></div>
+        <div class="form-group"><label class="form-label">预计归还日期</label><input type="date" id="ugExpectedReturn" class="form-input"></div></div>
+      </div>
     </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeUsageModal()">取消</button><button class="btn btn-info" onclick="saveUsage()">✅ 登记领用</button></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeUsageModal()">取消</button><button class="btn btn-info" id="ugSubmitBtn" onclick="saveUsage()">✅ 登记</button></div>
   </div>
 </div>
 
@@ -1204,7 +1230,7 @@ function updateSealStats(){
   document.getElementById('st-inactive').textContent=s.filter(r=>r.status==='已废止').length;
   document.getElementById('st-paused').textContent=s.filter(r=>r.status==='停用').length;
   document.getElementById('st-destroyed').textContent=s.filter(r=>r.status==='已销毁').length;
-  document.getElementById('st-using').textContent=DATA.usages.filter(r=>r.status==='使用中').length;
+  document.getElementById('st-using').textContent=DATA.usages.filter(r=>r.status==='使用中'||r.status==='借出中').length;
   document.getElementById('st-loaned').textContent=DATA.loans.filter(r=>r.status==='借出'||r.status==='逾期').length;
   document.getElementById('sysTotalSeals')&&(document.getElementById('sysTotalSeals').textContent=s.length);
   document.getElementById('sysLogCount')&&(document.getElementById('sysLogCount').textContent=DATA.logs.length);
@@ -1526,6 +1552,48 @@ function deleteCarving(id){
 }
 
 // ==================== 使用登记 ====================
+let ugSelectedSeals = []; // 模态框多印章标签
+let ugCurrentType = 'use'; // 当前使用类型
+
+function switchUgType(type) {
+  ugCurrentType = type;
+  document.querySelectorAll('#ugTypeTabs .type-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('#ugTypeTabs [data-type="' + type + '"]').classList.add('active');
+  document.getElementById('ugLoanFields').style.display = (type === 'loan') ? '' : 'none';
+  updateUgSubmitBtn();
+}
+function addUgSealTag(name, id, typeName) {
+  if (ugSelectedSeals.find(s => s.name === name)) { toast('已添加该印章', 'info'); document.getElementById('ugSealInput').value = ''; return; }
+  ugSelectedSeals.push({ id, name, type: typeName || '' });
+  renderUgSealTags();
+  document.getElementById('ugSealInput').value = '';
+  document.getElementById('ugSealInput').focus();
+  updateUgSubmitBtn();
+}
+function removeUgSealTag(index) {
+  ugSelectedSeals.splice(index, 1);
+  renderUgSealTags();
+  updateUgSubmitBtn();
+}
+function renderUgSealTags() {
+  const wrap = document.getElementById('ugSelectedSeals');
+  if (!wrap) return;
+  if (!ugSelectedSeals.length) {
+    wrap.innerHTML = '<span style="font-size:11px;color:var(--g400);">尚未选择印章，请在下方搜索并点击添加</span>';
+    return;
+  }
+  wrap.innerHTML = ugSelectedSeals.map((s, i) =>
+    '<span class="tag">' + escapeHtml(s.name) + ' <span style="font-size:10px;color:var(--g500);">' + escapeHtml(s.type) + '</span><span class="tag-remove" onclick="removeUgSealTag(' + i + ')" title="移除">✕</span></span>'
+  ).join('');
+}
+function updateUgSubmitBtn() {
+  const btn = document.getElementById('ugSubmitBtn');
+  if (!btn) return;
+  const count = ugSelectedSeals.length;
+  const typeLabel = ugCurrentType === 'loan' ? '借出' : '登记';
+  btn.textContent = count ? '✅ ' + typeLabel + '（' + count + '枚）' : '✅ ' + typeLabel;
+}
+
 function renderUsageList(){
   let list=[...DATA.usages];
   const q=(document.getElementById('usageSearch')?.value||'').toLowerCase();
@@ -1534,43 +1602,63 @@ function renderUsageList(){
   if(f) list=list.filter(r=>r.status===f);
   list.sort((a,b)=>new Date(b.checkOut||0)-new Date(a.checkOut||0));
   document.getElementById('usageTableBody').innerHTML=list.map(r=>{
-    const st=r.status==='使用中'?'badge-warn':'badge-success';
+    let st='badge-warn';
+    if(r.status==='已归还') st='badge-success';
+    else if(r.usageType==='loan'||r.status==='借出中') st='badge-loan';
+    const typeLabel = r.usageType==='loan' ? '🚪借出' : '📋领用';
     return `<tr>
       <td>${escapeHtml(r.user||'')}</td><td>${escapeHtml(r.dept||'')}</td><td>${escapeHtml(r.sealName||'')}</td>
+      <td style="font-size:11px;">${typeLabel}</td>
       <td>${escapeHtml(r.purpose||'')}</td><td>${r.checkOut?r.checkOut.replace('T',' '):''}</td>
       <td>${r.checkIn?r.checkIn.replace('T',' '):'—'}</td><td>${escapeHtml(r.approver||'')}</td>
       <td><span class="${st}">${r.status}</span></td>
-      <td>${r.status==='使用中'?`<button class="btn btn-ghost btn-sm" style="color:var(--suc)" onclick="returnUsage('${r.id}')">✅归还</button>`:`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteUsage('${r.id}')">🗑️</button>`}</td></tr>`;
-  }).join('')||'<tr><td colspan="9" style="text-align:center;color:var(--g400);padding:24px;">暂无使用记录</td></tr>';
+      <td>${(r.status==='使用中'||r.status==='借出中')?`<button class="btn btn-ghost btn-sm" style="color:var(--suc)" onclick="returnUsage('${r.id}')">✅归还</button><button class="btn btn-ghost btn-sm" style="color:var(--warn)" onclick="returnUsageBatch('${r.batchId||r.id}')">📦批量</button>`:`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteUsage('${r.id}')">🗑️</button>`}</td></tr>`;
+  }).join('')||'<tr><td colspan="10" style="text-align:center;color:var(--g400);padding:24px;">暂无使用记录</td></tr>';
 }
 
 function openUsageForm(){
-  document.getElementById('ugSealInput').value=''; document.getElementById('ugSealId').value='';
+  ugSelectedSeals = [];
+  ugCurrentType = 'use';
+  renderUgSealTags();
+  document.querySelectorAll('#ugTypeTabs .type-tab').forEach(t => t.classList.remove('active'));
+  const useTab = document.querySelector('#ugTypeTabs [data-type="use"]');
+  if (useTab) useTab.classList.add('active');
+  document.getElementById('ugLoanFields').style.display = 'none';
+  document.getElementById('ugSealInput').value='';
   document.getElementById('ugUser').value=''; document.getElementById('ugPurpose').value=''; document.getElementById('ugApprover').value='';
   document.getElementById('ugCheckOut').value=now();
+  document.getElementById('ugContactPhone').value=''; document.getElementById('ugExpectedReturn').value='';
   populateDeptSelects();
+  updateUgSubmitBtn();
   document.getElementById('usageModal').style.display='flex';
 }
 function closeUsageModal(){ document.getElementById('usageModal').style.display='none'; }
 function saveUsage(){
-  const sealName=document.getElementById('ugSealInput').value.trim();
-  const sealId=document.getElementById('ugSealId').value;
   const user=document.getElementById('ugUser').value.trim();
   const purpose=document.getElementById('ugPurpose').value.trim();
-  if(!sealName||!user||!purpose){ toast('请填写印章名称、使用人和用途','error'); return; }
-  // Check seal availability
-  const seal=DATA.seals.find(s=>s.name===sealName||s.id===sealId);
-  if(seal&&seal.status!=='在用'){ toast('该印章当前不可用（状态：'+seal.status+'）','error'); return; }
-  const rec={
-    id: genId(), sealId: sealId||(seal?seal.id:''), sealName,
-    user, dept: document.getElementById('ugDept').value, docType: document.getElementById('ugDocType').value,
-    purpose, approver: document.getElementById('ugApprover').value.trim(),
-    checkOut: document.getElementById('ugCheckOut').value, checkIn: '', status: '使用中'
-  };
-  DATA.usages.unshift(rec); saveData('usages');
-  log('印章领用',`${user} 领用 ${sealName}`);
+  if(!ugSelectedSeals.length){ toast('请至少选择一枚印章','error'); return; }
+  if(!user||!purpose){ toast('请填写使用人和用途','error'); return; }
+  const sealNames = ugSelectedSeals.map(s => s.name).join(',');
+  const status = ugCurrentType === 'loan' ? '借出中' : '使用中';
+  const batchId = 'B' + new Date().toISOString().replace(/[-:T.]/g,'').slice(0,14) + String(Math.floor(Math.random()*9000)+1000);
+  const checkOut = document.getElementById('ugCheckOut').value.replace('T',' ') || now();
+  ugSelectedSeals.forEach(s => {
+    const rec = {
+      id: genId(), sealId: s.id || '', sealName: s.name,
+      user, dept: document.getElementById('ugDept').value, docType: document.getElementById('ugDocType').value,
+      purpose, approver: document.getElementById('ugApprover').value.trim(),
+      checkOut, checkIn: '', status,
+      usageType: ugCurrentType, batchId,
+      contactPhone: ugCurrentType==='loan'?document.getElementById('ugContactPhone').value.trim():'',
+      expectedReturn: ugCurrentType==='loan'?document.getElementById('ugExpectedReturn').value:''
+    };
+    DATA.usages.unshift(rec);
+  });
+  saveData('usages');
+  const typeLabel = ugCurrentType === 'loan' ? '借出' : '领用';
+  log('印章'+typeLabel, user+' '+typeLabel+' '+sealNames);
   closeUsageModal(); renderUsageList(); updateAllBadges(); updateSealStats();
-  toast('领用登记成功','success');
+  toast(typeLabel+'登记成功（'+ugSelectedSeals.length+'枚印章）','success');
 }
 
 function returnUsage(id){
@@ -1580,10 +1668,18 @@ function returnUsage(id){
   log('印章归还',`${r.user} 归还 ${r.sealName}`);
   toast('已归还','success');
 }
-function quickReturnAll(){
-  if(!confirmDialog('确定将所有使用中的印章全部归还？')) return;
+function returnUsageBatch(batchId){
+  if(!batchId) return;
+  if(!confirm('确定要批量归还该批次所有印章吗？')) return;
   let cnt=0;
-  DATA.usages.forEach(r=>{ if(r.status==='使用中'){ r.checkIn=now(); r.status='已归还'; cnt++; } });
+  DATA.usages.forEach(r=>{ if(r.batchId===batchId&&(r.status==='使用中'||r.status==='借出中')){ r.checkIn=now(); r.status='已归还'; cnt++; } });
+  if(cnt){ saveData('usages'); renderUsageList(); updateSealStats(); updateAllBadges(); log('批量归还','批次'+batchId.slice(-6)+' 共'+cnt+'条'); }
+  toast(`已批量归还 ${cnt} 条`,'success');
+}
+function quickReturnAll(){
+  if(!confirmDialog('确定将所有使用中/借出中的印章全部归还？')) return;
+  let cnt=0;
+  DATA.usages.forEach(r=>{ if(r.status==='使用中'||r.status==='借出中'){ r.checkIn=now(); r.status='已归还'; cnt++; } });
   if(cnt){ saveData('usages'); renderUsageList(); updateSealStats(); updateAllBadges(); log('全部归还',`${cnt}条`); }
   toast(`已归还 ${cnt} 条`,'success');
 }
@@ -2010,18 +2106,23 @@ function submitApproval(){
 // ==================== 印章名称搜索建议 ====================
 function suggestSeals(prefix){
   const input=document.getElementById(prefix+'SealInput'); const dropdown=document.getElementById(prefix+'SealSuggest');
-  const sealIdEl=document.getElementById(prefix+'SealId');
   if(!input||!dropdown)return;
   const q=input.value.toLowerCase(); dropdown.innerHTML='';
   if(!q||q.length<1){ dropdown.style.display='none'; return; }
-  const matches=DATA.seals.filter(s=>s.name&&s.name.toLowerCase().includes(q)).slice(0,8);
-  if(!matches.length){ dropdown.style.display='none'; return; }
-  dropdown.innerHTML=matches.map(s=>`<div class="suggest-item" onclick="selectSuggest('${prefix}','${escapeHtml(s.name).replace(/'/g,"\\'")}','${s.id||''}')">${escapeHtml(s.name)} <span style="color:var(--g400);font-size:11px;">${s.dept||''} ${s.status||''}</span></div>`).join('');
+  const existingIds = prefix==='ug' ? ugSelectedSeals.map(s=>s.id) : [];
+  const matches=DATA.seals.filter(s=>s.name&&s.name.toLowerCase().includes(q)&&!existingIds.includes(s.id)).slice(0,8);
+  if(!matches.length){ dropdown.innerHTML='<div class="suggest-item" style="color:var(--g400);">未找到匹配印章'+(existingIds.length?'（或已添加）':'')+'</div>'; dropdown.style.display='block'; return; }
+  dropdown.innerHTML=matches.map(s=>`<div class="suggest-item" onclick="selectSuggest('${prefix}','${escapeHtml(s.name).replace(/'/g,"\\'")}','${s.id||''}','${escapeHtml(s.type||'').replace(/'/g,"\\'")}')">${escapeHtml(s.name)} <span style="color:var(--g400);font-size:11px;">${escapeHtml(s.dept||'')} ${escapeHtml(s.status||'')}</span></div>`).join('');
   dropdown.style.display='block';
 }
-function selectSuggest(prefix,name,id){
-  document.getElementById(prefix+'SealInput').value=name;
-  document.getElementById(prefix+'SealId').value=id;
+function selectSuggest(prefix,name,id,typeName){
+  if(prefix==='ug'){
+    addUgSealTag(name, id, typeName||'');
+  } else {
+    document.getElementById(prefix+'SealInput').value=name;
+    const sealIdEl=document.getElementById(prefix+'SealId');
+    if(sealIdEl) sealIdEl.value=id;
+  }
   document.getElementById(prefix+'SealSuggest').style.display='none';
 }
 
@@ -2179,7 +2280,7 @@ function clearLog(){
 // ==================== CSV导出 ====================
 function csvExport(data,cols,filename){
   const header=cols.map(c=>c.label).join(',')+'\n';
-  const body=data.map(r=>cols.map(c=>{ let v=r[c.key]||''; if(typeof v==='string'&&(v.includes(',')||v.includes('"')||v.includes('\n'))) v='"'+v.replace(/"/g,'""')+'"'; return v; }).join(',')).join('\n');
+  const body=data.map(r=>cols.map(c=>{ let v=r[c.key]||''; if(c.fmt&&typeof c.fmt==='function') v=c.fmt(v); if(typeof v==='string'&&(v.includes(',')||v.includes('"')||v.includes('\n'))) v='"'+v.replace(/"/g,'""')+'"'; return v; }).join(',')).join('\n');
   const blob=new Blob(['\uFEFF'+header+body],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename+'_'+today()+'.csv';
   a.click();
@@ -2196,8 +2297,10 @@ function exportCSV(){
 function exportUsageReport(){
   csvExport(DATA.usages,[
     {label:'使用人',key:'user'},{label:'部门',key:'dept'},{label:'印章名称',key:'sealName'},
+    {label:'使用类型',key:'usageType',fmt:v=>v==='loan'?'借出外带':'领用使用'},
     {label:'文件类型',key:'docType'},{label:'用途',key:'purpose'},{label:'审批人',key:'approver'},
-    {label:'领用时间',key:'checkOut'},{label:'归还时间',key:'checkIn'},{label:'状态',key:'status'}
+    {label:'领用时间',key:'checkOut'},{label:'归还时间',key:'checkIn'},{label:'状态',key:'status'},
+    {label:'批次编号',key:'batchId'},{label:'联系电话',key:'contactPhone'},{label:'预计归还',key:'expectedReturn'}
   ],'印章使用台账');
   toast('使用台账已导出','success');
 }
@@ -2230,7 +2333,7 @@ function exportArchivesCSV(){
 function updateAllBadges(){
   const pendingCarvings=DATA.carvings.filter(c=>c.status==='待审批'||c.status==='审批中').length;
   const pendingLoans=DATA.loans.filter(l=>l.status==='待审批').length;
-  const activeUsages=DATA.usages.filter(u=>u.status==='使用中').length;
+  const activeUsages=DATA.usages.filter(u=>u.status==='使用中'||u.status==='借出中').length;
   const pendingDestroys=DATA.destroys.filter(d=>d.status==='待审批'||d.status==='审批中').length;
   const overdueLoans=DATA.loans.filter(l=>l.status==='借出'&&l.expectedDate&&l.expectedDate<today()).length;
   updateBadge('tbCarving',pendingCarvings); updateBadge('tbUsage',activeUsages);

@@ -13,13 +13,13 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 16px;}
-.container{width:100%;max-width:480px;}
+.container{width:100%;max-width:500px;}
 .header{text-align:center;margin-bottom:20px;}
 .header h1{font-size:18px;color:var(--pri);margin-bottom:4px;}
 .header p{font-size:12px;color:var(--g500);}
 .conn-status{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600;margin-top:4px;}
-.conn-ok{background:var(--suc-l);color:#065f46;}
-.conn-err{background:var(--dan-l);color:#991b1b;}
+.conn-ok{background:#d1fae5;color:#065f46;}
+.conn-err{background:#fee2e2;color:#991b1b;}
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:14px;}
 .card h2{font-size:14px;color:var(--pri);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--g200);}
 .form-group{margin-bottom:14px;}
@@ -29,31 +29,60 @@ body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg)
 .form-input[readonly]{background:var(--g100);color:var(--g500);}
 select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px;}
 .req{color:var(--dan);}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;}
-.btn-primary{background:var(--pri);color:#fff;width:100%;}
-.btn-primary:hover{background:#154584;}
-.btn-primary:disabled{opacity:.5;cursor:not-allowed;}
-.btn-ghost{background:transparent;color:var(--g500);font-size:12px;}
-.btn-ghost:hover{color:var(--g700);}
+.hint{font-size:11px;color:var(--g400);margin-top:3px;}
+
+/* 类型切换 Tabs */
+.type-tabs{display:flex;gap:0;margin-bottom:0;border-radius:8px;overflow:hidden;border:1px solid var(--g200);}
+.type-tab{flex:1;text-align:center;padding:10px 0;font-size:13px;font-weight:600;cursor:pointer;background:var(--g50);color:var(--g500);border:none;font-family:inherit;transition:all 0.2s;}
+.type-tab.active{background:var(--pri);color:#fff;}
+.type-tab:first-child{border-right:1px solid var(--g200);}
+.type-tab.active:first-child{border-color:var(--pri);}
+
+/* 多印章标签 */
+.tag-wrap{display:flex;flex-wrap:wrap;gap:6px;padding:6px 0;min-height:28px;}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;background:#dbeafe;color:var(--pri);}
+.tag .tag-remove{cursor:pointer;font-size:14px;line-height:1;opacity:.6;}
+.tag .tag-remove:hover{opacity:1;color:var(--dan);}
 .suggest-wrap{position:relative;}
 .suggest-dropdown{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--g300);border-top:none;border-radius:0 0 6px 6px;max-height:220px;overflow-y:auto;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.1);}
 .suggest-item{padding:10px 12px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--g100);}
 .suggest-item:hover{background:var(--g50);color:var(--pri);}
 .suggest-item:last-child{border-bottom:none;}
 .suggest-item .badge-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:999px;margin-left:4px;background:var(--g100);color:var(--g500);}
+
+/* 按钮 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.btn-primary{background:var(--pri);color:#fff;width:100%;}
+.btn-primary:hover{background:#154584;}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;}
+.btn-sm{font-size:11px;padding:4px 10px;}
+.btn-ghost{background:transparent;color:var(--g500);font-size:11px;}
+.btn-ghost:hover{color:var(--g700);}
+.btn-success{background:var(--suc);color:#fff;font-size:11px;padding:4px 10px;}
+.btn-success:hover{background:#15803d;}
+
+/* Toast */
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--g800);color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:9999;animation:fadeIn 0.3s;pointer-events:none;}
 .toast-success{border-left:3px solid var(--suc);}
 .toast-error{border-left:3px solid var(--dan);}
 .toast-info{border-left:3px solid var(--inf);}
 @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(-10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+
+/* 列表 */
 .recent-list{margin-top:6px;}
-.recent-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--g100);font-size:13px;border-radius:4px;}
+.recent-item{display:flex;align-items:flex-start;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--g100);font-size:13px;border-radius:4px;}
 .recent-item:hover{background:var(--g50);}
 .recent-item .name{font-weight:600;color:var(--g700);}
 .recent-item .time{font-size:11px;color:var(--g400);}
 .recent-item .status{font-size:11px;padding:2px 8px;border-radius:10px;}
 .status-using{background:#fef3c7;color:#92400e;}
+.status-loan{background:#fce7f3;color:#9d174d;}
 .status-done{background:#d1fae5;color:#065f46;}
+.batch-group{background:var(--g50);border-radius:6px;padding:8px 10px;margin-bottom:6px;border:1px solid var(--g200);}
+.batch-header{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--g500);padding-bottom:6px;border-bottom:1px dashed var(--g200);}
+.batch-seals{font-size:12px;color:var(--g600);line-height:1.8;}
+
+/* 摘要 */
 .summary{display:flex;gap:10px;margin-bottom:14px;}
 .summary-item{flex:1;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;text-align:center;}
 .summary-item .num{font-size:24px;font-weight:700;color:var(--pri);}
@@ -61,13 +90,15 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 .footer{text-align:center;font-size:11px;color:var(--g400);margin-top:20px;padding-bottom:40px;}
 .loading-text{text-align:center;color:var(--g400);padding:16px;font-size:13px;}
 .empty-text{text-align:center;color:var(--g400);padding:16px;font-size:13px;}
+.form-row{display:flex;gap:10px;}
+.hidden{display:none !important;}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
     <h1>📝 大理大学第一附属医院<br>印章使用登记</h1>
-    <p>扫码快速登记 · 印章领用/盖章/归还</p>
+    <p>扫码快速登记 · 领用/借出/归还</p>
     <p id="connStatus" class="conn-status conn-err">⏳ 正在连接服务器...</p>
   </div>
 
@@ -78,25 +109,46 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
   </div>
 
   <div class="card">
-    <h2>➕ 快速登记领用</h2>
+    <h2>➕ 快速登记</h2>
+    <!-- 使用类型切换 -->
     <div class="form-group">
-      <label class="form-label">印章名称 <span class="req">*</span></label>
+      <label class="form-label">使用类型</label>
+      <div class="type-tabs" id="typeTabs">
+        <button class="type-tab active" data-type="use" onclick="switchType('use')">📋 领用使用</button>
+        <button class="type-tab" data-type="loan" onclick="switchType('loan')">🚪 借出外带</button>
+      </div>
+    </div>
+
+    <!-- 多印章选择 -->
+    <div class="form-group">
+      <label class="form-label">印章名称 <span class="req">*</span> <span class="hint">（支持多选，如公章+法人章）</span></label>
+      <div class="tag-wrap" id="selectedSeals"></div>
       <div class="suggest-wrap">
-        <input type="text" id="ugSealInput" class="form-input" placeholder="🔍 输入名称搜索..." oninput="suggestSeals()" autocomplete="off">
+        <input type="text" id="ugSealInput" class="form-input" placeholder="🔍 输入名称搜索印章..." oninput="suggestSeals()" autocomplete="off">
         <div class="suggest-dropdown" id="ugSealSuggest"></div>
       </div>
     </div>
+
     <div class="form-group"><label class="form-label">使用人 <span class="req">*</span></label><input type="text" id="ugUser" class="form-input" placeholder="使用人姓名"></div>
     <div class="form-group"><label class="form-label">部门</label><input type="text" id="ugDept" class="form-input" list="deptOptions" placeholder="选择或输入部门名称" autocomplete="off"></div>
     <div class="form-group"><label class="form-label">文件类型</label><select id="ugDocType" class="form-input"></select></div>
     <div class="form-group"><label class="form-label">用途说明 <span class="req">*</span></label><input type="text" id="ugPurpose" class="form-input" placeholder="简要说明盖章用途"></div>
     <div class="form-group"><label class="form-label">审批人</label><input type="text" id="ugApprover" class="form-input" placeholder="批准人姓名"></div>
+
+    <!-- 借出专属字段 -->
+    <div id="loanFields" class="hidden">
+      <div class="form-row">
+        <div class="form-group" style="flex:1;"><label class="form-label">联系电话</label><input type="text" id="ugContactPhone" class="form-input" placeholder="13800138000"></div>
+        <div class="form-group" style="flex:1;"><label class="form-label">预计归还日期</label><input type="date" id="ugExpectedReturn" class="form-input"></div>
+      </div>
+    </div>
+
     <button class="btn btn-primary" id="btnSubmit" onclick="saveUsage()" disabled>🔗 等待服务器连接...</button>
     <datalist id="deptOptions"></datalist>
   </div>
 
   <div class="card">
-    <h2>📋 使用中印章 <span id="activeCountBadge" style="font-size:11px;color:var(--g400);"></span></h2>
+    <h2>📋 使用中 / 借出中 <span id="activeCountBadge" style="font-size:11px;color:var(--g400);"></span></h2>
     <div class="recent-list" id="activeUsages"><div class="loading-text">加载中...</div></div>
   </div>
 
@@ -110,9 +162,7 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
 
 <script>
 // ==================== API 通信 ====================
-// 自动检测：通过 Flask 访问时用同源，否则默认 localhost:5100
-const API_BASE = (window.location.port === '5100')
-  ? '' : 'http://localhost:5100';
+const API_BASE = (window.location.port === '5100') ? '' : 'http://localhost:5100';
 let serverReady = false;
 
 async function apiGet(path) {
@@ -124,7 +174,10 @@ async function apiPost(path, data) {
   const r = await fetch(API_BASE + path, {
     method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
   });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
+  if (!r.ok) {
+    const errData = await r.json().catch(() => ({}));
+    throw new Error(errData.error || 'HTTP ' + r.status);
+  }
   return r.json();
 }
 async function apiPut(path, data) {
@@ -141,6 +194,8 @@ let departments = [];
 let docTypes = ['证明','合同','报告','申请','函件','其他'];
 let activeUsages = [];
 let returnedUsages = [];
+let selectedSeals = [];  // [{id, name, type, dept}]
+let currentUsageType = 'use'; // 'use' | 'loan'
 
 // ==================== UI 工具 ====================
 function now() { return new Date().toLocaleString('zh-CN'); }
@@ -162,8 +217,7 @@ function setConnStatus(ok) {
   if (ok) {
     el.className = 'conn-status conn-ok';
     el.textContent = '✅ 已连接服务器';
-    btn.textContent = '✅ 登记领用';
-    btn.disabled = false;
+    updateSubmitBtn();
   } else {
     el.className = 'conn-status conn-err';
     el.textContent = '❌ 服务器未连接';
@@ -172,60 +226,95 @@ function setConnStatus(ok) {
   }
 }
 
+function updateSubmitBtn() {
+  const btn = document.getElementById('btnSubmit');
+  if (!serverReady) { btn.textContent = '🔗 等待服务器连接...'; btn.disabled = true; return; }
+  const count = selectedSeals.length;
+  const typeLabel = currentUsageType === 'loan' ? '借出' : '领用';
+  btn.textContent = count ? '✅ 登记' + typeLabel + '（' + count + '枚印章）' : '✅ 登记' + typeLabel;
+  btn.disabled = false;
+}
+
+// ==================== 使用类型切换 ====================
+function switchType(type) {
+  currentUsageType = type;
+  document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('[data-type="' + type + '"]').classList.add('active');
+  document.getElementById('loanFields').classList.toggle('hidden', type !== 'loan');
+  updateSubmitBtn();
+}
+
+// ==================== 多印章标签管理 ====================
+function addSealTag(name, id, type, dept) {
+  // 防止重复
+  if (selectedSeals.find(s => s.name === name)) {
+    toast('该印章已添加', 'info');
+    document.getElementById('ugSealInput').value = '';
+    return;
+  }
+  selectedSeals.push({ id, name, type, dept });
+  renderSealTags();
+  document.getElementById('ugSealInput').value = '';
+  document.getElementById('ugSealInput').focus();
+  updateSubmitBtn();
+}
+
+function removeSealTag(index) {
+  selectedSeals.splice(index, 1);
+  renderSealTags();
+  updateSubmitBtn();
+}
+
+function renderSealTags() {
+  const wrap = document.getElementById('selectedSeals');
+  if (!selectedSeals.length) {
+    wrap.innerHTML = '<span style="font-size:11px;color:var(--g400);">尚未选择印章，请在下方搜索并点击添加</span>';
+    return;
+  }
+  wrap.innerHTML = selectedSeals.map((s, i) =>
+    `<span class="tag">${escapeHtml(s.name)}<span class="badge-tag">${escapeHtml(s.type||'')}</span><span class="tag-remove" onclick="removeSealTag(${i})" title="移除">✕</span></span>`
+  ).join('');
+}
+
 // ==================== 印章搜索联想 ====================
 async function suggestSeals() {
   const input = document.getElementById('ugSealInput');
   const dropdown = document.getElementById('ugSealSuggest');
   const q = input.value.trim().toLowerCase();
 
-  if (!allSeals.length) {
-    // Seal list not yet loaded, try fetching on demand
-    try {
-      const res = await apiGet('/api/usage/search-seals?q=' + encodeURIComponent(q));
-      renderSuggestDropdown(dropdown, res, q);
-    } catch(e) {
-      dropdown.style.display = 'none';
-    }
-    return;
-  }
-
   if (q.length < 1) {
     dropdown.style.display = 'none';
     return;
   }
 
-  const matches = allSeals
-    .filter(s => s.name && s.name.toLowerCase().includes(q))
-    .slice(0, 8);
-
-  renderSuggestDropdown(dropdown, matches, q);
-}
-
-function renderSuggestDropdown(dropdown, matches, q) {
-  if (!matches.length) {
+  try {
+    const res = await apiGet('/api/usage/search-seals?q=' + encodeURIComponent(q));
+    // 过滤已选中的
+    const filtered = res.filter(s => !selectedSeals.find(sel => sel.name === s.name));
+    if (!filtered.length) {
+      dropdown.innerHTML = '<div class="suggest-item" style="color:var(--g400);">全部印章已添加</div>';
+      dropdown.style.display = 'block';
+      return;
+    }
+    dropdown.innerHTML = filtered.map(s =>
+      `<div class="suggest-item" onclick="addSealTag('${s.name.replace(/'/g,"\\'")}',${s.id||0},'${(s.type||'').replace(/'/g,"\\'")}','${(s.dept||'').replace(/'/g,"\\'")}')">
+        ${highlightMatch(s.name, q)}
+        <span class="badge-tag">${escapeHtml(s.type||'')}</span>
+        <span class="badge-tag">${escapeHtml(s.dept||'')}</span>
+      </div>`
+    ).join('');
+    dropdown.style.display = 'block';
+  } catch(e) {
+    console.warn('搜索印章失败:', e);
     dropdown.style.display = 'none';
-    return;
   }
-  dropdown.innerHTML = matches.map(s =>
-    `<div class="suggest-item" onclick="selectSeal('${s.name.replace(/'/g,"\\'")}')">
-      ${highlightMatch(s.name, q)}
-      <span class="badge-tag">${s.type||''}</span>
-      <span class="badge-tag">${s.dept||''}</span>
-    </div>`
-  ).join('');
-  dropdown.style.display = 'block';
 }
 
 function highlightMatch(text, q) {
-  if (!q) return text;
+  if (!q) return escapeHtml(text);
   const idx = text.toLowerCase().indexOf(q.toLowerCase());
-  if (idx === -1) return text;
-  return text.slice(0, idx) + '<strong style="color:var(--pri);">' + text.slice(idx, idx + q.length) + '</strong>' + text.slice(idx + q.length);
-}
-
-function selectSeal(name) {
-  document.getElementById('ugSealInput').value = name;
-  document.getElementById('ugSealSuggest').style.display = 'none';
+  if (idx === -1) return escapeHtml(text);
+  return escapeHtml(text.slice(0, idx)) + '<strong style="color:var(--pri);">' + escapeHtml(text.slice(idx, idx + q.length)) + '</strong>' + escapeHtml(text.slice(idx + q.length));
 }
 
 document.addEventListener('click', e => {
@@ -233,17 +322,20 @@ document.addEventListener('click', e => {
   if (dd && !e.target.closest('.suggest-wrap')) dd.style.display = 'none';
 });
 
-// ==================== 登记使用 & 归还 ====================
+// ==================== 登记使用 ====================
 async function saveUsage() {
-  const sealName = document.getElementById('ugSealInput').value.trim();
   const user = document.getElementById('ugUser').value.trim();
   const dept = document.getElementById('ugDept').value.trim();
   const docType = document.getElementById('ugDocType').value;
   const purpose = document.getElementById('ugPurpose').value.trim();
   const approver = document.getElementById('ugApprover').value.trim();
 
-  if (!sealName || !user || !purpose) {
-    toast('请填写印章名称、使用人和用途', 'error');
+  if (!selectedSeals.length) {
+    toast('请至少选择一枚印章', 'error');
+    return;
+  }
+  if (!user || !purpose) {
+    toast('请填写使用人和用途', 'error');
     return;
   }
   if (!serverReady) {
@@ -255,24 +347,36 @@ async function saveUsage() {
   btn.disabled = true;
   btn.textContent = '⏳ 保存中...';
 
+  const sealNames = selectedSeals.map(s => s.name).join(',');
+  const body = {
+    sealNames, user, dept, docType, purpose, approver,
+    usageType: currentUsageType,
+    checkOut: now()
+  };
+  if (currentUsageType === 'loan') {
+    body.contactPhone = document.getElementById('ugContactPhone').value.trim();
+    body.expectedReturn = document.getElementById('ugExpectedReturn').value;
+  }
+
   try {
-    await apiPost('/api/usage/record', {
-      sealName, user, dept, docType, purpose, approver,
-      checkOut: now()
-    });
-    toast('登记成功', 'success');
+    const res = await apiPost('/api/usage/record', body);
+    const typeLabel = currentUsageType === 'loan' ? '借出' : '登记';
+    toast(typeLabel + '成功（' + res.count + '枚印章）', 'success');
     // 清空表单
-    document.getElementById('ugSealInput').value = '';
+    selectedSeals = [];
+    renderSealTags();
     document.getElementById('ugUser').value = '';
     document.getElementById('ugPurpose').value = '';
     document.getElementById('ugApprover').value = '';
+    document.getElementById('ugContactPhone').value = '';
+    document.getElementById('ugExpectedReturn').value = '';
     // 刷新列表
     await loadSummaryAndLists();
   } catch(e) {
     toast('登记失败：' + e.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.textContent = '✅ 登记领用';
+    updateSubmitBtn();
   }
 }
 
@@ -284,6 +388,18 @@ async function returnSeal(id) {
     await loadSummaryAndLists();
   } catch(e) {
     toast('归还失败：' + e.message, 'error');
+  }
+}
+
+async function returnBatch(batchId) {
+  if (!serverReady) { toast('服务器未连接', 'error'); return; }
+  if (!confirm('确定要批量归还该批次所有印章吗？')) return;
+  try {
+    const res = await apiPut('/api/usage/return-batch/' + batchId);
+    toast('批量归还成功（' + res.returnedCount + '枚印章）', 'success');
+    await loadSummaryAndLists();
+  } catch(e) {
+    toast('批量归还失败：' + e.message, 'error');
   }
 }
 
@@ -311,42 +427,77 @@ async function loadSummaryAndLists() {
 function renderActiveUsages() {
   const container = document.getElementById('activeUsages');
   if (!activeUsages.length) {
-    container.innerHTML = '<div class="empty-text">暂无使用中的印章</div>';
+    container.innerHTML = '<div class="empty-text">暂无使用中/借出中的印章</div>';
     document.getElementById('activeCountBadge').textContent = '';
     return;
   }
   document.getElementById('activeCountBadge').textContent = '(' + activeUsages.length + ')';
-  container.innerHTML = activeUsages.map(u =>
-    `<div class="recent-item">
-      <div>
-        <div class="name">${escapeHtml(u.sealName || '')}</div>
-        <div style="font-size:11px;color:var(--g500);">${escapeHtml(u.user || '')} · ${escapeHtml(u.dept || '')} · ${escapeHtml(u.purpose || '')}</div>
-        <div style="font-size:10px;color:var(--g400);">${escapeHtml(u.checkOut || '')}</div>
-      </div>
-      <div>
-        <div class="status status-using">使用中</div>
-        <div style="margin-top:4px;">
-          <button class="btn btn-ghost" style="color:var(--suc);font-size:11px;padding:4px 8px;" onclick="returnSeal('${escapeHtml(u.id)}')">✅ 归还</button>
+
+  // 按 batchId 分组显示
+  const groups = {};
+  const order = [];
+  activeUsages.forEach(u => {
+    const bid = u.batchId || u.id;
+    if (!groups[bid]) { groups[bid] = []; order.push(bid); }
+    groups[bid].push(u);
+  });
+
+  container.innerHTML = order.map(bid => {
+    const items = groups[bid];
+    const first = items[0];
+    const isLoan = first.usageType === 'loan';
+    const statusClass = isLoan ? 'status-loan' : 'status-using';
+    const statusText = isLoan ? '借出中' : '使用中';
+    const singleItem = items.length === 1;
+
+    if (singleItem) {
+      return `<div class="recent-item">
+        <div style="flex:1;">
+          <div class="name">${escapeHtml(first.sealName || '')}</div>
+          <div style="font-size:11px;color:var(--g500);">${escapeHtml(first.user || '')} · ${escapeHtml(first.dept || '')} · ${escapeHtml(first.purpose || '')}</div>
+          ${isLoan && first.expectedReturn ? '<div style="font-size:10px;color:var(--warn);">⚠ 预计归还：' + escapeHtml(first.expectedReturn) + '</div>' : ''}
+          <div style="font-size:10px;color:var(--g400);">${escapeHtml(first.checkOut || '')}</div>
         </div>
-      </div>
-    </div>`
-  ).join('');
+        <div style="text-align:right;">
+          <div class="status ${statusClass}">${statusText}</div>
+          <div style="margin-top:4px;">
+            <button class="btn btn-success" onclick="returnSeal('${escapeHtml(first.id)}')">✅ 归还</button>
+          </div>
+        </div>
+      </div>`;
+    } else {
+      // 多印章批次
+      const sealList = items.map(i => escapeHtml(i.sealName)).join('、');
+      return `<div class="batch-group">
+        <div class="batch-header">
+          <span>📦 批次 ${escapeHtml(bid.slice(-6))} · ${escapeHtml(first.user || '')} · ${escapeHtml(first.dept || '')}</span>
+          <span class="status ${statusClass}">${statusText}</span>
+        </div>
+        <div class="batch-seals">🖊 ${sealList}</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:2px;">用途：${escapeHtml(first.purpose || '')} · ${escapeHtml(first.checkOut || '')}</div>
+        ${isLoan && first.expectedReturn ? '<div style="font-size:10px;color:var(--warn);">⚠ 预计归还：' + escapeHtml(first.expectedReturn) + ' | 📞 ' + escapeHtml(first.contactPhone || '') + '</div>' : ''}
+        <div style="margin-top:6px;display:flex;gap:4px;">
+          <button class="btn btn-success" onclick="returnBatch('${escapeHtml(bid)}')">✅ 批量归还（${items.length}枚）</button>
+        </div>
+      </div>`;
+    }
+  }).join('');
 }
 
 function renderReturnedUsages() {
   const container = document.getElementById('recentUsages');
-  const list = returnedUsages.slice(0, 10);
+  const list = returnedUsages.slice(0, 20);
   if (!list.length) {
     container.innerHTML = '<div class="empty-text">暂无归还记录</div>';
     return;
   }
   container.innerHTML = list.map(u =>
     `<div class="recent-item">
-      <div>
+      <div style="flex:1;">
         <div class="name">${escapeHtml(u.sealName || '')}</div>
         <div style="font-size:11px;color:var(--g500);">${escapeHtml(u.user || '')} · ${escapeHtml(u.dept || '')}</div>
       </div>
-      <div>
+      <div style="text-align:right;">
         <div class="status status-done">已归还</div>
         <div class="time">${escapeHtml(u.checkIn || '')}</div>
       </div>
@@ -381,15 +532,13 @@ async function init() {
     allSeals = [];
   }
 
-  // 3. 加载系统设置（部门、文件类型）
+  // 3. 加载系统设置
   try {
     const settings = await apiGet('/settings');
     departments = settings.departments || [];
     docTypes = settings.doc_types || ['证明','合同','报告','申请','函件','其他'];
-    // 填充部门 datalist
     const dl = document.getElementById('deptOptions');
     dl.innerHTML = departments.map(d => '<option value="' + escapeHtml(d) + '">').join('');
-    // 填充文件类型下拉
     const dtSelect = document.getElementById('ugDocType');
     dtSelect.innerHTML = docTypes.map(t => '<option value="' + escapeHtml(t) + '">' + escapeHtml(t) + '</option>').join('');
   } catch(e) {
