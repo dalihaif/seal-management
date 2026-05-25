@@ -3,12 +3,42 @@
 启动: python server.py
 访问: http://localhost:5100
 """
-import json, os, csv, io, sqlite3
+import json, os, csv, io, sqlite3, hashlib, secrets
 from datetime import datetime
-from flask import Flask, request, jsonify, send_from_directory, g
+from functools import wraps
+from flask import Flask, request, jsonify, send_from_directory, g, session
 
 app = Flask(__name__, static_folder='.')
+app.secret_key = secrets.token_hex(32)
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'seal_archive.db')
+
+# ==================== 密码工具 ====================
+def hash_pwd(password):
+    if not password: return ''
+    return hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+ROLE_NAMES = {'admin': '系统管理员', 'editor': '印章管理员', 'clerk': '经办人'}
+
+# ==================== 鉴权装饰器 ====================
+PUBLIC_ROUTES = {'/api/login', '/api/session', '/api/init-status'}
+
+def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get('username'):
+            return jsonify({'error': '未登录'}), 401
+        return f(*args, **kwargs)
+    return decorated
+
+def admin_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get('username'):
+            return jsonify({'error': '未登录'}), 401
+        if session.get('role') != 'admin':
+            return jsonify({'error': '权限不足'}), 403
+        return f(*args, **kwargs)
+    return decorated
 
 # ==================== 数据库工具 ====================
 def get_db():
@@ -83,11 +113,22 @@ def init_db():
     CREATE TABLE IF NOT EXISTS settings (
         key TEXT PRIMARY KEY, value TEXT DEFAULT '{}'
     );
+    CREATE TABLE IF NOT EXISTS users (
+        username TEXT PRIMARY KEY,
+        password TEXT NOT NULL,
+        role TEXT NOT NULL,
+        display_name TEXT DEFAULT '',
+        must_change_pwd INTEGER DEFAULT 0
+    );
     -- Default settings
     INSERT OR IGNORE INTO settings (key, value) VALUES ('departments', '["院办公室","党委办公室","财务科","人事科","医务科","护理部","科教科","教学科","总务科","基建科","保卫科","审计科","纪检监察室","工会","团委"]');
     INSERT OR IGNORE INTO settings (key, value) VALUES ('approvers', '[{"name":"院长","level":2},{"name":"分管副院长","level":2},{"name":"办公室主任","level":1},{"name":"综合档案室","level":1}]');
     INSERT OR IGNORE INTO settings (key, value) VALUES ('default_seals', '[]');
     INSERT OR IGNORE INTO settings (key, value) VALUES ('doc_types', '["证明","合同","报告","申请","函件","其他"]');
+    -- Default users: admin/admin123, editor/edit123, clerk/(no password)
+    INSERT OR IGNORE INTO users (username, password, role, display_name, must_change_pwd) VALUES ('admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'admin', '系统管理员', 1);
+    INSERT OR IGNORE INTO users (username, password, role, display_name, must_change_pwd) VALUES ('editor', '84f3ee8f646c896e01ed7933bed50414ae8c8000e44880fa0e0d530e71f3b46e', 'editor', '印章管理员', 1);
+    INSERT OR IGNORE INTO users (username, password, role, display_name, must_change_pwd) VALUES ('clerk', '', 'clerk', '经办人', 0);
     ''')
     # 兼容旧数据库：增量添加新列
     migrations = [
@@ -102,6 +143,145 @@ def init_db():
     db.commit()
     db.close()
 
+# ==================== 认证 API ====================
+@app.route('/api/login', methods=['POST'])
+def api_login():
+    data = request.get_json(silent=True) or {}
+    username = (data.get('username') or '').strip()
+    password = data.get('password') or ''
+    db = get_db()
+    user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+    if not user:
+        return jsonify({'error': '用户不存在'}), 400
+    pwd_hash = hash_pwd(password)
+    # clerk 无密码，其他需验证密码
+    if user['role'] != 'clerk' and user['password'] != pwd_hash:
+        return jsonify({'error': '密码错误'}), 400
+    session['username'] = user['username']
+    session['role'] = user['role']
+    session['display_name'] = user['display_name'] or user['username']
+    result = {
+        'username': user['username'],
+        'role': user['role'],
+        'display_name': user['display_name'] or user['username'],
+        'role_name': ROLE_NAMES.get(user['role'], user['role']),
+        'must_change_pwd': bool(user['must_change_pwd'])
+    }
+    # 登录后清除 must_change_pwd 标记
+    if user['must_change_pwd']:
+        db.execute('UPDATE users SET must_change_pwd = 0 WHERE username = ?', (username,))
+        db.commit()
+    # 写入日志
+    db.execute("INSERT INTO logs (time, action, detail, user_name) VALUES (?,?,?,?)",
+               (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '用户登录', f'{user["username"]}({ROLE_NAMES.get(user["role"],"")}) 登录系统', user['username']))
+    db.commit()
+    return jsonify(result)
+
+@app.route('/api/logout', methods=['POST'])
+def api_logout():
+    username = session.pop('username', None)
+    if username:
+        db = get_db()
+        db.execute("INSERT INTO logs (time, action, detail, user_name) VALUES (?,?,?,?)",
+                   (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '用户登出', f'{username} 登出系统', username))
+        db.commit()
+    session.clear()
+    return jsonify({'ok': True})
+
+@app.route('/api/session', methods=['GET'])
+def api_session():
+    if not session.get('username'):
+        return jsonify({'logged_in': False})
+    return jsonify({
+        'logged_in': True,
+        'username': session['username'],
+        'role': session['role'],
+        'display_name': session.get('display_name', session['username']),
+        'role_name': ROLE_NAMES.get(session['role'], '')
+    })
+
+@app.route('/api/change-password', methods=['POST'])
+@login_required
+def api_change_password():
+    data = request.get_json(silent=True) or {}
+    old_pwd = data.get('old_password', '')
+    new_pwd = data.get('new_password', '')
+    confirm_pwd = data.get('confirm_password', '')
+    if not new_pwd or len(new_pwd) < 4:
+        return jsonify({'error': '新密码长度不能少于4位'}), 400
+    if new_pwd != confirm_pwd:
+        return jsonify({'error': '两次输入的新密码不一致'}), 400
+    db = get_db()
+    user = db.execute('SELECT * FROM users WHERE username = ?', (session['username'],)).fetchone()
+    if user['role'] != 'clerk' and user['password'] != hash_pwd(old_pwd):
+        return jsonify({'error': '旧密码错误'}), 400
+    db.execute('UPDATE users SET password = ? WHERE username = ?', (hash_pwd(new_pwd), session['username']))
+    db.execute("INSERT INTO logs (time, action, detail, user_name) VALUES (?,?,?,?)",
+               (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '修改密码', f'{session["username"]} 修改了密码', session['username']))
+    db.commit()
+    return jsonify({'ok': True, 'message': '密码修改成功'})
+
+@app.route('/api/users', methods=['GET'])
+@admin_required
+def api_get_users():
+    db = get_db()
+    rows = db.execute('SELECT username, role, display_name, must_change_pwd FROM users ORDER BY role, username').fetchall()
+    users = []
+    for r in rows:
+        users.append({'username': r['username'], 'role': r['role'], 'role_name': ROLE_NAMES.get(r['role'], r['role']),
+                       'display_name': r['display_name'] or r['username'], 'must_change_pwd': bool(r['must_change_pwd'])})
+    return jsonify(users)
+
+@app.route('/api/users', methods=['POST'])
+@admin_required
+def api_save_user():
+    data = request.get_json(silent=True) or {}
+    username = (data.get('username') or '').strip()
+    role = data.get('role', '')
+    display_name = (data.get('display_name') or '').strip()
+    password = data.get('password', '')
+    if not username or not role:
+        return jsonify({'error': '用户名和角色不能为空'}), 400
+    if role not in ROLE_NAMES:
+        return jsonify({'error': '无效的角色'}), 400
+    db = get_db()
+    existing = db.execute('SELECT username FROM users WHERE username = ?', (username,)).fetchone()
+    if existing:
+        # 编辑已有用户
+        sets = ['role = ?', 'display_name = ?']
+        params = [role, display_name]
+        if password:
+            sets.append('password = ?')
+            params.append(hash_pwd(password))
+        params.append(username)
+        db.execute(f'UPDATE users SET {", ".join(sets)} WHERE username = ?', params)
+        action = '编辑用户'
+    else:
+        # 新增用户
+        if not password and role != 'clerk':
+            return jsonify({'error': '新用户需要设置密码'}), 400
+        db.execute('INSERT INTO users (username, password, role, display_name, must_change_pwd) VALUES (?,?,?,?,?)',
+                   (username, hash_pwd(password) if password else '', role, display_name, 1 if password else 0))
+        action = '新增用户'
+    db.execute("INSERT INTO logs (time, action, detail, user_name) VALUES (?,?,?,?)",
+               (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), action, f'{session["username"]} {action}: {username}({ROLE_NAMES.get(role,"")})', session['username']))
+    db.commit()
+    return jsonify({'ok': True, 'message': f'用户 {username} 已保存'})
+
+@app.route('/api/users/<username>', methods=['DELETE'])
+@admin_required
+def api_delete_user(username):
+    if username == session['username']:
+        return jsonify({'error': '不能删除当前登录的用户'}), 400
+    db = get_db()
+    if not db.execute('SELECT username FROM users WHERE username = ?', (username,)).fetchone():
+        return jsonify({'error': '用户不存在'}), 400
+    db.execute('DELETE FROM users WHERE username = ?', (username,))
+    db.execute("INSERT INTO logs (time, action, detail, user_name) VALUES (?,?,?,?)",
+               (datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '删除用户', f'{session["username"]} 删除用户: {username}', session['username']))
+    db.commit()
+    return jsonify({'ok': True, 'message': f'用户 {username} 已删除'})
+
 # ==================== 通用 CRUD API ====================
 CATEGORIES = ['seals','carvings','usages','loans','recoveries','destroys','archives','logs']
 
@@ -112,6 +292,7 @@ TABLE_MAP = {
 }
 
 @app.route('/api/data/<category>', methods=['GET', 'POST'])
+@login_required
 def handle_category(category):
     if category not in CATEGORIES:
         return jsonify({'error': '无效分类'}), 400
@@ -144,6 +325,7 @@ def handle_category(category):
         return jsonify({'success': True, 'count': len(data) if isinstance(data, list) else 1})
 
 @app.route('/api/data/<category>/<item_id>', methods=['PUT', 'DELETE'])
+@login_required
 def handle_item(category, item_id):
     if category not in CATEGORIES:
         return jsonify({'error': '无效分类'}), 400
@@ -195,6 +377,7 @@ def insert_item(db, table, category, item):
 
 # ==================== 批量操作 ====================
 @app.route('/api/batch/<category>', methods=['POST'])
+@login_required
 def batch_operation(category):
     if category not in CATEGORIES:
         return jsonify({'error': '无效分类'}), 400
@@ -228,6 +411,7 @@ def batch_operation(category):
 
 # ==================== 设置管理 ====================
 @app.route('/api/settings', methods=['GET'])
+@login_required
 def get_settings():
     db = get_db()
     def get_setting(key, default):
@@ -246,6 +430,8 @@ def get_settings():
     })
 
 @app.route('/api/settings', methods=['POST'])
+@login_required
+@admin_required
 def save_settings():
     data = request.get_json()
     db = get_db()
@@ -258,6 +444,7 @@ def save_settings():
 
 # ==================== 印章默认设置（管理员配置常用印章） ====================
 @app.route('/api/settings/default-seals', methods=['GET'])
+@login_required
 def get_default_seals():
     """获取管理员设定的默认印章列表（供usage.html使用）"""
     db = get_db()
@@ -267,6 +454,8 @@ def get_default_seals():
     return jsonify([])
 
 @app.route('/api/settings/default-seals', methods=['POST'])
+@login_required
+@admin_required
 def save_default_seals():
     """管理员设定默认印章"""
     data = request.get_json()
@@ -279,6 +468,7 @@ def save_default_seals():
 
 # ==================== Usage 专用 API（供 usage.html 扫码登记页使用） ====================
 @app.route('/api/usage/search-seals', methods=['GET'])
+@login_required
 def search_seals():
     """搜索印章名称（usage.html下拉联想用）"""
     q = request.args.get('q', '').strip()
@@ -311,6 +501,7 @@ def search_seals():
     return jsonify([dict(r) for r in rows])
 
 @app.route('/api/usage/summary', methods=['GET'])
+@login_required
 def usage_summary():
     """获取使用登记摘要统计"""
     db = get_db()
@@ -336,6 +527,7 @@ def usage_summary():
     return jsonify(result)
 
 @app.route('/api/usage/record', methods=['POST'])
+@login_required
 def record_usage():
     """登记印章使用（支持多印章批量登记 + 借出类型）"""
     data = request.get_json()
@@ -384,6 +576,7 @@ def record_usage():
     return jsonify({'success': True, 'batchId': batch_id, 'count': len(records), 'records': records})
 
 @app.route('/api/usage/return/<uid>', methods=['PUT'])
+@login_required
 def return_usage(uid):
     """归还单个印章"""
     db = get_db()
@@ -395,6 +588,7 @@ def return_usage(uid):
     return jsonify({'success': True, 'checkIn': now_str})
 
 @app.route('/api/usage/return-batch/<batch_id>', methods=['PUT'])
+@login_required
 def return_batch(batch_id):
     """批量归还同一批次的所有印章"""
     db = get_db()
@@ -425,6 +619,7 @@ def init_status():
     return jsonify({'initialized': count > 0, 'sealCount': count})
 
 @app.route('/api/init', methods=['POST'])
+@login_required
 def initialize_data():
     """从data.json导入初始印章数据，并生成演示数据"""
     data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.json')
@@ -557,6 +752,7 @@ def initialize_data():
 
 # ==================== 导出 ====================
 @app.route('/api/export/<category>', methods=['GET'])
+@login_required
 def export_csv(category):
     if category not in CATEGORIES + ['all']:
         return jsonify({'error': '无效分类'}), 400
@@ -587,6 +783,7 @@ def export_csv(category):
 
 # ==================== 备份与恢复 ====================
 @app.route('/api/backup', methods=['GET'])
+@login_required
 def backup_data():
     """导出全部数据为JSON"""
     db = get_db()
@@ -603,6 +800,8 @@ def backup_data():
     return jsonify(backup)
 
 @app.route('/api/restore', methods=['POST'])
+@login_required
+@admin_required
 def restore_data():
     """从JSON备份恢复数据"""
     data = request.get_json()
@@ -632,6 +831,8 @@ def restore_data():
 
 # ==================== 清空数据 ====================
 @app.route('/api/reset', methods=['POST'])
+@login_required
+@admin_required
 def reset_data():
     db = get_db()
     for table in TABLE_MAP.values():

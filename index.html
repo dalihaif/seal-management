@@ -337,27 +337,88 @@ textarea.form-input{resize:vertical;min-height:70px;}
 .tag .tag-remove{cursor:pointer;font-size:14px;line-height:1;opacity:.6;}
 .tag .tag-remove:hover{opacity:1;color:var(--dan);}
 .badge-loan{background:#fce7f3!important;color:#9d174d!important;}
+/* ==================== LOGIN PAGE ==================== */
+.login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#1a56a0 0%,#0f3460 50%,#1a1a2e 100%);z-index:9999;display:flex;align-items:center;justify-content:center;animation:loginFadeIn .5s ease;}
+@keyframes loginFadeIn{from{opacity:0}to{opacity:1}}
+.login-card{background:#fff;border-radius:16px;box-shadow:0 25px 60px rgba(0,0,0,.3);padding:40px 36px;width:380px;max-width:90vw;animation:loginSlideUp .6s ease;}
+@keyframes loginSlideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.login-card .login-logo{text-align:center;margin-bottom:28px;}
+.login-card .login-logo .logo-icon{font-size:48px;display:block;margin-bottom:8px;}
+.login-card .login-logo h2{font-size:18px;color:var(--g900);font-weight:700;margin-bottom:4px;}
+.login-card .login-logo p{font-size:12px;color:var(--g400);}
+.login-field{margin-bottom:16px;}
+.login-field label{display:block;font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;}
+.login-field input{width:100%;padding:10px 14px;border:1px solid var(--g300);border-radius:var(--rad);font-size:14px;outline:none;transition:border-color .2s;font-family:inherit;}
+.login-field input:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(26,86,160,.1);}
+.login-btn{width:100%;padding:11px;border:none;border-radius:var(--rad);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;}
+.login-btn-primary{background:linear-gradient(135deg,var(--pri),var(--pri-d));color:#fff;}
+.login-btn-primary:hover{opacity:.9;transform:translateY(-1px);box-shadow:var(--shd-md);}
+.login-btn-ghost{background:transparent;color:var(--pri);border:1px solid var(--g300);margin-top:10px;}
+.login-btn-ghost:hover{background:var(--pri-l);border-color:var(--pri);}
+.login-divider{text-align:center;margin:18px 0;color:var(--g400);font-size:12px;position:relative;}
+.login-divider::before,.login-divider::after{content:'';position:absolute;top:50%;width:calc(50% - 50px);height:1px;background:var(--g200);}
+.login-divider::before{left:0;}.login-divider::after{right:0;}
+.login-error{color:var(--dan);font-size:12px;text-align:center;margin-bottom:12px;display:none;}
+.login-footer{text-align:center;margin-top:20px;font-size:11px;color:var(--g400);}
+/* User info in header */
+.user-info{display:flex;align-items:center;gap:8px;}
+.user-name{font-size:12px;font-weight:600;color:#fff;}
+.user-role-tag{font-size:11px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:999px;color:#fff;}
+/* Change password modal */
+.pwd-field{margin-bottom:14px;}
+.pwd-field label{display:block;font-size:12px;font-weight:600;color:var(--g700);margin-bottom:4px;}
+.pwd-field input{width:100%;padding:8px 12px;border:1px solid var(--g300);border-radius:var(--rad);font-size:13px;outline:none;font-family:inherit;}
+.pwd-field input:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(26,86,160,.1);}
+/* User management table */
+.user-table{width:100%;border-collapse:collapse;font-size:12px;}
+.user-table th{background:var(--g100);padding:8px 10px;text-align:left;font-weight:600;color:var(--g700);border-bottom:2px solid var(--g200);}
+.user-table td{padding:7px 10px;border-bottom:1px solid var(--g100);}
+.user-table tr:hover td{background:var(--pri-l);}
 </style>
 </head>
 <body>
 
-<!-- ==================== HEADER ==================== -->
+<!-- ==================== LOGIN OVERLAY ==================== -->
+<div id="loginOverlay" class="login-overlay" style="display:none">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="logo-icon">🔖</span>
+      <h2>大理大学第一附属医院</h2>
+      <p>印章管理系统</p>
+    </div>
+    <div class="login-error" id="loginError"></div>
+    <div class="login-field">
+      <label>用户名</label>
+      <input type="text" id="loginUsername" placeholder="请输入用户名" onkeydown="if(event.key==='Enter')document.getElementById('loginPassword').focus()">
+    </div>
+    <div class="login-field">
+      <label>密码</label>
+      <input type="password" id="loginPassword" placeholder="请输入密码" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn login-btn-primary" onclick="doLogin()">登 录</button>
+    <div class="login-divider">或</div>
+    <button class="login-btn login-btn-ghost" onclick="enterAsClerk()">以经办人身份进入（免密）</button>
+    <div class="login-footer">v3.6 · 印章管理系统</div>
+  </div>
+</div>
+
+<!-- ==================== MAIN APP ==================== -->
+<div id="mainApp">
 <header class="header">
   <h1>🔖 大理大学第一附属医院印章管理系统</h1>
   <div class="header-right">
     <div class="role-selector">
-      👤 <select id="roleSelect" onchange="switchRole(this.value)">
-        <option value="admin">系统管理员</option>
-        <option value="archivist">档案管理员</option>
-        <option value="approver">部门审批人</option>
-        <option value="clerk">普通经办人</option>
-      </select>
-      <span class="role-badge" id="roleBadge">管理员</span>
+      <div class="user-info">
+        <span class="user-name" id="headerUserName">经办人</span>
+        <span class="user-role-tag" id="headerRoleTag">经办人</span>
+      </div>
     </div>
-    <button class="btn btn-outline btn-sm" onclick="openImportModal()">📥 导入数据</button>
-    <button class="btn btn-outline btn-sm" onclick="exportCSV()">📤 导出</button>
-    <button class="btn btn-outline btn-sm" onclick="quickBackup()">💾 备份</button>
-    <button class="btn btn-primary btn-sm" onclick="openSealForm()">＋ 新增印章</button>
+    <button class="btn btn-outline btn-sm" onclick="openChangePwdModal()" id="btnChangePwd">🔑 修改密码</button>
+    <button class="btn btn-outline btn-sm" onclick="doLogout()">🚪 退出</button>
+    <button class="btn btn-outline btn-sm" onclick="openImportModal()" data-role="admin,editor" id="btnImport">📥 导入数据</button>
+    <button class="btn btn-outline btn-sm" onclick="exportCSV()" data-role="admin,editor" id="btnExport">📤 导出</button>
+    <button class="btn btn-outline btn-sm" onclick="quickBackup()" data-role="admin,editor" id="btnBackup">💾 备份</button>
+    <button class="btn btn-primary btn-sm" onclick="openSealForm()" data-role="admin,editor" id="btnAddSeal">＋ 新增印章</button>
   </div>
 </header>
 
@@ -374,7 +435,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
   <div class="tab" data-tab="archive" onclick="switchTab('archive',this)">🗄️ 归档记录</div>
   <div class="tab" data-tab="print" onclick="switchTab('print',this)">🖨️ 标签打印</div>
   <div class="tab" data-tab="stats" onclick="switchTab('stats',this)">📊 统计报表</div>
-  <div class="tab" data-tab="settings" onclick="switchTab('settings',this)">⚙️ 系统设置</div>
+  <div class="tab" data-tab="settings" onclick="switchTab('settings',this)" data-role="admin">⚙️ 系统设置</div>
   <div class="tab" data-tab="log" onclick="switchTab('log',this)">📜 操作日志</div>
 </div>
 
@@ -622,10 +683,22 @@ textarea.form-input{resize:vertical;min-height:70px;}
         <button class="btn btn-ghost btn-sm" onclick="reloadFromJSON()">🔄 重新加载内置初始数据</button>
       </div>
     </div>
+    <div class="setting-card" id="userMgmtCard">
+      <h3>👥 用户管理</h3>
+      <div style="display:flex;gap:6px;margin-bottom:10px;">
+        <button class="btn btn-success btn-sm" onclick="openUserForm()">＋ 新增用户</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="user-table">
+          <thead><tr><th>用户名</th><th>角色</th><th>显示名</th><th>操作</th></tr></thead>
+          <tbody id="userListBody"></tbody>
+        </table>
+      </div>
+    </div>
     <div class="setting-card">
       <h3>ℹ️ 系统信息</h3>
       <div style="font-size:12px;color:var(--g500);line-height:1.8;">
-        <div>版本：v3.3 API版（SQLite数据库）</div>
+        <div>版本：v3.6 API版（SQLite数据库 + 登录认证）</div>
         <div>数据存储：SQLite 数据库（seal_archive.db）</div>
         <div>部署方式：Python Flask + SQLite，运行 start.bat 启动</div>
         <div>印章数据源：印章目录.xlsx</div>
@@ -686,6 +759,39 @@ textarea.form-input{resize:vertical;min-height:70px;}
 <!-- ============================================ -->
 <!-- MODALS: 批量导入 -->
 <!-- ============================================ -->
+<!-- 修改密码弹窗 -->
+<div class="modal-overlay" id="changePwdModal" style="display:none">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header"><span class="modal-title">🔑 修改密码</span><button class="btn-icon" id="pwdCloseBtn" onclick="closeChangePwdModal()">✕</button></div>
+    <div class="modal-body" style="padding:20px;">
+      <div class="pwd-field"><label>旧密码</label><input type="password" id="pwdOld" placeholder="请输入旧密码"></div>
+      <div class="pwd-field"><label>新密码（至少4位）</label><input type="password" id="pwdNew" placeholder="请输入新密码"></div>
+      <div class="pwd-field"><label>确认新密码</label><input type="password" id="pwdConfirm" placeholder="请再次输入新密码" onkeydown="if(event.key==='Enter')doChangePwd()"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="doChangePwd()">确认修改</button>
+    </div>
+  </div>
+</div>
+
+<!-- 用户管理弹窗 -->
+<div class="modal-overlay" id="userFormModal" onclick="if(event.target===this)closeUserFormModal()" style="display:none">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><span class="modal-title" id="userModalTitle">新增用户</span><button class="btn-icon" onclick="closeUserFormModal()">✕</button></div>
+    <div class="modal-body" style="padding:20px;">
+      <div class="pwd-field"><label>用户名</label><input type="text" id="ufUsername" placeholder="登录用户名"></div>
+      <div class="pwd-field"><label>角色</label>
+        <select id="ufRole" style="width:100%;padding:8px 12px;border:1px solid var(--g300);border-radius:var(--rad);font-size:13px;font-family:inherit;">
+          <option value="admin">系统管理员</option>
+          <option value="editor">印章管理员</option>
+          <option value="clerk">经办人</option>
+        </select>
+      </div>
+      <div class="pwd-field"><label>显示名称</label><input type="text" id="ufDisplayName" placeholder="显示名称（可选）"></div>
+      <div class="pwd-field"><label>密码</label><input type="password" id="ufPassword" placeholder="请设置密码"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="saveUser()">保存</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="importSealModal" onclick="if(event.target===this)closeImportSeal()">
   <div class="modal modal-lg">
     <div class="modal-header"><span class="modal-title">📥 批量导入印章</span><button class="btn-icon" onclick="closeImportSeal()">✕</button></div>
@@ -1170,6 +1276,7 @@ let serverReady = false;
 
 async function apiGet(path) {
   const r = await fetch(API_BASE + path);
+  if (r.status === 401) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
   if (!r.ok) throw new Error('API error: ' + r.status);
   return r.json();
 }
@@ -1177,18 +1284,24 @@ async function apiPost(path, data) {
   const r = await fetch(API_BASE + path, {
     method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
   });
-  if (!r.ok) throw new Error('API error: ' + r.status);
+  if (r.status === 401) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
+  if (!r.ok) {
+    try { const err = await r.json(); throw new Error(err.error || 'API error: ' + r.status); }
+    catch(e) { if(e.message.startsWith('API error')) throw e; throw new Error('API error: ' + r.status); }
+  }
   return r.json();
 }
 async function apiPut(path, data) {
   const r = await fetch(API_BASE + path, {
     method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
   });
+  if (r.status === 401) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
   if (!r.ok) throw new Error('API error: ' + r.status);
   return r.json();
 }
 async function apiDelete(path) {
   const r = await fetch(API_BASE + path, { method: 'DELETE' });
+  if (r.status === 401) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
   if (!r.ok) throw new Error('API error: ' + r.status);
   return r.json();
 }
@@ -1247,27 +1360,32 @@ function log(action,detail=''){
   if(DATA.logs.length>500) DATA.logs.length=500;
   saveData('logs');
 }
-function getCurrentUser(){ const r=document.getElementById('roleSelect'); return r?r.options[r.selectedIndex].text:'系统管理员'; }
+function getCurrentUser(){ return LOGIN_USER?.display_name || '经办人'; }
 function confirmDialog(msg){ return confirm(msg); }
 
-// ==================== 权限管理 ====================
+// ==================== 登录 & 权限管理 ====================
+let LOGIN_USER = null; // { username, role, display_name, role_name }
+
 const PERMS = {
   admin: { all:true },
-  archivist: { sealView:true, sealEdit:true, sealDelete:true, carvingView:true, carvingEdit:true, usageView:true, usageEdit:true, loanView:true, loanEdit:true, recoveryView:true, recoveryEdit:true, destroyView:true, destroyEdit:true, archiveView:true, archiveEdit:true, print:true, stats:true, settings:true, log:true, import:true, export:true },
-  approver: { sealView:true, carvingView:true, usageView:true, loanView:true, loanApprove:true, recoveryView:true, destroyView:true, destroyApprove:true, archiveView:true, print:true, stats:true, log:true },
-  clerk: { sealView:true, carvingView:true, usageView:true, usageEdit:true, loanView:true, loanEdit:true, recoveryView:true, print:true, stats:true }
+  editor: { sealView:true, sealEdit:true, sealDelete:true, carvingView:true, carvingEdit:true, usageView:true, usageEdit:true, loanView:true, loanEdit:true, recoveryView:true, recoveryEdit:true, destroyView:true, destroyEdit:true, destroyApprove:true, archiveView:true, archiveEdit:true, print:true, stats:true, log:true, import:true, export:true },
+  clerk: { sealView:true, usageView:true, usageEdit:true, loanView:true, loanEdit:true, print:true, stats:true, log:true }
 };
-function can(action){ if(CURRENT_ROLE==='admin')return true; return !!(PERMS[CURRENT_ROLE]&&PERMS[CURRENT_ROLE][action]); }
+function can(action){ if(!LOGIN_USER)return false; if(LOGIN_USER.role==='admin')return true; return !!(PERMS[LOGIN_USER.role]&&PERMS[LOGIN_USER.role][action]); }
 function switchRole(v){
-  CURRENT_ROLE=v; const b=document.getElementById('roleBadge');
-  const badges={admin:'role-admin',archivist:'role-archivist',approver:'role-approver',clerk:'role-clerk'};
-  const labels={admin:'管理员',archivist:'档案员',approver:'审批人',clerk:'经办人'};
-  b.className='role-badge '+badges[v]; b.textContent=labels[v];
+  CURRENT_ROLE=v;
   applyRoleUI(); refreshAll();
 }
 function applyRoleUI(){
+  if(!LOGIN_USER) return;
   const btns=document.querySelectorAll('[data-role]');
-  btns.forEach(b=>{ const roles=b.dataset.role.split(','); b.style.display=roles.includes(CURRENT_ROLE)||CURRENT_ROLE==='admin'?'':'none'; });
+  btns.forEach(b=>{ const roles=b.dataset.role.split(','); b.style.display=roles.includes(LOGIN_USER.role)?'':'none'; });
+  // 更新 header 用户信息
+  document.getElementById('headerUserName').textContent = LOGIN_USER.display_name;
+  document.getElementById('headerRoleTag').textContent = LOGIN_USER.role_name;
+  // 经办人隐藏修改密码按钮
+  const cpb = document.getElementById('btnChangePwd');
+  if(cpb) cpb.style.display = LOGIN_USER.role === 'clerk' ? 'none' : '';
 }
 function refreshAll(){ applySealFilter(); renderCarvingList(); renderUsageList(); renderLoanList(); renderRecoveryList(); renderDestroyList(); renderArchiveList(); updateAllBadges(); }
 
@@ -2906,6 +3024,7 @@ function renderSettings(){
   const approvers=DATA.settings.approvers||[];
   document.getElementById('approverList').innerHTML=approvers.map((a,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;"><span>${escapeHtml(a.name)} <span style="color:var(--g400);font-size:10px;">${a.level===2?'二级(院领导)':'一级(部门)'}</span></span><button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="removeApprover(${i})">✕</button></div>`).join('');
   renderDefaultSealList();
+  renderUserList();
 }
 
 function addDept(){
@@ -2930,6 +3049,93 @@ function addApprover(){
   document.getElementById('newApprover').value=''; toast('审批人已添加','success');
 }
 function removeApprover(i){ DATA.settings.approvers.splice(i,1); saveData('settings'); renderSettings(); toast('已删除','success'); }
+
+// ==================== 用户管理 ====================
+async function renderUserList(){
+  try {
+    const users = await fetch('/api/users').then(r=>r.json());
+    const tbody = document.getElementById('userListBody');
+    if(!tbody) return;
+    tbody.innerHTML = users.map(u=>`<tr>
+      <td><strong>${escapeHtml(u.username)}</strong></td>
+      <td>${escapeHtml(u.role_name)}</td>
+      <td>${escapeHtml(u.display_name)}</td>
+      <td>
+        <button class="btn btn-ghost btn-sm" onclick='openUserForm(${JSON.stringify(u)})'>✏️ 编辑</button>
+        <button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteUser('${escapeHtml(u.username)}')" ${u.username===LOGIN_USER?.username?'disabled':''}>🗑️</button>
+      </td>
+    </tr>`).join('');
+  } catch(e){ console.warn('加载用户列表失败',e); }
+}
+
+function openUserForm(user){
+  const isNew = !user;
+  document.getElementById('userModalTitle').textContent = isNew ? '新增用户' : '编辑用户';
+  document.getElementById('ufUsername').value = user?.username || '';
+  document.getElementById('ufUsername').disabled = !isNew;
+  document.getElementById('ufRole').value = user?.role || 'clerk';
+  document.getElementById('ufDisplayName').value = user?.display_name || '';
+  document.getElementById('ufPassword').value = '';
+  document.getElementById('ufPassword').placeholder = isNew ? '请设置密码' : '留空则不修改';
+  document.getElementById('userFormModal').style.display='flex';
+}
+
+function closeUserFormModal(){ document.getElementById('userFormModal').style.display='none'; }
+
+async function saveUser(){
+  const username = document.getElementById('ufUsername').value.trim();
+  const role = document.getElementById('ufRole').value;
+  const display_name = document.getElementById('ufDisplayName').value.trim();
+  const password = document.getElementById('ufPassword').value;
+  if(!username||!role){ toast('用户名和角色不能为空','error'); return; }
+  try {
+    const r = await apiPost('/users', { username, role, display_name, password });
+    if(r.error){ toast(r.error,'error'); return; }
+    toast(r.message,'success');
+    closeUserFormModal();
+    renderUserList();
+  } catch(e){ toast('保存失败：'+e.message,'error'); }
+}
+
+async function deleteUser(username){
+  if(!confirmDialog(`确定删除用户「${username}」？`)) return;
+  try {
+    const r = await fetch('/api/users/'+encodeURIComponent(username),{method:'DELETE'}).then(r=>r.json());
+    if(r.error){ toast(r.error,'error'); return; }
+    toast(r.message,'success');
+    renderUserList();
+  } catch(e){ toast('删除失败','error'); }
+}
+
+// ==================== 修改密码 ====================
+function openChangePwdModal(isForce){
+  document.getElementById('pwdOld').value='';
+  document.getElementById('pwdNew').value='';
+  document.getElementById('pwdConfirm').value='';
+  const modal = document.getElementById('changePwdModal');
+  modal.style.display='flex';
+  // 如果是强制修改，隐藏关闭按钮
+  const closeBtn = document.getElementById('pwdCloseBtn');
+  if(closeBtn) closeBtn.style.display = isForce ? 'none' : '';
+}
+
+function closeChangePwdModal(){
+  document.getElementById('changePwdModal').style.display='none';
+}
+
+async function doChangePwd(){
+  const old_pwd = document.getElementById('pwdOld').value;
+  const new_pwd = document.getElementById('pwdNew').value;
+  const confirm_pwd = document.getElementById('pwdConfirm').value;
+  if(!new_pwd||new_pwd.length<4){ toast('新密码至少4位','error'); return; }
+  if(new_pwd!==confirm_pwd){ toast('两次输入的密码不一致','error'); return; }
+  try {
+    const r = await apiPost('/change-password', { old_password:old_pwd, new_password:new_pwd, confirm_password:confirm_pwd });
+    if(r.error){ toast(r.error,'error'); return; }
+    toast('密码修改成功','success');
+    closeChangePwdModal();
+  } catch(e){ toast('修改失败','error'); }
+}
 
 function renderDefaultSealList(){
   const container = document.getElementById('defaultSealList');
@@ -3321,8 +3527,83 @@ function loadSheetJS(cb){
 function quickBackup(){
   exportAllData();
 }
+
+// ==================== 登录相关 ====================
+function showLogin(){
+  document.getElementById('loginOverlay').style.display='flex';
+  document.getElementById('mainApp').style.display='none';
+}
+function hideLogin(){
+  document.getElementById('loginOverlay').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+}
+
+async function doLogin(){
+  const username = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  if(!username){ errEl.textContent='请输入用户名'; errEl.style.display='block'; return; }
+  try {
+    const r = await apiPost('/login', { username, password });
+    if(r.error){ errEl.textContent=r.error; errEl.style.display='block'; return; }
+    LOGIN_USER = r;
+    onLoginSuccess();
+  } catch(e) {
+    errEl.textContent='登录失败：'+e.message; errEl.style.display='block';
+  }
+}
+
+async function enterAsClerk(){
+  try {
+    const r = await apiPost('/login', { username:'clerk', password:'' });
+    if(r.error){ toast(r.error,'error'); return; }
+    LOGIN_USER = r;
+    onLoginSuccess();
+  } catch(e) { toast('进入失败：'+e.message,'error'); }
+}
+
+async function doLogout(){
+  if(!confirm('确定要退出登录吗？')) return;
+  try { await apiPost('/logout', {}); } catch(e) {}
+  LOGIN_USER = null;
+  document.getElementById('loginUsername').value='';
+  document.getElementById('loginPassword').value='';
+  document.getElementById('loginError').style.display='none';
+  showLogin();
+}
+
+function onLoginSuccess(){
+  hideLogin();
+  CURRENT_ROLE = LOGIN_USER.role;
+  applyRoleUI();
+  if(LOGIN_USER.must_change_pwd){
+    setTimeout(()=>openChangePwdModal(true), 300);
+  }
+}
+
+async function checkSession(){
+  try {
+    const r = await fetch('/api/session').then(r=>r.json());
+    if(r.logged_in){
+      LOGIN_USER = r;
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
 // ==================== 初始化 ====================
 async function init(){
+  // 检查已有登录
+  const hasSession = await checkSession();
+  if(!hasSession){
+    showLogin();
+    return;
+  }
+  await afterLogin();
+}
+
+async function afterLogin(){
   const connected = await loadAll();
   if (!connected) {
     document.getElementById('sealTableBody').innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--dan);padding:32px;">⚠️ 无法连接后端服务<br><small>请运行 start.bat 或执行 python server.py 启动服务</small></td></tr>';
@@ -3335,13 +3616,13 @@ async function init(){
       if(r.count) { await loadAll(); }
     } catch(e) { console.warn('自动初始化失败:', e.message); }
   }
-  switchRole('admin');
+  switchRole(LOGIN_USER.role);
   renderSealTable(); updateSealStats(); updateAllBadges();
   populateDeptSelects();
   // Close modals on escape
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ document.querySelectorAll('.modal-overlay').forEach(m=>m.style.display='none'); } });
   log('系统启动');
-  console.log('🔖 大理大学第一附属医院印章管理系统 v3.4 已就绪（API模式）');
+  console.log('🔖 大理大学第一附属医院印章管理系统 v3.6 已就绪（API模式）');
   // 初始化所有类型下拉列表
   document.getElementById('sfType').innerHTML = typeOptionsHTML('', '请选择');
   document.getElementById('beType').innerHTML = typeOptionsWithBlank('', '— 不修改 —');
@@ -3349,4 +3630,5 @@ async function init(){
 }
 document.addEventListener('DOMContentLoaded',init);
 </script>
+</div><!-- end mainApp -->
 </html>
