@@ -424,7 +424,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
 
 <!-- ==================== TAB NAVIGATION ==================== -->
 <div class="tab-row" style="border-bottom:none">
-  <div class="tab active" data-tab="list" onclick="switchTab('list',this)">📋 档案目录</div>
+  <div class="tab active" data-tab="list" onclick="switchTab('list',this)">📋 印章目录</div>
   <div class="tab" data-tab="carving" onclick="switchTab('carving',this)">🔨 刻制管理 <span class="tab-badge" id="tbCarving" style="display:none">0</span></div>
   <div class="tab" data-tab="usage" onclick="switchTab('usage',this)">📝 使用登记 <span class="tab-badge" id="tbUsage" style="display:none">0</span></div>
   <div class="tab" data-tab="loan" onclick="switchTab('loan',this)">🔄 借用管理 <span class="tab-badge" id="tbLoan" style="display:none">0</span></div>
@@ -441,7 +441,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
 
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- ==================== TAB 1: 档案目录 ==================== -->
+<!-- ==================== TAB 1: 印章目录 ==================== -->
 <div id="tabList" class="content">
   <div class="stats-row">
     <div class="stat-card" onclick="quickFilterSeal('')"><div class="stat-value" id="st-total">0</div><div class="stat-label">📌 印章总数</div></div>
@@ -558,7 +558,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
   <div class="dual-toolbar">
     <div><h2 style="font-size:15px;font-weight:700;">🔍 印章回收核验</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">印章收回检查、状况评估、处置建议</p></div>
     <button class="btn btn-info" onclick="openRecoveryForm()">＋ 新增核验</button>
-    <div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="recoveryBatchDelete()">🗑️ 批量删除</button><button class="btn btn-ghost btn-sm" onclick="exportRecoveryCSV()">📤 导出</button></div>
+    <div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="recoveryBatchAction()">✏️ 批量修改</button><button class="btn btn-ghost btn-sm" onclick="recoveryBatchDelete()">🗑️ 批量删除</button><button class="btn btn-ghost btn-sm" onclick="exportRecoveryCSV()">📤 导出</button></div>
   </div>
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="recoverySearch" placeholder="搜索印章名称..." oninput="renderRecoveryList()"></div>
@@ -597,7 +597,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
 <div id="tabPrint" class="content" style="display:none">
   <div class="print-panel">
     <h3>🖨️ 印章标签打印</h3>
-    <p style="font-size:12px;color:var(--g500);margin-bottom:8px;">选择印章生成标签，也可从档案目录勾选后点击「批量打印」跳转。</p>
+    <p style="font-size:12px;color:var(--g500);margin-bottom:8px;">选择印章生成标签，也可从印章目录勾选后点击「批量打印」跳转。</p>
     <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;align-items:center;">
       <button class="btn btn-sm btn-ghost" onclick="selectRecentForPrint()">📌 最新批次</button>
       <button class="btn btn-sm btn-ghost" onclick="selectAllForPrint()">全选</button>
@@ -731,7 +731,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-row-3">
         <div class="form-group"><label class="form-label">编号</label><input type="number" id="sfId" class="form-input" placeholder="自动分配"></div>
         <div class="form-group"><label class="form-label">印章类型</label><select id="sfType" class="form-input"></select></div>
-        <div class="form-group"><label class="form-label">状态</label><select id="sfStatus" class="form-input"><option value="在用">在用</option><option value="停用">停用</option><option value="已废止">已废止</option><option value="已销毁">已销毁</option></select></div>
+        <div class="form-group"><label class="form-label">状态</label><select id="sfStatus" class="form-input"><option value="在用">在用</option><option value="停用">停用</option><option value="已废止">已废止</option><option value="已销毁">已销毁</option><option value="已归档">已归档</option></select></div>
       </div>
       <div class="form-group"><label class="form-label">印章名称 <span class="req">*</span></label><input type="text" id="sfName" class="form-input" placeholder="请输入印章全称"></div>
       <div class="form-row">
@@ -867,7 +867,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
   <div class="modal">
     <div class="modal-header"><span class="modal-title">📋 印章登记发放</span><button class="btn-icon" onclick="closeSealRegisterModal()">✕</button></div>
     <div class="modal-body">
-      <div class="modal-banner">🔨 刻制已完成，请填写以下信息将印章正式纳入档案目录</div>
+      <div class="modal-banner">🔨 刻制已完成，请填写以下信息将印章正式纳入印章目录</div>
       <input type="hidden" id="srCarvingId">
       <div class="form-group"><label class="form-label">印章名称</label><input type="text" id="srSealName" class="form-input" readonly style="background:var(--g100);font-weight:700;"></div>
       <div class="form-row"><div class="form-group"><label class="form-label">类型</label><input type="text" id="srType" class="form-input" readonly style="background:var(--g100);"></div>
@@ -878,7 +878,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-row"><div class="form-group"><label class="form-label">印章编号（可选）</label><input type="text" id="srCustomId" class="form-input" placeholder="留空自动生成"></div>
       <div class="form-group"><label class="form-label">备注</label><input type="text" id="srRemark" class="form-input" placeholder="登记备注"></div></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeSealRegisterModal()">稍后处理</button><button class="btn btn-primary" onclick="confirmSealRegister()">✅ 确认登记并纳入档案目录</button></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeSealRegisterModal()">稍后处理</button><button class="btn btn-primary" onclick="confirmSealRegister()">✅ 确认登记并纳入印章目录</button></div>
   </div>
 </div>
 
@@ -1009,11 +1009,25 @@ textarea.form-input{resize:vertical;min-height:70px;}
 </div>
 
 <!-- ============================================ -->
+<!-- 批量修改回收核验记录弹窗 -->
+<div class="modal-overlay" id="recoveryBatchListModal" onclick="if(event.target===this)closeRecoveryBatchListModal()">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><span class="modal-title">✏️ 批量修改核验记录</span><button class="btn-icon" onclick="closeRecoveryBatchListModal()">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--g500);margin-bottom:12px;">已选 <strong id="rblCount">0</strong> 条记录，将统一修改以下字段（留空则不修改）：</p>
+      <div class="form-group"><label class="form-label">修改核验结果</label><select id="rblResult" class="form-input"><option value="">不修改</option><option value="通过">✅ 通过</option><option value="需更换">🔧 需更换</option><option value="直接报废">🗑️ 直接报废</option><option value="归档">📚 归档</option></select></div>
+      <div class="form-group"><label class="form-label">修改印章状况</label><select id="rblCondition" class="form-input"><option value="">不修改</option><option value="完好">完好</option><option value="轻微磨损">轻微磨损</option><option value="严重磨损">严重磨损</option><option value="损毁">损毁</option></select></div>
+      <div class="form-group"><label class="form-label">追加备注</label><textarea id="rblRemark" class="form-input" rows="2" placeholder="留空则不修改"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeRecoveryBatchListModal()">取消</button><button class="btn btn-info" onclick="confirmRecoveryBatchAction()">✅ 确认修改</button></div>
+  </div>
+</div>
+
 <!-- MODALS: 回收核验 -->
 <!-- ============================================ -->
 <div class="modal-overlay" id="recoveryModal" onclick="if(event.target===this)closeRecoveryModal()">
   <div class="modal">
-    <div class="modal-header"><span class="modal-title">🔍 印章回收核验</span><button class="btn-icon" onclick="closeRecoveryModal()">✕</button></div>
+    <div class="modal-header"><span class="modal-title" id="recoveryModalTitle">🔍 印章回收核验</span><button class="btn-icon" onclick="closeRecoveryModal()">✕</button></div>
     <div class="modal-body">
       <div class="form-row"><div class="form-group"><label class="form-label">选择印章 <span class="req">*</span></label>
         <div style="position:relative"><input type="text" id="rcSealInput" class="form-input" placeholder="输入印章名称搜索..." oninput="suggestSeals('rc')" autocomplete="off"><div class="suggest-dropdown" id="rcSealSuggest"></div></div>
@@ -1082,7 +1096,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-row"><div class="form-group"><label class="form-label">经办人</label><input type="text" id="baHandler" class="form-input"></div>
       <div class="form-group"><label class="form-label">原因</label><select id="baReason" class="form-input"><option value="机构撤销">机构撤销</option><option value="更名换章">更名换章</option><option value="印章损毁">印章损毁</option><option value="职能调整">职能调整</option><option value="已销毁">已销毁</option><option value="其他">其他</option></select></div></div>
       <div class="form-group"><label class="form-label">归档说明</label><textarea id="baNote" class="form-input" rows="2" placeholder="可选，将应用到所有条目"></textarea></div>
-      <div class="form-group"><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;"><input type="checkbox" id="baUpdateSeal" checked> 同步更新档案目录中所有印章状态为「已归档」</label></div>
+      <div class="form-group"><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;"><input type="checkbox" id="baUpdateSeal" checked> 同步更新印章目录中所有印章状态为「已归档」</label></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeBulkArchiveModal()">取消</button>
@@ -1106,7 +1120,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-row"><div class="form-group"><label class="form-label">经办人</label><input type="text" id="arHandler" class="form-input"></div>
       <div class="form-group"><label class="form-label">原因</label><select id="arReason" class="form-input"><option value="机构撤销">机构撤销</option><option value="更名换章">更名换章</option><option value="印章损毁">印章损毁</option><option value="职能调整">职能调整</option><option value="已销毁">已销毁</option><option value="其他">其他</option></select></div></div>
       <div class="form-group"><label class="form-label">归档说明</label><textarea id="arNote" class="form-input" rows="2"></textarea></div>
-      <div class="form-group"><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;"><input type="checkbox" id="arUpdateSeal" checked> 同步更新档案目录中该印章状态</label></div>
+      <div class="form-group"><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;"><input type="checkbox" id="arUpdateSeal" checked> 同步更新印章目录中该印章状态</label></div>
     </div>
     <div class="modal-footer"><button class="btn btn-ghost" onclick="closeArchiveModal()">取消</button><button class="btn btn-purple" onclick="printArchiveCert()" style="margin-right:auto;">🖨️ 打印归档证明</button><button class="btn btn-success" onclick="saveArchive()">💾 保存归档</button></div>
   </div>
@@ -1121,7 +1135,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <img id="qrImage" src="" alt="QR Code" style="width:200px;height:200px;border:1px solid var(--g200);border-radius:8px;">
       <p style="font-size:10px;color:var(--g400);margin-top:8px;word-break:break-all;" id="qrUrl"></p>
       <button class="btn btn-ghost btn-sm btn-full" onclick="copyQRLink()" style="margin-top:8px;">📋 复制链接</button>
-      <p style="font-size:10px;color:var(--g400);margin-top:8px;">提示：请将 usage.html 部署到Web服务器后扫描</p>
+      <p style="font-size:10px;color:var(--g400);margin-top:8px;">提示：手机和电脑在同一局域网内扫码即可直接访问</p>
     </div>
   </div>
 </div>
@@ -1274,17 +1288,18 @@ let sealEditId = null;
 const API_BASE = window.location.origin + '/api';
 let serverReady = false;
 
+function apiHeaders(extra={}){ return {'Content-Type':'application/json', ...extra}; }
 async function apiGet(path) {
-  const r = await fetch(API_BASE + path);
-  if (r.status === 401) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
+  const r = await fetch(API_BASE + path, { headers: apiHeaders() });
+  if (r.status === 401 && !(LOGIN_USER && LOGIN_USER.username==='guest')) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
   if (!r.ok) throw new Error('API error: ' + r.status);
   return r.json();
 }
 async function apiPost(path, data) {
   const r = await fetch(API_BASE + path, {
-    method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+    method: 'POST', headers: apiHeaders(), body: JSON.stringify(data)
   });
-  if (r.status === 401) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
+  if (r.status === 401 && !(LOGIN_USER && LOGIN_USER.username==='guest')) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
   if (!r.ok) {
     try { const err = await r.json(); throw new Error(err.error || 'API error: ' + r.status); }
     catch(e) { if(e.message.startsWith('API error')) throw e; throw new Error('API error: ' + r.status); }
@@ -1293,15 +1308,15 @@ async function apiPost(path, data) {
 }
 async function apiPut(path, data) {
   const r = await fetch(API_BASE + path, {
-    method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+    method: 'PUT', headers: apiHeaders(), body: JSON.stringify(data)
   });
-  if (r.status === 401) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
+  if (r.status === 401 && !(LOGIN_USER && LOGIN_USER.username==='guest')) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
   if (!r.ok) throw new Error('API error: ' + r.status);
   return r.json();
 }
 async function apiDelete(path) {
-  const r = await fetch(API_BASE + path, { method: 'DELETE' });
-  if (r.status === 401) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
+  const r = await fetch(API_BASE + path, { method: 'DELETE', headers: apiHeaders() });
+  if (r.status === 401 && !(LOGIN_USER && LOGIN_USER.username==='guest')) { LOGIN_USER = null; showLogin(); throw new Error('未登录'); }
   if (!r.ok) throw new Error('API error: ' + r.status);
   return r.json();
 }
@@ -1396,11 +1411,17 @@ function switchTab(tab,el){
   document.querySelectorAll('.content').forEach(d=>d.style.display='none');
   const target=document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1));
   if(target){ target.style.display='block'; }
+  if(tab==='list') applySealFilter();
+  if(tab==='carving') renderCarvingList();
+  if(tab==='usage') renderUsageList();
+  if(tab==='loan') renderLoanList();
+  if(tab==='recovery') renderRecoveryList();
+  if(tab==='destroy') renderDestroyList();
+  if(tab==='archive') renderArchiveList();
   if(tab==='stats') renderAllCharts();
   if(tab==='log') renderLogList();
   if(tab==='settings') renderSettings();
   if(tab==='print'){ updatePrintFromSelection(); renderPrintChips(); renderPrintPreview(); }
-  if(tab==='list') applySealFilter();
 }
 
 // ==================== 印章目录 CRUD ====================
@@ -1920,7 +1941,7 @@ function confirmSealRegister(){
   saveData('seals'); renderSealTable(); updateSealStats();
   closeSealRegisterModal();
   log('登记发放',`${c.name} → 保管人:${keeper} 位置:${location}${exists?' (覆盖更换)':''}`);
-  toast(exists?`印章「${c.name}」已覆盖更换并更新档案记录`:'印章已登记发放并纳入档案目录','success');
+  toast(exists?`印章「${c.name}」已覆盖更换并更新档案记录`:'印章已登记发放并纳入印章目录','success');
 }
 
 function deleteCarving(id){
@@ -2402,7 +2423,9 @@ function renderRecoveryList(){
   const someChecked = list.some(r => sel.has(String(r.id)));
   const checkAllHtml = list.length ? `<label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--g500);cursor:pointer;margin-bottom:6px;"><input type="checkbox" ${allChecked?'checked':''} ${someChecked&&!allChecked?'style="opacity:.6"':''} onchange="toggleRecoverySelectAll(this.checked)" style="cursor:pointer;accent-color:var(--pri);">全选（已选 ${sel.size} 项）</label>` : '';
   document.getElementById('recoveryList').innerHTML=checkAllHtml+list.map(r=>{
-    let actions=''; actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteRecovery('${r.id}')">🗑️</button>`;
+    let actions='';
+    actions+=`<button class="btn btn-ghost btn-sm" onclick="editRecovery('${r.id}')">✏️</button>`;
+    actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteRecovery('${r.id}')">🗑️</button>`;
     const checked = sel.has(String(r.id));
     return `<div class="card" style="${checked?'border-color:var(--pri);background:rgba(79,70,229,.04);':''}"><div style="display:flex;justify-content:space-between;align-items:start;">
       <div style="display:flex;align-items:center;gap:8px;"><input type="checkbox" ${checked?'checked':''} onchange="toggleRecoverySelect('${r.id}',this.checked)" style="cursor:pointer;accent-color:var(--pri);"><strong>${escapeHtml(r.sealName)}</strong><span class="${resultMap[r.result]||''} status-chip">${r.result}</span></div>
@@ -2412,14 +2435,30 @@ function renderRecoveryList(){
   }).join('')||'<div class="card" style="text-align:center;color:var(--g400);">暂无核验记录</div>';
 }
 
-function openRecoveryForm(){
-  document.getElementById('rcSealInput').value=''; document.getElementById('rcSealId').value='';
-  document.getElementById('rcDate').value=today(); document.getElementById('rcChecker').value=''; document.getElementById('rcNote').value='';
+function openRecoveryForm(id){
+  document.getElementById('recoveryModalTitle').textContent = id ? '🔍 编辑核验记录' : '🔍 印章回收核验';
   window._recoveryBulkMode = false;
   window._recoveryBulkIds = null;
+  if(id){
+    const r=DATA.recoveries.find(d=>d.id===id); if(!r)return;
+    document.getElementById('rcSealInput').value=r.sealName||'';
+    document.getElementById('rcSealId').value=r.sealId||'';
+    document.getElementById('rcDate').value=r.date||today();
+    document.getElementById('rcChecker').value=r.checker||'';
+    document.getElementById('rcCondition').value=r.condition||'完好';
+    document.getElementById('rcResult').value=r.result||'通过';
+    document.getElementById('rcNote').value=r.note||'';
+    window._editingRecoveryId = id;
+  } else {
+    document.getElementById('rcSealInput').value=''; document.getElementById('rcSealId').value='';
+    document.getElementById('rcDate').value=today(); document.getElementById('rcChecker').value=''; document.getElementById('rcNote').value='';
+    document.getElementById('rcCondition').value='完好'; document.getElementById('rcResult').value='通过';
+    window._editingRecoveryId = null;
+  }
   document.getElementById('recoveryModal').style.display='flex';
 }
 function closeRecoveryModal(){ document.getElementById('recoveryModal').style.display='none'; }
+function editRecovery(id){ openRecoveryForm(id); }
 function saveRecovery(){
   const sealNames = document.getElementById('rcSealInput').value.trim();
   const sealIds = document.getElementById('rcSealId').value.trim();
@@ -2429,6 +2468,28 @@ function saveRecovery(){
   const result = document.getElementById('rcResult').value;
   const note = document.getElementById('rcNote').value.trim();
   if(!sealNames||!checker){ toast('请填写印章名称和核验人','error'); return; }
+
+  // 编辑模式：更新已有记录
+  const editId = window._editingRecoveryId;
+  if(editId){
+    const existing = DATA.recoveries.find(d=>d.id===editId);
+    if(existing){
+      existing.sealId = sealIds;
+      existing.sealName = sealNames;
+      existing.date = date;
+      existing.checker = checker;
+      existing.condition = condition;
+      existing.result = result;
+      existing.note = note;
+      saveData('recoveries');
+      closeRecoveryModal();
+      window._editingRecoveryId = null;
+      renderRecoveryList();
+      toast('核验记录已更新','success');
+      log('修改核验记录', sealNames);
+      return;
+    }
+  }
 
   const isBulk = window._recoveryBulkMode && window._recoveryBulkIds && window._recoveryBulkIds.length > 0;
   let ids = [];
@@ -2472,10 +2533,26 @@ function saveRecovery(){
 
   // 根据核验结果分流到对应模块
   if (result === '需更换') {
-    // 为每枚印章创建刻制申请，并跳转刻制管理
+    // 为每枚印章创建归档记录（旧章归档），同时创建刻制申请
     let createdCount = 0;
     for (let i = 0; i < names.length; i++) {
       const seal = DATA.seals.find(s => s.name === names[i] || String(s.id) === String(ids[i]));
+      // 旧章归档记录
+      if (seal) {
+        const archive = {
+          id: genId(),
+          sealId: ids[i] || '',
+          sealName: names[i],
+          endDate: seal.validUntil || seal.startDate || '',
+          archiveDate: date,
+          handler: checker,
+          reason: '需更换',
+          note: '回收核验结果为需更换，旧章归档'
+        };
+        DATA.archives.unshift(archive);
+        seal.status = '已归档';
+      }
+      // 创建新章刻制申请
       const carving = {
         id: genId(),
         name: names[i],
@@ -2495,11 +2572,16 @@ function saveRecovery(){
       DATA.carvings.unshift(carving);
       createdCount++;
     }
+    saveData('archives');
     saveData('carvings');
+    saveData('seals');
     renderRecoveryList();
     renderCarvingList();
+    renderArchiveList();
+    renderSealTable();
+    updateSealStats();
     updateAllBadges();
-    toast(`核验完成：${names.length}枚印章需更换，已自动创建刻制申请`, 'success');
+    toast(`核验完成：${names.length}枚印章需更换，旧章已归档并创建刻制申请`, 'success');
   } else if (result === '直接报废') {
     // 为每枚印章创建作废销毁记录，并跳转作废销毁
     let createdCount = 0;
@@ -2544,7 +2626,7 @@ function saveRecovery(){
         id: genId(),
         sealId: ids[i] || '',
         sealName: names[i],
-        endDate: seal ? seal.validUntil || seal.startDate : '',
+        endDate: seal ? (seal.validUntil || seal.startDate) : '',
         archiveDate: date,
         handler: checker,
         reason: '回收核验归档',
@@ -2571,7 +2653,7 @@ function saveRecovery(){
     toast(`核验记录已保存：${result}`, 'success');
   }
 
-  // 清除档案目录选择
+  // 清除印章目录选择
   if (isBulk) {
     sealSelection.clear();
     renderSealTable();
@@ -2596,6 +2678,93 @@ function toggleRecoverySelectAll(checked){
   if(checked) list.forEach(r=>window._recoverySelection.add(String(r.id)));
   else list.forEach(r=>window._recoverySelection.delete(String(r.id)));
   renderRecoveryList();
+}
+function recoveryBatchAction(){
+  const sel=window._recoverySelection;
+  if(!sel||!sel.size){ toast('请先勾选要修改的核验记录','error'); return; }
+  const ids=[...sel]; const count=ids.length;
+  document.getElementById('rblCount').textContent=count;
+  document.getElementById('rblResult').value='';
+  document.getElementById('rblCondition').value='';
+  document.getElementById('rblRemark').value='';
+  window._recoveryBatchIds=ids;
+  document.getElementById('recoveryBatchListModal').style.display='flex';
+}
+function closeRecoveryBatchListModal(){ document.getElementById('recoveryBatchListModal').style.display='none'; }
+function confirmRecoveryBatchAction(){
+  const ids=window._recoveryBatchIds; if(!ids||!ids.length) return;
+  const newResult=document.getElementById('rblResult').value;
+  const newCondition=document.getElementById('rblCondition').value;
+  const newRemark=document.getElementById('rblRemark').value.trim();
+  if(!newResult&&!newCondition&&!newRemark){ toast('请至少填写一项修改内容','error'); return; }
+  let cnt=0;
+  let sealUpdated=false;
+  let needArchive=0, needDestroy=0, needCarving=0;
+  ids.forEach(id=>{
+    const item=DATA.recoveries.find(d=>String(d.id)===String(id));
+    if(!item) return;
+    const oldResult = item.result;
+    if(newResult) item.result=newResult;
+    if(newCondition) item.condition=newCondition;
+    if(newRemark) item.note=(item.note?item.note+'；':'')+newRemark;
+    // 同步更新印章目录状态并根据结果创建对应记录
+    if(newResult && newResult !== oldResult){
+      const seal=DATA.seals.find(s=>s.name===item.sealName||String(s.id)===String(item.sealId));
+      if(newResult==='直接报废'){
+        // 创建作废销毁申请
+        DATA.destroys.unshift({
+          id:genId(), sealId:item.sealId||'', sealName:item.sealName,
+          applicant:item.checker||'', applyDate:today(), reason:'回收核验报废',
+          status:'待审批', destroyDate:'', method:'物理销毁',
+          certNo:'', witnesses:'', remark:'由回收核验批量修改发起', approvals:[]
+        });
+        if(seal){ seal.status='已废止'; sealUpdated=true; }
+        needDestroy++;
+      } else if(newResult==='归档'){
+        // 创建归档记录
+        DATA.archives.unshift({
+          id:genId(), sealId:item.sealId||'', sealName:item.sealName,
+          endDate:seal?(seal.validUntil||seal.startDate):'', archiveDate:item.date||today(),
+          handler:item.checker||'', reason:'回收核验归档', note:'由回收核验批量修改发起'
+        });
+        if(seal){ seal.status='已归档'; sealUpdated=true; }
+        needArchive++;
+      } else if(newResult==='需更换'){
+        // 旧章归档 + 创建刻制申请
+        if(seal){
+          DATA.archives.unshift({
+            id:genId(), sealId:item.sealId||'', sealName:item.sealName,
+            endDate:(seal.validUntil||seal.startDate)||'', archiveDate:item.date||today(),
+            handler:item.checker||'', reason:'需更换', note:'回收核验批量修改：旧章归档'
+          });
+          DATA.carvings.unshift({
+            id:genId(), name:item.sealName, type:seal.type||'公章', dept:seal.dept||'',
+            material:seal.material||'橡胶', shape:seal.shape||'圆形',
+            applicant:item.checker||'', applyDate:today(), expectedDate:'', vendor:'',
+            status:'待审批', completeDate:'', remark:'由回收核验批量修改发起，原印章需更换', approvals:[]
+          });
+          seal.status='已归档'; sealUpdated=true;
+          needCarving++;
+        }
+      }
+    }
+    cnt++;
+  });
+  saveData('recoveries');
+  if(needArchive||needCarving) saveData('archives');
+  if(needDestroy) saveData('destroys');
+  if(needCarving) saveData('carvings');
+  if(sealUpdated){ saveData('seals'); renderSealTable(); updateSealStats(); }
+  closeRecoveryBatchListModal();
+  window._recoverySelection.clear();
+  renderRecoveryList(); renderArchiveList(); renderDestroyList(); renderCarvingList();
+  updateAllBadges();
+  let msg=`已批量修改 ${cnt} 条核验记录`;
+  if(needArchive) msg+=`，${needArchive}枚归档`;
+  if(needDestroy) msg+=`，${needDestroy}枚作废`;
+  if(needCarving) msg+=`，${needCarving}枚需更换(已归档旧章并创建刻制申请)`;
+  toast(msg,'success');
+  log('批量修改核验',`${cnt}条`);
 }
 function recoveryBatchDelete(){
   const sel=window._recoverySelection;
@@ -2691,7 +2860,7 @@ function saveDestroy(){
   else{ DATA.destroys.unshift(d); }
   // If marked destroyed, update seal
   if(d.status==='已销毁'){
-    const seal=DATA.seals.find(s=>s.name===d.sealName||s.id===d.sealId);
+    const seal=DATA.seals.find(s=>s.name===d.sealName||String(s.id)===String(d.sealId));
     if(seal){ seal.status='已销毁'; saveData('seals'); renderSealTable(); updateSealStats(); }
   }
   saveData('destroys'); closeDestroyModal(); renderDestroyList(); updateAllBadges();
@@ -2701,7 +2870,7 @@ function markDestroyed(id){
   if(!confirmDialog('确定执行销毁？此操作将标记印章为已销毁状态。')) return;
   const r=DATA.destroys.find(d=>d.id===id); if(!r)return;
   r.status='已销毁'; r.destroyDate=today();
-  const seal=DATA.seals.find(s=>s.name===r.sealName||s.id===r.sealId);
+  const seal=DATA.seals.find(s=>s.name===r.sealName||String(s.id)===String(r.sealId));
   if(seal){ seal.status='已销毁'; saveData('seals'); renderSealTable(); updateSealStats(); }
   saveData('destroys'); renderDestroyList(); updateAllBadges();
   log('执行销毁',r.sealName); toast('已执行销毁','success');
@@ -2746,19 +2915,27 @@ function confirmDestroyBatchAction(){
   const newRemark=document.getElementById('dblRemark').value.trim();
   if(!newStatus&&!newMethod&&!newRemark){ toast('请至少填写一项修改内容','error'); return; }
   let cnt=0;
+  let sealUpdated=false;
   ids.forEach(id=>{
     const item=DATA.destroys.find(d=>String(d.id)===String(id));
     if(!item) return;
     if(newStatus){
       item.status=newStatus;
       if(newStatus==='已销毁'&&!item.destroyDate) item.destroyDate=today();
+      // 同步更新印章目录状态
+      if(newStatus==='已销毁'){
+        const seal=DATA.seals.find(s=>s.name===item.sealName||String(s.id)===String(item.sealId));
+        if(seal){ seal.status='已销毁'; sealUpdated=true; }
+      }
     }
     if(newMethod) item.method=newMethod;
     if(newRemark) item.remark=(item.remark?item.remark+'；':'')+newRemark;
     cnt++;
   });
-  saveData('destroys'); closeDestroyBatchListModal();
-  window._destroySelection.clear(); renderDestroyList(); renderSealTable(); updateSealStats(); updateAllBadges();
+  saveData('destroys');
+  if(sealUpdated){ saveData('seals'); renderSealTable(); updateSealStats(); }
+  closeDestroyBatchListModal();
+  window._destroySelection.clear(); renderDestroyList(); updateAllBadges();
   toast(`已批量修改 ${cnt} 条作废记录`,'success');
   log('批量修改作废',`${cnt}条`);
 }
@@ -2818,7 +2995,7 @@ function saveArchive(){
   if(!d.sealName||!d.archiveDate){ toast('请填写印章名称和归档日期','error'); return; }
   DATA.archives.unshift(d); saveData('archives');
   if(document.getElementById('arUpdateSeal').checked){
-    const seal=DATA.seals.find(s=>s.name===d.sealName||s.id===d.sealId);
+    const seal=DATA.seals.find(s=>s.name===d.sealName||String(s.id)===String(d.sealId));
     if(seal){ seal.status='已归档'; if(d.endDate) seal.validUntil=d.endDate; saveData('seals'); renderSealTable(); updateSealStats(); }
   }
   log('印章归档',d.sealName);
@@ -3314,7 +3491,8 @@ function updateBadge(id,cnt){
 
 // ==================== 扫码登记 ====================
 function openQRModal(){
-  const pageUrl=window.location.href.replace(/index\.html.*$/,'usage.html');
+  const base = window.location.href.split('#')[0].replace(/\/index\.html$/i, '/index.html');
+  const pageUrl = base.replace(/\/$/, '') + '#usage';
   document.getElementById('qrUrl').textContent=pageUrl;
   document.getElementById('qrImage').src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(pageUrl);
   document.getElementById('qrModal').style.display='flex';
@@ -3462,7 +3640,7 @@ function showImportPreview(headers,rows){
     return nameField&&existNames.has(String(r[nameField]||''));
   });
   if(dups.length){
-    document.getElementById('importDupWarn').textContent='⚠️ 检测到 '+dups.length+' 条重名印章（已在档案目录中存在）';
+    document.getElementById('importDupWarn').textContent='⚠️ 检测到 '+dups.length+' 条重名印章（已在印章目录中存在）';
   }
   // Scroll to preview
   document.getElementById('importPreview').scrollIntoView({behavior:'smooth'});
@@ -3597,36 +3775,62 @@ async function init(){
   // 检查已有登录
   const hasSession = await checkSession();
   if(!hasSession){
+    // 访客模式：扫码访问 #usage 时，允许匿名登记（仅登记功能，无管理权限）
+    if(location.hash==='#usage'){
+      LOGIN_USER={ username:'guest', displayName:'访客', role:'clerk' };
+      document.getElementById('mainApp').style.display='block';
+      document.querySelector('.header-actions').style.display='none'; // 隐藏登录信息区域
+      await afterLogin(true);          // true = 访客模式
+      return;
+    }
     showLogin();
     return;
   }
   await afterLogin();
 }
 
-async function afterLogin(){
-  const connected = await loadAll();
-  if (!connected) {
-    document.getElementById('sealTableBody').innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--dan);padding:32px;">⚠️ 无法连接后端服务<br><small>请运行 start.bat 或执行 python server.py 启动服务</small></td></tr>';
-    document.getElementById('st-total').textContent = '—';
-    return;
-  }
-  if(!DATA.seals.length){
+async function afterLogin(guestMode){
+  if(!guestMode){
+    const connected = await loadAll();
+    if (!connected) {
+      document.getElementById('sealTableBody').innerHTML = '<tr><td colspan="11" style="text-align:center;color:var(--dan);padding:32px;">⚠️ 无法连接后端服务<br><small>请运行 start.bat 或执行 python server.py 启动服务</small></td></tr>';
+      document.getElementById('st-total').textContent = '—';
+      return;
+    }
+    if(!DATA.seals.length){
+      try {
+        const r = await apiPost('/init', {});
+        if(r.count) { await loadAll(); }
+      } catch(e) { console.warn('自动初始化失败:', e.message); }
+    }
+    switchRole(LOGIN_USER.role);
+    renderSealTable(); updateSealStats(); updateAllBadges();
+    populateDeptSelects();
+    log('系统启动');
+  } else {
+    // 访客模式：只加载使用登记所需数据
     try {
-      const r = await apiPost('/init', {});
-      if(r.count) { await loadAll(); }
-    } catch(e) { console.warn('自动初始化失败:', e.message); }
+      DATA.seals = await apiGet('/usage/search-seals?q=');
+    } catch(e){ DATA.seals = []; }
+    // 只显示使用登记 tab
+    document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
+    document.querySelector('[data-tab="usage"]').style.display='';
+    switchTab('usage', document.querySelector('[data-tab="usage"]'));
   }
-  switchRole(LOGIN_USER.role);
-  renderSealTable(); updateSealStats(); updateAllBadges();
-  populateDeptSelects();
   // Close modals on escape
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ document.querySelectorAll('.modal-overlay').forEach(m=>m.style.display='none'); } });
-  log('系统启动');
-  console.log('🔖 大理大学第一附属医院印章管理系统 v3.6 已就绪（API模式）');
+  console.log('🔖 大理大学第一附属医院印章管理系统 v3.6 已就绪（访客模式）');
   // 初始化所有类型下拉列表
   document.getElementById('sfType').innerHTML = typeOptionsHTML('', '请选择');
   document.getElementById('beType').innerHTML = typeOptionsWithBlank('', '— 不修改 —');
   document.getElementById('cvType').innerHTML = typeOptionsHTML('', '请选择');
+  // Hash 路由：支持 /index.html#usage 直接打开使用登记 tab
+  function handleHash(){
+    const hash = location.hash.replace('#','');
+    if(hash==='usage'){ switchTab('usage',null); }
+  }
+  handleHash();
+  window.addEventListener('hashchange', handleHash);
 }
 document.addEventListener('DOMContentLoaded',init);
 </script>

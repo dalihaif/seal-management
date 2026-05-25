@@ -3,14 +3,22 @@
 启动: python server.py
 访问: http://localhost:5100
 """
-import json, os, csv, io, sqlite3, hashlib, secrets
+import json, os, sys, csv, io, sqlite3, hashlib, secrets
 from datetime import datetime
 from functools import wraps
 from flask import Flask, request, jsonify, send_from_directory, g, session
 
-app = Flask(__name__, static_folder='.')
+# BASE_DIR 在 import 后定义，static_folder 先用默认值
+app = Flask(__name__)
 app.secret_key = secrets.token_hex(32)
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'seal_archive.db')
+
+# 兼容 PyInstaller 打包后的路径解析
+if getattr(sys, 'frozen', False):
+    BASE_DIR = os.path.dirname(sys.executable)
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'seal_archive.db')
+app.static_folder = BASE_DIR
 
 # ==================== 密码工具 ====================
 def hash_pwd(password):
@@ -20,11 +28,19 @@ def hash_pwd(password):
 ROLE_NAMES = {'admin': '系统管理员', 'editor': '印章管理员', 'clerk': '经办人'}
 
 # ==================== 鉴权装饰器 ====================
-PUBLIC_ROUTES = {'/api/login', '/api/session', '/api/init-status'}
+PUBLIC_ROUTES = {'/api/login', '/api/session', '/api/init-status', '/api/usage/search-seals', '/api/usage/summary', '/api/usage/record', '/api/usage/return', '/api/usage/return-batch'}
 
 def login_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+        # 公开路由：无需登录
+        if request.path in PUBLIC_ROUTES:
+            # 为访客设置临时 session
+            if not session.get('username'):
+                session['username'] = 'guest'
+                session['role'] = 'clerk'
+                session['display_name'] = '访客'
+            return f(*args, **kwargs)
         if not session.get('username'):
             return jsonify({'error': '未登录'}), 401
         return f(*args, **kwargs)
@@ -98,7 +114,8 @@ def init_db():
         id TEXT PRIMARY KEY, sealId TEXT DEFAULT '', sealName TEXT DEFAULT '',
         applicant TEXT DEFAULT '', applyDate TEXT DEFAULT '', reason TEXT DEFAULT '',
         method TEXT DEFAULT '', approver TEXT DEFAULT '', destroyDate TEXT DEFAULT '',
-        witnesses TEXT DEFAULT '', certNo TEXT DEFAULT '', status TEXT DEFAULT '待审批'
+        witnesses TEXT DEFAULT '', certNo TEXT DEFAULT '', status TEXT DEFAULT '待审批',
+        remark TEXT DEFAULT '', approvals TEXT DEFAULT '[]'
     );
     CREATE TABLE IF NOT EXISTS archives (
         id TEXT PRIMARY KEY, sealId TEXT DEFAULT '', sealName TEXT DEFAULT '',
@@ -136,6 +153,8 @@ def init_db():
         "ALTER TABLE usages ADD COLUMN batchId TEXT DEFAULT ''",
         "ALTER TABLE usages ADD COLUMN contactPhone TEXT DEFAULT ''",
         "ALTER TABLE usages ADD COLUMN expectedReturn TEXT DEFAULT ''",
+        "ALTER TABLE destroys ADD COLUMN remark TEXT DEFAULT ''",
+        "ALTER TABLE destroys ADD COLUMN approvals TEXT DEFAULT '[]'",
     ]
     for m in migrations:
         try: db.execute(m)
@@ -622,7 +641,7 @@ def init_status():
 @login_required
 def initialize_data():
     """从data.json导入初始印章数据，并生成演示数据"""
-    data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.json')
+    data_file = os.path.join(BASE_DIR, 'data.json')
     if not os.path.exists(data_file):
         return jsonify({'error': 'data.json 文件不存在'}), 404
     db = get_db()
@@ -850,12 +869,13 @@ def reset_data():
 @app.route('/')
 @app.route('/index.html')
 def serve_index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory(BASE_DIR, 'index.html')
 
 @app.route('/<path:filename>')
 def serve_static(filename):
-    if os.path.exists(os.path.join(os.path.dirname(__file__), filename)):
-        return send_from_directory('.', filename)
+    filepath = os.path.join(BASE_DIR, filename)
+    if os.path.exists(filepath):
+        return send_from_directory(BASE_DIR, filename)
     return jsonify({'error': 'Not found'}), 404
 
 # ==================== 启动 ====================

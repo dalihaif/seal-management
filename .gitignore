@@ -25,3 +25,8 @@ Thumbs.db
 venv/
 env/
 .env
+
+# PyInstaller 打包产物
+build/
+dist/
+*.spec
