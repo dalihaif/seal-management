@@ -290,6 +290,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
 .badge-success{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:var(--suc-l);color:var(--suc);}
 .badge-warn{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:var(--war-l);color:var(--war);}
 .badge-danger{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:var(--dan-l);color:var(--dan);}
+.badge-archive{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600;background:#dbeafe;color:#1e40af;}
 .status-chip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;margin-left:8px;vertical-align:middle;}
 .status-pending{background:var(--war-l);color:var(--war);}
 .status-review{background:var(--inf-l);color:var(--inf);}
@@ -387,13 +388,14 @@ textarea.form-input{resize:vertical;min-height:70px;}
     <div class="stat-card dan" onclick="quickFilterSeal('已废止')"><div class="stat-value" id="st-inactive">0</div><div class="stat-label">❌ 已废止</div></div>
     <div class="stat-card war" onclick="quickFilterSeal('停用')"><div class="stat-value" id="st-paused">0</div><div class="stat-label">⏸️ 停用</div></div>
     <div class="stat-card" style="border-left-color:#be185d" onclick="quickFilterSeal('已销毁')"><div class="stat-value" id="st-destroyed">0</div><div class="stat-label">💀 已销毁</div></div>
+    <div class="stat-card" style="border-left-color:#1e40af" onclick="quickFilterSeal('已归档')"><div class="stat-value" id="st-archived">0</div><div class="stat-label">📚 已归档</div></div>
     <div class="stat-card inf" onclick="switchTab('usage',document.querySelector('[data-tab=usage]'))"><div class="stat-value" id="st-using">0</div><div class="stat-label">📝 使用中</div></div>
     <div class="stat-card pur" onclick="switchTab('loan',document.querySelector('[data-tab=loan]'))"><div class="stat-value" id="st-loaned">0</div><div class="stat-label">🔄 借出中</div></div>
   </div>
 
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="sealSearch" placeholder="搜索印章名称/部门/管理人..." oninput="applySealFilter()"></div>
-    <select class="filter-select" id="sealFilterStatus" onchange="applySealFilter()"><option value="">全部状态</option><option value="在用">在用</option><option value="停用">停用</option><option value="已废止">已废止</option><option value="已销毁">已销毁</option></select>
+    <select class="filter-select" id="sealFilterStatus" onchange="applySealFilter()"><option value="">全部状态</option><option value="在用" selected>在用</option><option value="停用">停用</option><option value="已废止">已废止</option><option value="已销毁">已销毁</option><option value="已归档">已归档</option></select>
     <select class="filter-select" id="sealFilterType" onchange="applySealFilter()"><option value="">全部类型</option></select>
     <select class="filter-select" id="sealFilterDept" onchange="applySealFilter()"><option value="">全部部门</option></select>
     <button class="btn btn-ghost btn-sm" onclick="resetSealFilter()">重置</button>
@@ -446,6 +448,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
   <div class="dual-toolbar">
     <div><h2 style="font-size:15px;font-weight:700;">🔨 印章刻制管理</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">刻印申请 → 审批流转 → 制作跟踪 → 入库发放</p></div>
     <button class="btn btn-warn" onclick="openCarvingForm()">＋ 新增刻制申请</button>
+    <div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="carvingBatchAction()">✏️ 批量修改</button><button class="btn btn-ghost btn-sm" onclick="carvingBatchDelete()">🗑️ 批量删除</button><button class="btn btn-ghost btn-sm" onclick="exportCarvingCSV()">📤 导出</button></div>
   </div>
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="carvingSearch" placeholder="搜索印章名称..." oninput="renderCarvingList()"></div>
@@ -461,7 +464,9 @@ textarea.form-input{resize:vertical;min-height:70px;}
     <div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" onclick="openQRModal()">📱 扫码登记</button><button class="btn btn-info" onclick="openUsageForm()">＋ 登记领用</button></div>
   </div>
   <div class="quick-actions">
-    <button class="btn btn-ghost btn-sm" onclick="quickReturnAll()">✅ 一键全部归还</button>
+    <span style="font-size:12px;color:var(--g500);">共 <strong id="usageCount">0</strong> 条</span>
+    <button class="btn btn-ghost btn-sm" onclick="usageBatchAction()">✏️ 批量修改</button>
+    <button class="btn btn-ghost btn-sm" onclick="usageBatchDelete()">🗑️ 批量删除</button>
     <button class="btn btn-ghost btn-sm" onclick="exportUsageReport()">📊 导出使用台账</button>
   </div>
   <div class="filter-bar">
@@ -469,7 +474,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
     <select class="filter-select" id="usageFilter" onchange="renderUsageList()"><option value="">全部状态</option><option value="使用中">使用中</option><option value="借出中">借出中</option><option value="已归还">已归还</option></select>
   </div>
   <div class="table-wrap"><table><thead><tr>
-    <th>使用人</th><th>部门</th><th>印章名称</th><th>类型</th><th>用途</th><th>领用/借出时间</th><th>归还时间</th><th>审批人</th><th style="width:110px;">状态</th><th style="width:130px;">操作</th><th>用印次数</th>
+    <th style="width:36px;"><input type="checkbox" id="usageSelectAll" onchange="toggleUsageSelectAll(this.checked)" style="cursor:pointer;accent-color:var(--pri);"></th><th>使用人</th><th>部门</th><th>印章名称</th><th>类型</th><th>用途</th><th>领用/借出时间</th><th>归还时间</th><th>审批人</th><th style="width:110px;">状态</th><th style="width:130px;">操作</th><th>用印次数</th>
   </tr></thead><tbody id="usageTableBody"></tbody></table></div>
 </div>
 
@@ -477,7 +482,8 @@ textarea.form-input{resize:vertical;min-height:70px;}
 <div id="tabLoan" class="content" style="display:none">
   <div class="dual-toolbar">
     <div><h2 style="font-size:15px;font-weight:700;">🔄 印章借用管理</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">外借申请 / 审批 / 归还跟踪</p></div>
-    <button class="btn btn-purple" onclick="openLoanForm()">＋ 新增借用</button>
+    <div style="display:flex;gap:6px;"><button class="btn btn-purple" onclick="openLoanForm()">＋ 新增借用</button><button class="btn btn-success" onclick="batchReturnLoan()">✅ 一键全部归还</button></div>
+    <div style="display:flex;gap:4px;"><span style="font-size:12px;color:var(--g500);line-height:28px;">共 <strong id="loanCount">0</strong> 条</span><button class="btn btn-ghost btn-sm" onclick="loanBatchAction()">✏️ 批量修改</button><button class="btn btn-ghost btn-sm" onclick="loanBatchDelete()">🗑️ 批量删除</button><button class="btn btn-ghost btn-sm" onclick="exportLoanReport()">📤 导出</button></div>
   </div>
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="loanSearch" placeholder="搜索借用人/印章名称..." oninput="renderLoanList()"></div>
@@ -491,6 +497,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
   <div class="dual-toolbar">
     <div><h2 style="font-size:15px;font-weight:700;">🔍 印章回收核验</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">印章收回检查、状况评估、处置建议</p></div>
     <button class="btn btn-info" onclick="openRecoveryForm()">＋ 新增核验</button>
+    <div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="recoveryBatchDelete()">🗑️ 批量删除</button><button class="btn btn-ghost btn-sm" onclick="exportRecoveryCSV()">📤 导出</button></div>
   </div>
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="recoverySearch" placeholder="搜索印章名称..." oninput="renderRecoveryList()"></div>
@@ -504,6 +511,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
   <div class="dual-toolbar">
     <div><h2 style="font-size:15px;font-weight:700;">🗑️ 印章作废销毁</h2><p style="font-size:11px;color:var(--g500);margin-top:2px;">作废申请 → 多级审批 → 执行销毁 → 归档</p></div>
     <button class="btn btn-danger" onclick="openDestroyForm()">＋ 新建作废申请</button>
+    <div style="display:flex;gap:4px;"><button class="btn btn-ghost btn-sm" onclick="destroyBatchAction()">✏️ 批量修改</button><button class="btn btn-ghost btn-sm" onclick="destroyBatchDelete()">🗑️ 批量删除</button><button class="btn btn-ghost btn-sm" onclick="exportDestroyCSV()">📤 导出</button></div>
   </div>
   <div class="filter-bar">
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="destroySearch" placeholder="搜索印章名称..." oninput="renderDestroyList()"></div>
@@ -788,6 +796,36 @@ textarea.form-input{resize:vertical;min-height:70px;}
 <!-- ============================================ -->
 <!-- MODALS: 使用登记 -->
 <!-- ============================================ -->
+<!-- 批量修改刻制记录弹窗 -->
+<div class="modal-overlay" id="carvingBatchListModal" onclick="if(event.target===this)closeCarvingBatchListModal()">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><span class="modal-title">✏️ 批量修改刻制记录</span><button class="btn-icon" onclick="closeCarvingBatchListModal()">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--g500);margin-bottom:12px;">已选 <strong id="cblCount">0</strong> 条记录，将统一修改以下字段（留空则不修改）：</p>
+      <div class="form-group"><label class="form-label">修改状态</label><select id="cblStatus" class="form-input"><option value="">不修改</option><option value="待审批">待审批</option><option value="审批中">审批中</option><option value="已批准">已批准</option><option value="刻制中">刻制中</option><option value="已完成">已完成</option><option value="已驳回">已驳回</option><option value="已取消">已取消</option></select></div>
+      <div class="form-group"><label class="form-label">刻制单位</label><input type="text" id="cblVendor" class="form-input" placeholder="留空则不修改"></div>
+      <div class="form-group"><label class="form-label">追加备注</label><textarea id="cblRemark" class="form-input" rows="2" placeholder="留空则不修改"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeCarvingBatchListModal()">取消</button><button class="btn btn-warn" onclick="confirmCarvingBatchAction()">✅ 确认修改</button></div>
+  </div>
+</div>
+<!-- ============================================ -->
+<!-- MODALS: 使用登记批量修改 -->
+<!-- ============================================ -->
+<div class="modal-overlay" id="usageBatchListModal" onclick="if(event.target===this)closeUsageBatchListModal()">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><span class="modal-title">✏️ 批量修改使用记录</span><button class="btn-icon" onclick="closeUsageBatchListModal()">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--g500);margin-bottom:12px;">已选 <strong id="ublCount">0</strong> 条记录，将统一修改以下字段（留空则不修改）：</p>
+      <div class="form-group"><label class="form-label">修改状态</label><select id="ublStatus" class="form-input"><option value="">不修改</option><option value="使用中">使用中</option><option value="借出中">借出中</option><option value="已归还">已归还</option><option value="已完成">已完成</option><option value="批量归还">✅ 批量归还（仅归还使用中/借出中的记录）</option></select></div>
+      <div class="form-group"><label class="form-label">追加用途备注</label><textarea id="ublRemark" class="form-input" rows="2" placeholder="留空则不修改"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeUsageBatchListModal()">取消</button><button class="btn btn-warn" onclick="confirmUsageBatchAction()">✅ 确认修改</button></div>
+  </div>
+</div>
+<!-- ============================================ -->
+<!-- MODALS: 使用登记（原弹窗） -->
+<!-- ============================================ -->
 <div class="modal-overlay" id="usageModal" onclick="if(event.target===this)closeUsageModal()">
   <div class="modal" style="max-width:520px;">
     <div class="modal-header"><span class="modal-title">📝 印章使用登记</span><button class="btn-icon" onclick="closeUsageModal()">✕</button></div>
@@ -805,6 +843,7 @@ textarea.form-input{resize:vertical;min-height:70px;}
       <div class="form-group">
         <label class="form-label">印章名称 <span class="req">*</span> <span style="font-size:11px;color:var(--g400);">（支持多选，如公章+法人章）</span></label>
         <div class="tag-wrap" id="ugSelectedSeals"></div>
+        <div id="ugDefaultSealsWrap" style="display:none;margin-bottom:6px;"><div style="font-size:11px;color:var(--g500);margin-bottom:4px;">⭐ 常用印章：</div><div id="ugDefaultSeals" style="display:flex;flex-wrap:wrap;gap:4px;"></div></div>
         <div style="position:relative"><input type="text" id="ugSealInput" class="form-input" placeholder="输入印章名称搜索并点击添加..." oninput="suggestSeals('ug')" autocomplete="off"><div class="suggest-dropdown" id="ugSealSuggest"></div></div>
       </div>
       <div class="form-row-3"><div class="form-group"><label class="form-label">使用人 <span class="req">*</span></label><input type="text" id="ugUser" class="form-input" placeholder="使用人姓名"></div>
@@ -824,6 +863,20 @@ textarea.form-input{resize:vertical;min-height:70px;}
   </div>
 </div>
 
+<!-- ============================================ -->
+<!-- MODALS: 借用登记批量修改 -->
+<!-- ============================================ -->
+<div class="modal-overlay" id="loanBatchListModal" onclick="if(event.target===this)closeLoanBatchListModal()">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><span class="modal-title">✏️ 批量修改借用记录</span><button class="btn-icon" onclick="closeLoanBatchListModal()">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--g500);margin-bottom:12px;">已选 <strong id="lblCount">0</strong> 条记录，将统一修改以下字段（留空则不修改）：</p>
+      <div class="form-group"><label class="form-label">修改状态</label><select id="lblStatus" class="form-input"><option value="">不修改</option><option value="待审批">待审批</option><option value="借出">借出</option><option value="已归还">已归还</option><option value="批量归还">✅ 批量归还（仅归还借出中的记录）</option></select></div>
+      <div class="form-group"><label class="form-label">追加事由备注</label><textarea id="lblRemark" class="form-input" rows="2" placeholder="留空则不修改"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeLoanBatchListModal()">取消</button><button class="btn btn-warn" onclick="confirmLoanBatchAction()">✅ 确认修改</button></div>
+  </div>
+</div>
 <!-- ============================================ -->
 <!-- MODALS: 借用登记 -->
 <!-- ============================================ -->
@@ -872,6 +925,19 @@ textarea.form-input{resize:vertical;min-height:70px;}
 
 <!-- ============================================ -->
 <!-- MODALS: 作废销毁 -->
+<!-- 批量修改作废记录弹窗 -->
+<div class="modal-overlay" id="destroyBatchListModal" onclick="if(event.target===this)closeDestroyBatchListModal()">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header"><span class="modal-title">✏️ 批量修改作废记录</span><button class="btn-icon" onclick="closeDestroyBatchListModal()">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--g500);margin-bottom:12px;">已选 <strong id="dblCount">0</strong> 条记录，将统一修改以下字段（留空则不修改）：</p>
+      <div class="form-group"><label class="form-label">修改状态</label><select id="dblStatus" class="form-input"><option value="">不修改</option><option value="待审批">待审批</option><option value="审批中">审批中</option><option value="已批准">已批准</option><option value="已驳回">已驳回</option><option value="已销毁">已销毁</option></select></div>
+      <div class="form-group"><label class="form-label">销毁方式</label><select id="dblMethod" class="form-input"><option value="">不修改</option><option value="物理销毁">物理销毁</option><option value="化学销毁">化学销毁</option><option value="封存">封存</option></select></div>
+      <div class="form-group"><label class="form-label">追加备注</label><textarea id="dblRemark" class="form-input" rows="2" placeholder="留空则不修改"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeDestroyBatchListModal()">取消</button><button class="btn btn-danger" onclick="confirmDestroyBatchAction()">✅ 确认修改</button></div>
+  </div>
+</div>
 <!-- ============================================ -->
 <div class="modal-overlay" id="destroyModal" onclick="if(event.target===this)closeDestroyModal()">
   <div class="modal">
@@ -1089,10 +1155,10 @@ let DATA = {
   destroys: [],    // 作废销毁
   archives: [],    // 归档记录
   logs: [],        // 操作日志
-  settings: { departments: ['院办公室','党委办公室','财务科','人事科','医务科','护理部','科研科','教学科','总务科','基建科','保卫科','审计科','纪检监察室','工会','团委'], approvers: [{name:'院长',level:2},{name:'分管副院长',level:2},{name:'办公室主任',level:1},{name:'档案科科长',level:1}], default_seals: [], doc_types: ['证明','合同','报告','申请','函件','其他'] }
+  settings: { departments: ['院办公室','党委办公室','财务科','人事科','医务科','护理部','科教科','教学科','总务科','基建科','保卫科','审计科','纪检监察室','工会','团委'], approvers: [{name:'院长',level:2},{name:'分管副院长',level:2},{name:'办公室主任',level:1},{name:'综合档案室',level:1}], default_seals: [], doc_types: ['证明','合同','报告','申请','函件','其他'] }
 };
 let CURRENT_ROLE = 'admin';
-let sealFilter = { search:'', status:'', type:'', dept:'', page:1, pageSize:20, sort:'id', sortDir:'asc' };
+let sealFilter = { search:'', status:'在用', type:'', dept:'', page:1, pageSize:20, sort:'id', sortDir:'asc' };
 let sealSelection = new Set();
 let printSelection = new Set();
 let importSealPreview = [];
@@ -1228,8 +1294,8 @@ function applySealFilter(){
   sealFilter.page=1; renderSealTable(); updateSealStats(); updateAllBadges();
 }
 function resetSealFilter(){
-  document.getElementById('sealSearch').value=''; document.getElementById('sealFilterStatus').value=''; document.getElementById('sealFilterType').value=''; document.getElementById('sealFilterDept').value='';
-  sealFilter={search:'',status:'',type:'',dept:'',page:1,pageSize:20,sort:'id',sortDir:'asc'};
+  document.getElementById('sealSearch').value=''; document.getElementById('sealFilterStatus').value='在用'; document.getElementById('sealFilterType').value=''; document.getElementById('sealFilterDept').value='';
+  sealFilter={search:'',status:'在用',type:'',dept:'',page:1,pageSize:20,sort:'id',sortDir:'asc'};
   renderSealTable(); updateSealStats();
 }
 function quickFilterSeal(status){
@@ -1266,7 +1332,7 @@ function renderSealTable(){
   const pageItems=list.slice((p-1)*ps,p*ps);
   let html='';
   for(const r of pageItems){
-    const statusCls=r.status==='在用'?'badge-success':r.status==='停用'?'badge-warn':r.status==='已废止'?'badge-danger':'badge-danger';
+    const statusCls=r.status==='在用'?'badge-success':r.status==='停用'?'badge-warn':r.status==='已归档'?'badge-archive':r.status==='已废止'?'badge-danger':'badge-danger';
     const checked=sealSelection.has(r.id)?' checked':'';
     html+=`<tr>
       <td><input type="checkbox" ${checked} onchange="toggleSealCheck(${r.id},this.checked)"></td>
@@ -1302,6 +1368,7 @@ function updateSealStats(){
   document.getElementById('st-inactive').textContent=s.filter(r=>r.status==='已废止').length;
   document.getElementById('st-paused').textContent=s.filter(r=>r.status==='停用').length;
   document.getElementById('st-destroyed').textContent=s.filter(r=>r.status==='已销毁').length;
+  document.getElementById('st-archived').textContent=s.filter(r=>r.status==='已归档').length;
   document.getElementById('st-using').textContent=DATA.usages.filter(r=>r.status==='使用中'||r.status==='借出中').length;
   document.getElementById('st-loaned').textContent=DATA.loans.filter(r=>r.status==='借出'||r.status==='逾期').length;
   document.getElementById('sysTotalSeals')&&(document.getElementById('sysTotalSeals').textContent=s.length);
@@ -1431,18 +1498,23 @@ function sealBulkArchive(){
   const ids=[...sealSelection];
   const seals=ids.map(id=>DATA.seals.find(s=>String(s.id)===String(id))).filter(Boolean);
   if(!seals.length){ toast('未找到有效印章','error'); return; }
-  // 填充批量归档弹窗
-  document.getElementById('baCount').textContent=seals.length;
-  document.getElementById('baSealList').innerHTML=seals.map((s,i)=>`<div style="display:flex;justify-content:space-between;padding:2px 4px;border-bottom:1px dotted var(--g200);"><span>${i+1}. ${escapeHtml(s.name)}</span><span style="color:var(--g500);">${s.type||'—'} · ${s.dept||'—'}</span></div>`).join('');
-  document.getElementById('baEndDate').value=today();
-  document.getElementById('baArchiveDate').value=today();
-  document.getElementById('baHandler').value='';
-  document.getElementById('baReason').value='其他';
-  document.getElementById('baNote').value='';
-  document.getElementById('baUpdateSeal').checked=true;
-  // 暂存选中的ID列表供后续使用
-  window._bulkArchiveIds=ids;
-  document.getElementById('bulkArchiveModal').style.display='flex';
+  // 批量归档 → 先进入回收核验流程
+  // 将选中的印章列表暂存，并在回收核验弹窗中预填
+  window._recoveryBulkIds = ids;
+  window._recoveryBulkMode = true;
+  // 预填印章名称（多枚用逗号分隔）
+  const sealNames = seals.map(s => s.name).join('、');
+  document.getElementById('rcSealInput').value = sealNames;
+  document.getElementById('rcSealId').value = ids.join(',');
+  document.getElementById('rcDate').value = today();
+  document.getElementById('rcChecker').value = '';
+  document.getElementById('rcCondition').value = '完好';
+  document.getElementById('rcResult').value = '归档';
+  document.getElementById('rcNote').value = '批量归档核验，共' + seals.length + '枚印章';
+  // 切换到回收核验Tab并打开弹窗
+  switchTab('recovery', document.querySelector('[data-tab=recovery]'));
+  document.getElementById('recoveryModal').style.display = 'flex';
+  toast('已选择' + seals.length + '枚印章进入回收核验，请填写核验信息', 'info');
 }
 function closeBulkArchiveModal(){ document.getElementById('bulkArchiveModal').style.display='none'; window._bulkArchiveIds=null; }
 
@@ -1518,15 +1590,6 @@ function exportBulkArchiveCerts(){
 }
 
 // 导出归档记录为CSV
-function exportArchiveCSV(){
-  if(!DATA.archives.length){ toast('暂无归档记录可导出','warn'); return; }
-  const hdr='\uFEFF序号,印章名称,印章编号,废止日期,归档日期,废止原因,经办人,归档说明\n';
-  const rows=DATA.archives.map((a,i)=>
-    `${i+1},"${a.sealName||''}","${a.sealId||''}","${a.endDate||''}","${a.archiveDate||''}","${a.reason||''}","${a.handler||''}","${a.note||''}"\n`
-  ).join('');
-  downloadFile('印章归档记录_'+today()+'.csv', hdr+rows, 'text/csv;charset=utf-8');
-  toast(`已导出 ${DATA.archives.length} 条归档记录`,'success');
-}
 function sealBulkDelete(){
   if(!sealSelection.size){ toast('请先选择印章','error'); return; }
   document.getElementById('bdCnt').textContent=sealSelection.size;
@@ -1547,9 +1610,8 @@ function confirmSealBulkDel(){
 function quickUseSeal(id){
   const s=DATA.seals.find(r=>String(r.id)===String(id)); if(!s)return;
   if(s.status!=='在用'){ toast('该印章当前不可用','error'); return; }
-  document.getElementById('ugSealInput').value=s.name; document.getElementById('ugSealId').value=s.id;
-  document.getElementById('ugCheckOut').value=now();
-  document.getElementById('usageModal').style.display='flex';
+  openUsageForm();
+  addUgSealTag(s.name, s.id, s.type||'公章');
 }
 
 // ==================== 批量导入印章 ====================
@@ -1592,7 +1654,13 @@ function renderCarvingList(){
   list.sort((a,b)=>new Date(b.applyDate||0)-new Date(a.applyDate||0));
   const statusMap={待审批:'status-pending',审批中:'status-review',已批准:'status-approved',刻制中:'status-crafting',已完成:'status-done',已驳回:'status-rejected',已取消:'status-cancelled'};
   const statusSteps={待审批:1,审批中:2,已批准:3,刻制中:4,已完成:5,已驳回:-1,已取消:-1};
-  document.getElementById('carvingList').innerHTML=list.map(r=>{
+  if(!window._carvingSelection) window._carvingSelection = new Set();
+  const sel = window._carvingSelection;
+  // 全选状态
+  const allChecked = list.length > 0 && list.every(r => sel.has(String(r.id)));
+  const someChecked = list.some(r => sel.has(String(r.id)));
+  const checkAllHtml = list.length ? `<label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--g500);cursor:pointer;margin-bottom:6px;"><input type="checkbox" ${allChecked?'checked':''} ${someChecked&&!allChecked?'style="opacity:.6"':''} onchange="toggleCarvingSelectAll(this.checked)" style="cursor:pointer;accent-color:var(--pri);">全选（已选 ${sel.size} 项）</label>` : '';
+  document.getElementById('carvingList').innerHTML=checkAllHtml+list.map(r=>{
     const step=statusSteps[r.status]||0; const maxStep=5; const pct=Math.round(step/Math.max(maxStep,1)*100);
     const progress=(step>0&&step<=maxStep)?`<div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div><span style="font-size:10px;position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--g700)">${r.status}</span></div>`:'';
     let actions='';
@@ -1601,8 +1669,9 @@ function renderCarvingList(){
       if(r.status==='待审批'||r.status==='审批中') actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--inf)" onclick="openApprovalModal('carving','${r.id}')">✅审批</button>`;
       actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteCarving('${r.id}')">🗑️</button>`;
     }
-    return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:start;">
-      <div><strong>${escapeHtml(r.name)}</strong><span class="${statusMap[r.status]||''} status-chip">${r.status}</span></div>
+    const checked = sel.has(String(r.id));
+    return `<div class="card" style="${checked?'border-color:var(--pri);background:rgba(79,70,229,.04);':''}"><div style="display:flex;justify-content:space-between;align-items:start;">
+      <div style="display:flex;align-items:center;gap:8px;"><input type="checkbox" ${checked?'checked':''} onchange="toggleCarvingSelect('${r.id}',this.checked)" style="cursor:pointer;accent-color:var(--pri);"><strong>${escapeHtml(r.name)}</strong><span class="${statusMap[r.status]||''} status-chip">${r.status}</span></div>
       <div style="font-size:11px;color:var(--g500);">${r.applicant||''} · ${fmtDate(r.applyDate)}</div></div>
       <div style="font-size:12px;color:var(--g500);margin:4px 0;">类型:${r.type||''} | 部门:${r.dept||''} | 材质:${r.material||''} | ${r.vendor?'刻制:'+r.vendor:''}</div>
       ${progress}
@@ -1703,26 +1772,113 @@ function confirmSealRegister(){
   const customId=document.getElementById('srCustomId').value.trim();
   const maxId=DATA.seals.reduce((mx,s)=>Math.max(mx,s.id||0),0);
   const exists=DATA.seals.find(s=>s.name===c.name);
-  if(exists){ toast('该印章名称已存在档案中','error'); return; }
-  DATA.seals.push({
-    id: customId||(maxId+1),
-    name: c.name, type: c.type, dept: c.dept,
-    keeper: keeper, location: location,
-    material: c.material, shape: c.shape,
-    carvingDate: c.completeDate, startDate: startDate,
-    validUntil: '', status: '在用',
-    remark: document.getElementById('srRemark').value.trim()||`由刻制申请${cid}登记发放`
-  });
+  // 构建新印章备注信息
+  let newRemark = document.getElementById('srRemark').value.trim()||`由刻制申请${cid}登记发放`;
+  if(exists){
+    // 同名印章已存在 → 覆盖原数据，备注注明更换原因
+    const oldInfo = `【更换记录】原印章保管人:${exists.keeper||'—'} 存放:${exists.location||'—'} 材料:${exists.material||'—'} 形状:${exists.shape||'—'} 启用:${exists.startDate||'—'} 原备注:${exists.remark||'无'}`;
+    const changeReason = c.remark || '未注明';
+    newRemark = `${newRemark}\n${oldInfo}\n更换原因：${changeReason}`;
+    // 覆盖原印章数据（保留原ID）
+    Object.assign(exists, {
+      type: c.type, dept: c.dept,
+      keeper: keeper, location: location,
+      material: c.material, shape: c.shape,
+      carvingDate: c.completeDate, startDate: startDate,
+      validUntil: '', status: '在用',
+      remark: newRemark
+    });
+  } else {
+    DATA.seals.push({
+      id: customId||(maxId+1),
+      name: c.name, type: c.type, dept: c.dept,
+      keeper: keeper, location: location,
+      material: c.material, shape: c.shape,
+      carvingDate: c.completeDate, startDate: startDate,
+      validUntil: '', status: '在用',
+      remark: newRemark
+    });
+  }
   saveData('seals'); renderSealTable(); updateSealStats();
   closeSealRegisterModal();
-  log('登记发放',`${c.name} → 保管人:${keeper} 位置:${location}`);
-  toast('印章已登记发放并纳入档案目录','success');
+  log('登记发放',`${c.name} → 保管人:${keeper} 位置:${location}${exists?' (覆盖更换)':''}`);
+  toast(exists?`印章「${c.name}」已覆盖更换并更新档案记录`:'印章已登记发放并纳入档案目录','success');
 }
 
 function deleteCarving(id){
   if(!confirmDialog('确定删除此刻制申请？')) return;
   DATA.carvings=DATA.carvings.filter(c=>c.id!==id);
   saveData('carvings'); renderCarvingList(); updateAllBadges(); toast('已删除','success');
+}
+function toggleCarvingSelect(id, checked){
+  if(!window._carvingSelection) window._carvingSelection = new Set();
+  if(checked) window._carvingSelection.add(String(id)); else window._carvingSelection.delete(String(id));
+  renderCarvingList();
+}
+function toggleCarvingSelectAll(checked){
+  if(!window._carvingSelection) window._carvingSelection = new Set();
+  const list=getFilteredCarvings();
+  if(checked) list.forEach(r=>window._carvingSelection.add(String(r.id)));
+  else list.forEach(r=>window._carvingSelection.delete(String(r.id)));
+  renderCarvingList();
+}
+function getFilteredCarvings(){
+  let list=[...DATA.carvings];
+  const q=(document.getElementById('carvingSearch')?.value||'').toLowerCase();
+  const f=document.getElementById('carvingFilter')?.value||'';
+  if(q) list=list.filter(r=>r.name&&r.name.toLowerCase().includes(q));
+  if(f) list=list.filter(r=>r.status===f);
+  return list;
+}
+function carvingBatchAction(){
+  const sel=window._carvingSelection;
+  if(!sel||!sel.size){ toast('请先勾选要修改的刻制记录','error'); return; }
+  const ids=[...sel];
+  const count=ids.length;
+  document.getElementById('cblCount').textContent=count;
+  document.getElementById('cblStatus').value='';
+  document.getElementById('cblVendor').value='';
+  document.getElementById('cblRemark').value='';
+  window._carvingBatchIds=ids;
+  document.getElementById('carvingBatchListModal').style.display='flex';
+}
+function closeCarvingBatchListModal(){ document.getElementById('carvingBatchListModal').style.display='none'; }
+function confirmCarvingBatchAction(){
+  const ids=window._carvingBatchIds; if(!ids||!ids.length) return;
+  const newStatus=document.getElementById('cblStatus').value;
+  const newVendor=document.getElementById('cblVendor').value.trim();
+  const newRemark=document.getElementById('cblRemark').value.trim();
+  if(!newStatus&&!newVendor&&!newRemark){ toast('请至少填写一项修改内容','error'); return; }
+  let cnt=0;
+  ids.forEach(id=>{
+    const item=DATA.carvings.find(c=>String(c.id)===String(id));
+    if(!item) return;
+    if(newStatus) item.status=newStatus;
+    if(newVendor) item.vendor=newVendor;
+    if(newRemark) item.remark=(item.remark?item.remark+'；':'')+newRemark;
+    cnt++;
+  });
+  saveData('carvings'); closeCarvingBatchListModal();
+  window._carvingSelection.clear(); renderCarvingList(); updateAllBadges();
+  toast(`已批量修改 ${cnt} 条刻制记录`,'success');
+  log('批量修改刻制',`${cnt}条`);
+}
+function carvingBatchDelete(){
+  const sel=window._carvingSelection;
+  if(!sel||!sel.size){ toast('请先勾选要删除的刻制记录','error'); return; }
+  if(!confirmDialog(`确定删除选中的 ${sel.size} 条刻制记录？`)) return;
+  DATA.carvings=DATA.carvings.filter(c=>!sel.has(String(c.id)));
+  saveData('carvings'); sel.clear(); renderCarvingList(); updateAllBadges();
+  toast(`已批量删除 ${sel.size} 条记录`,'success');
+}
+function exportCarvingCSV(){
+  if(!DATA.carvings.length){ toast('暂无刻制记录可导出','warn'); return; }
+  csvExport(DATA.carvings,[
+    {label:'印章名称',key:'name'},{label:'类型',key:'type'},{label:'部门',key:'dept'},{label:'材质',key:'material'},{label:'形状',key:'shape'},
+    {label:'申请人',key:'applicant'},{label:'申请日期',key:'applyDate'},{label:'预计完成',key:'expectedDate'},
+    {label:'刻制单位',key:'vendor'},{label:'状态',key:'status'},{label:'完成日期',key:'completeDate'},{label:'备注',key:'remark'}
+  ],'刻制管理台账');
+  toast('刻制管理台账已导出','success');
 }
 
 // ==================== 使用登记 ====================
@@ -1740,6 +1896,7 @@ function addUgSealTag(name, id, typeName) {
   if (ugSelectedSeals.find(s => s.name === name)) { toast('已添加该印章', 'info'); document.getElementById('ugSealInput').value = ''; return; }
   ugSelectedSeals.push({ id, name, type: typeName || '' });
   renderUgSealTags();
+  renderUgDefaultSeals();
   document.getElementById('ugSealInput').value = '';
   document.getElementById('ugSealInput').focus();
   updateUgSubmitBtn();
@@ -1747,6 +1904,7 @@ function addUgSealTag(name, id, typeName) {
 function removeUgSealTag(index) {
   ugSelectedSeals.splice(index, 1);
   renderUgSealTags();
+  renderUgDefaultSeals();
   updateUgSubmitBtn();
 }
 function renderUgSealTags() {
@@ -1759,6 +1917,27 @@ function renderUgSealTags() {
   wrap.innerHTML = ugSelectedSeals.map((s, i) =>
     '<span class="tag">' + escapeHtml(s.name) + ' <span style="font-size:10px;color:var(--g500);">' + escapeHtml(s.type) + '</span><span class="tag-remove" onclick="removeUgSealTag(' + i + ')" title="移除">✕</span></span>'
   ).join('');
+}
+function renderUgDefaultSeals(){
+  const wrapEl = document.getElementById('ugDefaultSealsWrap');
+  const container = document.getElementById('ugDefaultSeals');
+  if(!wrapEl||!container) return;
+  const defaultIds = DATA.settings.default_seals || [];
+  if(!defaultIds.length){ wrapEl.style.display='none'; return; }
+  // 获取默认印章（排除已添加的和已销毁/已废止的）
+  const selectedIds = ugSelectedSeals.map(s => String(s.id));
+  const seals = defaultIds.map(id => DATA.seals.find(s => String(s.id) === String(id) && s.status !== '已销毁' && s.status !== '已废止')).filter(Boolean);
+  if(!seals.length){ wrapEl.style.display='none'; return; }
+  wrapEl.style.display='block';
+  container.innerHTML = seals.map(s => {
+    const added = selectedIds.includes(String(s.id));
+    const style = added
+      ? 'display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:12px;background:var(--g100);color:var(--g400);cursor:not-allowed;border:1px solid var(--g200);'
+      : 'display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:12px;background:rgba(79,70,229,.06);color:var(--pri);cursor:pointer;border:1px solid rgba(79,70,229,.2);';
+    const onclick = added ? '' : `onclick="addUgSealTag('${escapeHtml(s.name).replace(/'/g,"\\'")}',${s.id},'${escapeHtml(s.type||'').replace(/'/g,"\\'")}')"`;
+    const prefix = added ? '✓ ' : '';
+    return `<span style="${style}" ${onclick}>${prefix}${escapeHtml(s.name)}</span>`;
+  }).join('');
 }
 function updateUgSubmitBtn() {
   const btn = document.getElementById('ugSubmitBtn');
@@ -1775,13 +1954,26 @@ function renderUsageList(){
   if(q) list=list.filter(r=>(r.user&&r.user.toLowerCase().includes(q))||(r.sealName&&r.sealName.toLowerCase().includes(q)));
   if(f) list=list.filter(r=>r.status===f);
   list.sort((a,b)=>new Date(b.checkOut||0)-new Date(a.checkOut||0));
+  if(!window._usageSelection) window._usageSelection = new Set();
+  const sel = window._usageSelection;
+  const countEl=document.getElementById('usageCount');
+  if(countEl) countEl.textContent=list.length;
+  const allEl=document.getElementById('usageSelectAll');
+  if(allEl){
+    const allChecked=list.length>0&&list.every(r=>sel.has(String(r.id)));
+    const someChecked=list.some(r=>sel.has(String(r.id)));
+    allEl.checked=allChecked;
+    allEl.style.opacity=(someChecked&&!allChecked)?'.6':'1';
+  }
   document.getElementById('usageTableBody').innerHTML=list.map(r=>{
     let st='badge-warn';
     if(r.status==='已归还') st='badge-success';
     else if(r.usageType==='loan'||r.status==='借出中') st='badge-loan';
     else if(r.usageType==='stamp'||r.status==='已完成') st='badge-success';
     const typeLabel = r.usageType==='loan' ? '🚪借出' : r.usageType==='stamp' ? '🖊盖章' : '📋领用';
-    return `<tr>
+    const checked = sel.has(String(r.id));
+    return `<tr style="${checked?'background:rgba(79,70,229,.04);':''}">
+      <td><input type="checkbox" ${checked?'checked':''} onchange="toggleUsageSelect('${r.id}',this.checked)" style="cursor:pointer;accent-color:var(--pri);"></td>
       <td>${escapeHtml(r.user||'')}</td><td>${escapeHtml(r.dept||'')}</td><td>${escapeHtml(r.sealName||'')}</td>
       <td style="font-size:11px;">${typeLabel}</td>
       <td>${escapeHtml(r.purpose||'')}</td><td>${r.checkOut?r.checkOut.replace('T',' '):''}</td>
@@ -1789,13 +1981,14 @@ function renderUsageList(){
       <td><span class="${st}">${r.status}</span></td>
       <td>${(r.status==='使用中'||r.status==='借出中')?`<button class="btn btn-ghost btn-sm" style="color:var(--suc)" onclick="returnUsage('${r.id}')">✅归还</button><button class="btn btn-ghost btn-sm" style="color:var(--warn)" onclick="returnUsageBatch('${r.batchId||r.id}')">📦批量</button>`:`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteUsage('${r.id}')">🗑️</button>`}</td>
       <td>${r.copies||'—'}</td></tr>`;
-  }).join('')||'<tr><td colspan="10" style="text-align:center;color:var(--g400);padding:24px;">暂无使用记录</td></tr>';
+  }).join('')||'<tr><td colspan="12" style="text-align:center;color:var(--g400);padding:24px;">暂无使用记录</td></tr>';
 }
 
 function openUsageForm(){
   ugSelectedSeals = [];
   ugCurrentType = 'stamp';
   renderUgSealTags();
+  renderUgDefaultSeals();
   document.querySelectorAll('#ugTypeTabs .type-tab').forEach(t => t.classList.remove('active'));
   const useTab = document.querySelector('#ugTypeTabs [data-type="stamp"]');
   if (useTab) useTab.classList.add('active');
@@ -1854,16 +2047,65 @@ function returnUsageBatch(batchId){
   if(cnt){ saveData('usages'); renderUsageList(); updateSealStats(); updateAllBadges(); log('批量归还','批次'+batchId.slice(-6)+' 共'+cnt+'条'); }
   toast(`已批量归还 ${cnt} 条`,'success');
 }
-function quickReturnAll(){
-  if(!confirmDialog('确定将所有使用中/借出中的印章全部归还？')) return;
-  let cnt=0;
-  DATA.usages.forEach(r=>{ if(r.status==='使用中'||r.status==='借出中'){ r.checkIn=now(); r.status='已归还'; cnt++; } });
-  if(cnt){ saveData('usages'); renderUsageList(); updateSealStats(); updateAllBadges(); log('全部归还',`${cnt}条`); }
-  toast(`已归还 ${cnt} 条`,'success');
-}
 function deleteUsage(id){
   DATA.usages=DATA.usages.filter(u=>u.id!==id);
+  if(window._usageSelection) window._usageSelection.delete(String(id));
   saveData('usages'); renderUsageList(); updateSealStats(); updateAllBadges(); toast('已删除','success');
+}
+function toggleUsageSelect(id,checked){
+  if(!window._usageSelection) window._usageSelection = new Set();
+  if(checked) window._usageSelection.add(String(id)); else window._usageSelection.delete(String(id));
+  renderUsageList();
+}
+function toggleUsageSelectAll(checked){
+  if(!window._usageSelection) window._usageSelection = new Set();
+  let list=[...DATA.usages];
+  const q=(document.getElementById('usageSearch')?.value||'').toLowerCase();
+  const f=document.getElementById('usageFilter')?.value||'';
+  if(q) list=list.filter(r=>(r.user&&r.user.toLowerCase().includes(q))||(r.sealName&&r.sealName.toLowerCase().includes(q)));
+  if(f) list=list.filter(r=>r.status===f);
+  if(checked) list.forEach(r=>window._usageSelection.add(String(r.id)));
+  else list.forEach(r=>window._usageSelection.delete(String(r.id)));
+  renderUsageList();
+}
+function usageBatchAction(){
+  if(!window._usageSelection||window._usageSelection.size===0){ toast('请先选择要修改的记录','error'); return; }
+  const sel=[...window._usageSelection];
+  document.getElementById('ublCount').textContent=sel.length;
+  document.getElementById('ublStatus').value='';
+  document.getElementById('ublRemark').value='';
+  window._usageBatchIds=sel;
+  document.getElementById('usageBatchListModal').style.display='flex';
+}
+function closeUsageBatchListModal(){ document.getElementById('usageBatchListModal').style.display='none'; }
+function confirmUsageBatchAction(){
+  const ids=window._usageBatchIds; if(!ids||!ids.length) return;
+  const newStatus=document.getElementById('ublStatus').value;
+  const newRemark=document.getElementById('ublRemark').value.trim();
+  if(!newStatus&&!newRemark){ toast('请至少填写一项修改内容','error'); return; }
+  let cnt=0;
+  ids.forEach(id=>{
+    const item=DATA.usages.find(u=>String(u.id)===String(id));
+    if(!item) return;
+    if(newStatus&&newStatus==='批量归还'){
+      if(item.status==='使用中'||item.status==='借出中'){ item.checkIn=now(); item.status='已归还'; }
+    } else if(newStatus){
+      item.status=newStatus;
+    }
+    if(newRemark) item.purpose=(item.purpose?item.purpose+'；':'')+newRemark;
+    cnt++;
+  });
+  saveData('usages'); closeUsageBatchListModal();
+  window._usageSelection.clear(); renderUsageList(); updateAllBadges(); updateSealStats();
+  toast(`已批量修改 ${cnt} 条使用记录`,'success');
+  log('批量修改使用记录',`${cnt}条`);
+}
+function usageBatchDelete(){
+  if(!window._usageSelection||window._usageSelection.size===0){ toast('请先选择要删除的记录','error'); return; }
+  if(!confirmDialog(`确定批量删除选中的 ${window._usageSelection.size} 条使用记录？`)) return;
+  DATA.usages=DATA.usages.filter(u=>!window._usageSelection.has(String(u.id)));
+  window._usageSelection = new Set();
+  saveData('usages'); renderUsageList(); updateAllBadges(); updateSealStats(); toast('已批量删除','success');
 }
 
 // ==================== 借用管理 ====================
@@ -1878,7 +2120,14 @@ function renderLoanList(){
   }
   list.sort((a,b)=>new Date(b.loanDate||0)-new Date(a.loanDate||0));
   const statusMap={待审批:'status-pending',借出:'status-crafting',已归还:'status-done',逾期:'status-rejected'};
-  document.getElementById('loanList').innerHTML=list.map(r=>{
+  if(!window._loanSelection) window._loanSelection = new Set();
+  const sel = window._loanSelection;
+  const loanCountEl=document.getElementById('loanCount');
+  if(loanCountEl) loanCountEl.textContent=list.length;
+  const allChecked = list.length > 0 && list.every(r => sel.has(String(r.id)));
+  const someChecked = list.some(r => sel.has(String(r.id)));
+  const checkAllHtml = list.length ? `<label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--g500);cursor:pointer;margin-bottom:6px;"><input type="checkbox" ${allChecked?'checked':''} ${someChecked&&!allChecked?'style="opacity:.6"':''} onchange="toggleLoanSelectAll(this.checked)" style="cursor:pointer;accent-color:var(--pri);">全选（已选 ${sel.size} 项）</label>` : '';
+  document.getElementById('loanList').innerHTML=checkAllHtml+list.map(r=>{
     const isOverdue=r.status==='借出'&&r.expectedDate&&r.expectedDate<today();
     const displayStatus=isOverdue?'逾期未还':r.status;
     const stCls=isOverdue?'status-rejected':(statusMap[r.status]||'');
@@ -1888,13 +2137,30 @@ function renderLoanList(){
       if(r.status==='借出'||isOverdue) actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--suc)" onclick="returnLoan('${r.id}')">✅归还</button>`;
       actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteLoan('${r.id}')">🗑️</button>`;
     }
-    return `<div class="card ${isOverdue?'card-overdue':''}"><div style="display:flex;justify-content:space-between;align-items:start;">
-      <div><strong>${escapeHtml(r.sealName)}</strong><span class="${stCls} status-chip">${displayStatus}</span></div>
+    const checked = sel.has(String(r.id));
+    return `<div class="card ${isOverdue?'card-overdue':''}" style="${checked?'border-color:var(--pri);background:rgba(79,70,229,.04);':''}"><div style="display:flex;justify-content:space-between;align-items:start;">
+      <div style="display:flex;align-items:center;gap:8px;"><input type="checkbox" ${checked?'checked':''} onchange="toggleLoanSelect('${r.id}',this.checked)" style="cursor:pointer;accent-color:var(--pri);"><strong>${escapeHtml(r.sealName)}</strong><span class="${stCls} status-chip">${displayStatus}</span></div>
       <div style="font-size:11px;color:var(--g500);">${r.borrower||''} · ${r.dept||''}</div></div>
       <div style="font-size:12px;color:var(--g500);margin:4px 0;">借出:${fmtDate(r.loanDate)} → 预计归还:${fmtDate(r.expectedDate)} | ${r.destination?'去向:'+r.destination:''}${r.returnDate?' | 实际归还:'+fmtDate(r.returnDate):''}</div>
       <div style="font-size:12px;color:var(--g700);margin:2px 0;">事由: ${escapeHtml(r.purpose||'')}</div>
       <div style="margin-top:6px;">${actions}</div></div>`;
   }).join('')||'<div class="card" style="text-align:center;color:var(--g400);">暂无借用记录</div>';
+}
+function toggleLoanSelect(id,checked){
+  if(!window._loanSelection) window._loanSelection = new Set();
+  if(checked) window._loanSelection.add(String(id)); else window._loanSelection.delete(String(id));
+  renderLoanList();
+}
+function toggleLoanSelectAll(checked){
+  if(!window._loanSelection) window._loanSelection = new Set();
+  let list=[...DATA.loans];
+  const q=(document.getElementById('loanSearch')?.value||'').toLowerCase();
+  const f=document.getElementById('loanFilter')?.value||'';
+  if(q) list=list.filter(r=>(r.borrower&&r.borrower.toLowerCase().includes(q))||(r.sealName&&r.sealName.toLowerCase().includes(q)));
+  if(f){ if(f==='逾期') list=list.filter(r=>r.status==='借出'&&r.expectedDate&&r.expectedDate<today()); else list=list.filter(r=>r.status===f); }
+  if(checked) list.forEach(r=>window._loanSelection.add(String(r.id)));
+  else list.forEach(r=>window._loanSelection.delete(String(r.id)));
+  renderLoanList();
 }
 
 function openLoanForm(id){
@@ -1944,10 +2210,63 @@ function returnLoan(id){
   log('借用归还',`${r.borrower} 归还 ${r.sealName}`);
   toast('已归还','success');
 }
+function batchReturnLoan(){
+  let list=[...DATA.loans];
+  const f=document.getElementById('loanFilter')?.value||'';
+  if(f){ if(f==='逾期') list=list.filter(r=>r.status==='借出'&&r.expectedDate&&r.expectedDate<today()); else list=list.filter(r=>r.status===f); }
+  const returnable=list.filter(r=>r.status==='借出'||(r.status==='借出'&&r.expectedDate&&r.expectedDate<today()));
+  if(returnable.length===0){ toast('当前列表无可归还的记录（仅"借出"状态可归还）','error'); return; }
+  if(!confirmDialog(`确定将当前列表中可归还的 ${returnable.length} 条记录全部标记为已归还？`)) return;
+  const todayStr=today();
+  returnable.forEach(r=>{ r.returnDate=todayStr; r.status='已归还'; });
+  saveData('loans'); renderLoanList(); updateAllBadges(); updateSealStats();
+  log('批量归还',`${returnable.length} 条借用记录`);
+  toast(`已批量归还 ${returnable.length} 条记录`,'success');
+}
 function deleteLoan(id){
   if(!confirmDialog('确定删除此借用记录？')) return;
   DATA.loans=DATA.loans.filter(l=>l.id!==id);
+  if(window._loanSelection) window._loanSelection.delete(String(id));
   saveData('loans'); renderLoanList(); updateAllBadges(); updateSealStats(); toast('已删除','success');
+}
+function loanBatchDelete(){
+  if(!window._loanSelection||window._loanSelection.size===0){ toast('请先选择要删除的记录','error'); return; }
+  if(!confirmDialog(`确定批量删除选中的 ${window._loanSelection.size} 条借用记录？`)) return;
+  DATA.loans=DATA.loans.filter(l=>!window._loanSelection.has(String(l.id)));
+  window._loanSelection = new Set();
+  saveData('loans'); renderLoanList(); updateAllBadges(); updateSealStats(); toast('已批量删除','success');
+}
+function loanBatchAction(){
+  if(!window._loanSelection||window._loanSelection.size===0){ toast('请先选择要修改的记录','error'); return; }
+  const sel=[...window._loanSelection];
+  document.getElementById('lblCount').textContent=sel.length;
+  document.getElementById('lblStatus').value='';
+  document.getElementById('lblRemark').value='';
+  window._loanBatchIds=sel;
+  document.getElementById('loanBatchListModal').style.display='flex';
+}
+function closeLoanBatchListModal(){ document.getElementById('loanBatchListModal').style.display='none'; }
+function confirmLoanBatchAction(){
+  const ids=window._loanBatchIds; if(!ids||!ids.length) return;
+  const newStatus=document.getElementById('lblStatus').value;
+  const newRemark=document.getElementById('lblRemark').value.trim();
+  if(!newStatus&&!newRemark){ toast('请至少填写一项修改内容','error'); return; }
+  let cnt=0;
+  ids.forEach(id=>{
+    const item=DATA.loans.find(l=>String(l.id)===String(id));
+    if(!item) return;
+    if(newStatus&&newStatus==='批量归还'){
+      if(item.status==='借出'){ item.returnDate=today(); item.status='已归还'; }
+    } else if(newStatus){
+      item.status=newStatus;
+    }
+    if(newRemark) item.purpose=(item.purpose?item.purpose+'；':'')+newRemark;
+    cnt++;
+  });
+  saveData('loans'); closeLoanBatchListModal();
+  window._loanSelection.clear(); renderLoanList(); updateAllBadges(); updateSealStats();
+  toast(`已批量修改 ${cnt} 条借用记录`,'success');
+  log('批量修改借用记录',`${cnt}条`);
 }
 
 // ==================== 回收核验 ====================
@@ -1958,11 +2277,17 @@ function renderRecoveryList(){
   if(q) list=list.filter(r=>r.sealName&&r.sealName.toLowerCase().includes(q));
   if(f) list=list.filter(r=>r.result===f);
   list.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
-  const resultMap={通过:'status-approved',需更换:'status-review',直接报废:'status-rejected'};
-  document.getElementById('recoveryList').innerHTML=list.map(r=>{
+  const resultMap={通过:'status-approved',需更换:'status-review',直接报废:'status-rejected',归档:'status-approved'};
+  if(!window._recoverySelection) window._recoverySelection = new Set();
+  const sel = window._recoverySelection;
+  const allChecked = list.length > 0 && list.every(r => sel.has(String(r.id)));
+  const someChecked = list.some(r => sel.has(String(r.id)));
+  const checkAllHtml = list.length ? `<label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--g500);cursor:pointer;margin-bottom:6px;"><input type="checkbox" ${allChecked?'checked':''} ${someChecked&&!allChecked?'style="opacity:.6"':''} onchange="toggleRecoverySelectAll(this.checked)" style="cursor:pointer;accent-color:var(--pri);">全选（已选 ${sel.size} 项）</label>` : '';
+  document.getElementById('recoveryList').innerHTML=checkAllHtml+list.map(r=>{
     let actions=''; actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteRecovery('${r.id}')">🗑️</button>`;
-    return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:start;">
-      <div><strong>${escapeHtml(r.sealName)}</strong><span class="${resultMap[r.result]||''} status-chip">${r.result}</span></div>
+    const checked = sel.has(String(r.id));
+    return `<div class="card" style="${checked?'border-color:var(--pri);background:rgba(79,70,229,.04);':''}"><div style="display:flex;justify-content:space-between;align-items:start;">
+      <div style="display:flex;align-items:center;gap:8px;"><input type="checkbox" ${checked?'checked':''} onchange="toggleRecoverySelect('${r.id}',this.checked)" style="cursor:pointer;accent-color:var(--pri);"><strong>${escapeHtml(r.sealName)}</strong><span class="${resultMap[r.result]||''} status-chip">${r.result}</span></div>
       <div style="font-size:11px;color:var(--g500);">${fmtDate(r.date)} · ${r.checker||''}</div></div>
       <div style="font-size:12px;color:var(--g500);margin:4px 0;">状况:${r.condition||''} | ${r.note||''}</div>
       <div style="margin-top:6px;">${actions}</div></div>`;
@@ -1972,32 +2297,204 @@ function renderRecoveryList(){
 function openRecoveryForm(){
   document.getElementById('rcSealInput').value=''; document.getElementById('rcSealId').value='';
   document.getElementById('rcDate').value=today(); document.getElementById('rcChecker').value=''; document.getElementById('rcNote').value='';
+  window._recoveryBulkMode = false;
+  window._recoveryBulkIds = null;
   document.getElementById('recoveryModal').style.display='flex';
 }
 function closeRecoveryModal(){ document.getElementById('recoveryModal').style.display='none'; }
 function saveRecovery(){
-  const d={
-    id: genId(), sealId: document.getElementById('rcSealId').value,
-    sealName: document.getElementById('rcSealInput').value.trim(),
-    date: document.getElementById('rcDate').value, checker: document.getElementById('rcChecker').value.trim(),
-    condition: document.getElementById('rcCondition').value,
-    result: document.getElementById('rcResult').value,
-    note: document.getElementById('rcNote').value.trim()
-  };
-  if(!d.sealName||!d.checker){ toast('请填写印章名称和核验人','error'); return; }
-  DATA.recoveries.unshift(d); saveData('recoveries');
-  log('印章核验',`${d.sealName} — ${d.result}`);
-  // If directly scrap, update seal status
-  if(d.result==='直接报废'){
-    const seal=DATA.seals.find(s=>s.name===d.sealName||s.id===d.sealId);
-    if(seal){ seal.status='已废止'; saveData('seals'); renderSealTable(); updateSealStats(); toast('已同步更新印章状态为已废止','info'); }
+  const sealNames = document.getElementById('rcSealInput').value.trim();
+  const sealIds = document.getElementById('rcSealId').value.trim();
+  const date = document.getElementById('rcDate').value;
+  const checker = document.getElementById('rcChecker').value.trim();
+  const condition = document.getElementById('rcCondition').value;
+  const result = document.getElementById('rcResult').value;
+  const note = document.getElementById('rcNote').value.trim();
+  if(!sealNames||!checker){ toast('请填写印章名称和核验人','error'); return; }
+
+  const isBulk = window._recoveryBulkMode && window._recoveryBulkIds && window._recoveryBulkIds.length > 0;
+  let ids = [];
+  let names = [];
+
+  if (isBulk) {
+    // 批量模式：使用暂存的ID列表
+    ids = [...window._recoveryBulkIds];
+    names = ids.map(id => {
+      const s = DATA.seals.find(r => String(r.id) === String(id));
+      return s ? s.name : '';
+    }).filter(Boolean);
+  } else {
+    // 单条模式
+    ids = sealIds ? sealIds.split(',').map(s => s.trim()) : [];
+    names = [sealNames];
   }
-  closeRecoveryModal(); renderRecoveryList();
-  toast('核验记录已保存','success');
+
+  // 为每枚印章创建核验记录
+  for (let i = 0; i < names.length; i++) {
+    const d = {
+      id: genId(),
+      sealId: ids[i] || '',
+      sealName: names[i],
+      date: date,
+      checker: checker,
+      condition: condition,
+      result: result,
+      note: note
+    };
+    DATA.recoveries.unshift(d);
+  }
+  saveData('recoveries');
+  log('印章核验', `${names.join('、')} — ${result}`);
+
+  // 清理批量模式标记
+  window._recoveryBulkMode = false;
+  window._recoveryBulkIds = null;
+
+  closeRecoveryModal();
+
+  // 根据核验结果分流到对应模块
+  if (result === '需更换') {
+    // 为每枚印章创建刻制申请，并跳转刻制管理
+    let createdCount = 0;
+    for (let i = 0; i < names.length; i++) {
+      const seal = DATA.seals.find(s => s.name === names[i] || String(s.id) === String(ids[i]));
+      const carving = {
+        id: genId(),
+        name: names[i],
+        type: seal ? seal.type : '公章',
+        dept: seal ? seal.dept : '',
+        material: seal ? seal.material : '橡胶',
+        shape: seal ? seal.shape : '圆形',
+        applicant: checker,
+        applyDate: today(),
+        expectedDate: '',
+        vendor: '',
+        status: '待审批',
+        completeDate: '',
+        remark: '由回收核验发起，原印章需更换',
+        approvals: []
+      };
+      DATA.carvings.unshift(carving);
+      createdCount++;
+    }
+    saveData('carvings');
+    renderRecoveryList();
+    renderCarvingList();
+    updateAllBadges();
+    toast(`核验完成：${names.length}枚印章需更换，已自动创建刻制申请`, 'success');
+  } else if (result === '直接报废') {
+    // 为每枚印章创建作废销毁记录，并跳转作废销毁
+    let createdCount = 0;
+    for (let i = 0; i < names.length; i++) {
+      const seal = DATA.seals.find(s => s.name === names[i] || String(s.id) === String(ids[i]));
+      const destroy = {
+        id: genId(),
+        sealId: ids[i] || '',
+        sealName: names[i],
+        applicant: checker,
+        applyDate: today(),
+        reason: '回收核验报废',
+        status: '待审批',
+        destroyDate: '',
+        method: '物理销毁',
+        certNo: '',
+        witnesses: '',
+        remark: '由回收核验发起：' + condition,
+        approvals: []
+      };
+      DATA.destroys.unshift(destroy);
+      // 更新印章状态为已废止
+      if (seal) {
+        seal.status = '已废止';
+      }
+      createdCount++;
+    }
+    saveData('destroys');
+    saveData('seals');
+    renderRecoveryList();
+    renderDestroyList();
+    renderSealTable();
+    updateSealStats();
+    updateAllBadges();
+    toast(`核验完成：${names.length}枚印章直接报废，已创建作废申请`, 'success');
+  } else if (result === '归档') {
+    // 为每枚印章创建归档记录，并跳转归档记录
+    let createdCount = 0;
+    for (let i = 0; i < names.length; i++) {
+      const seal = DATA.seals.find(s => s.name === names[i] || String(s.id) === String(ids[i]));
+      const archive = {
+        id: genId(),
+        sealId: ids[i] || '',
+        sealName: names[i],
+        endDate: seal ? seal.validUntil || seal.startDate : '',
+        archiveDate: date,
+        handler: checker,
+        reason: '回收核验归档',
+        note: note || '由回收核验发起'
+      };
+      DATA.archives.unshift(archive);
+      // 更新印章状态为已归档
+      if (seal) {
+        seal.status = '已归档';
+      }
+      createdCount++;
+    }
+    saveData('archives');
+    saveData('seals');
+    renderRecoveryList();
+    renderArchiveList();
+    renderSealTable();
+    updateSealStats();
+    updateAllBadges();
+    toast(`核验完成：${names.length}枚印章已归档`, 'success');
+  } else {
+    // 通过：仅记录核验结果
+    renderRecoveryList();
+    toast(`核验记录已保存：${result}`, 'success');
+  }
+
+  // 清除档案目录选择
+  if (isBulk) {
+    sealSelection.clear();
+    renderSealTable();
+  }
 }
 function deleteRecovery(id){
   DATA.recoveries=DATA.recoveries.filter(r=>r.id!==id);
   saveData('recoveries'); renderRecoveryList(); toast('已删除','success');
+}
+function toggleRecoverySelect(id, checked){
+  if(!window._recoverySelection) window._recoverySelection = new Set();
+  if(checked) window._recoverySelection.add(String(id)); else window._recoverySelection.delete(String(id));
+  renderRecoveryList();
+}
+function toggleRecoverySelectAll(checked){
+  if(!window._recoverySelection) window._recoverySelection = new Set();
+  let list=[...DATA.recoveries];
+  const q=(document.getElementById('recoverySearch')?.value||'').toLowerCase();
+  const f=(document.getElementById('recoveryFilter')?.value||'');
+  if(q) list=list.filter(r=>r.sealName&&r.sealName.toLowerCase().includes(q));
+  if(f) list=list.filter(r=>r.result===f);
+  if(checked) list.forEach(r=>window._recoverySelection.add(String(r.id)));
+  else list.forEach(r=>window._recoverySelection.delete(String(r.id)));
+  renderRecoveryList();
+}
+function recoveryBatchDelete(){
+  const sel=window._recoverySelection;
+  if(!sel||!sel.size){ toast('请先勾选要删除的核验记录','error'); return; }
+  if(!confirmDialog(`确定删除选中的 ${sel.size} 条核验记录？`)) return;
+  const cnt=sel.size;
+  DATA.recoveries=DATA.recoveries.filter(r=>!sel.has(String(r.id)));
+  saveData('recoveries'); sel.clear(); renderRecoveryList();
+  toast(`已批量删除 ${cnt} 条记录`,'success');
+}
+function exportRecoveryCSV(){
+  if(!DATA.recoveries.length){ toast('暂无核验记录可导出','warn'); return; }
+  csvExport(DATA.recoveries,[
+    {label:'印章名称',key:'sealName'},{label:'核验日期',key:'date'},{label:'核验人',key:'checker'},
+    {label:'印章状况',key:'condition'},{label:'核验结果',key:'result'},{label:'备注',key:'note'}
+  ],'回收核验台账');
+  toast('回收核验台账已导出','success');
 }
 
 // ==================== 作废销毁 ====================
@@ -2009,7 +2506,12 @@ function renderDestroyList(){
   if(f) list=list.filter(r=>r.status===f);
   list.sort((a,b)=>new Date(b.applyDate||0)-new Date(a.applyDate||0));
   const statusMap={待审批:'status-pending',审批中:'status-review',已批准:'status-approved',已驳回:'status-rejected',已销毁:'status-done'};
-  document.getElementById('destroyList').innerHTML=list.map(r=>{
+  if(!window._destroySelection) window._destroySelection = new Set();
+  const sel = window._destroySelection;
+  const allChecked = list.length > 0 && list.every(r => sel.has(String(r.id)));
+  const someChecked = list.some(r => sel.has(String(r.id)));
+  const checkAllHtml = list.length ? `<label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--g500);cursor:pointer;margin-bottom:6px;"><input type="checkbox" ${allChecked?'checked':''} ${someChecked&&!allChecked?'style="opacity:.6"':''} onchange="toggleDestroySelectAll(this.checked)" style="cursor:pointer;accent-color:var(--pri);">全选（已选 ${sel.size} 项）</label>` : '';
+  document.getElementById('destroyList').innerHTML=checkAllHtml+list.map(r=>{
     let actions='';
     if(can('destroyEdit')){
       if(r.status==='待审批'||r.status==='审批中') actions+=`<button class="btn btn-ghost btn-sm" style="color:var(--inf)" onclick="openApprovalModal('destroy','${r.id}')">✅审批</button>`;
@@ -2017,8 +2519,9 @@ function renderDestroyList(){
       actions+=`<button class="btn btn-ghost btn-sm" onclick="editDestroy('${r.id}')">✏️</button>
         <button class="btn btn-ghost btn-sm" style="color:var(--dan)" onclick="deleteDestroy('${r.id}')">🗑️</button>`;
     }
-    return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:start;">
-      <div><strong>${escapeHtml(r.sealName)}</strong><span class="status-chip ${statusMap[r.status]||''}">${r.status}</span></div>
+    const checked = sel.has(String(r.id));
+    return `<div class="card" style="${checked?'border-color:var(--pri);background:rgba(79,70,229,.04);':''}"><div style="display:flex;justify-content:space-between;align-items:start;">
+      <div style="display:flex;align-items:center;gap:8px;"><input type="checkbox" ${checked?'checked':''} onchange="toggleDestroySelect('${r.id}',this.checked)" style="cursor:pointer;accent-color:var(--pri);"><strong>${escapeHtml(r.sealName)}</strong><span class="status-chip ${statusMap[r.status]||''}">${r.status}</span></div>
       <div style="font-size:11px;color:var(--g500);">${r.applicant||''} · ${fmtDate(r.applyDate)}</div></div>
       <div style="font-size:12px;color:var(--g500);margin:4px 0;">原因:${r.reason||''}${r.destroyDate?' | 销毁日期:'+fmtDate(r.destroyDate):''}${r.method?' | '+r.method:''}</div>
       <div style="margin-top:6px;">${actions}</div></div>`;
@@ -2089,6 +2592,75 @@ function deleteDestroy(id){
   if(!confirmDialog('确定删除？')) return;
   DATA.destroys=DATA.destroys.filter(d=>d.id!==id);
   saveData('destroys'); renderDestroyList(); updateAllBadges(); toast('已删除','success');
+}
+function toggleDestroySelect(id, checked){
+  if(!window._destroySelection) window._destroySelection = new Set();
+  if(checked) window._destroySelection.add(String(id)); else window._destroySelection.delete(String(id));
+  renderDestroyList();
+}
+function toggleDestroySelectAll(checked){
+  if(!window._destroySelection) window._destroySelection = new Set();
+  let list=[...DATA.destroys];
+  const q=(document.getElementById('destroySearch')?.value||'').toLowerCase();
+  const f=(document.getElementById('destroyFilter')?.value||'');
+  if(q) list=list.filter(r=>r.sealName&&r.sealName.toLowerCase().includes(q));
+  if(f) list=list.filter(r=>r.status===f);
+  if(checked) list.forEach(r=>window._destroySelection.add(String(r.id)));
+  else list.forEach(r=>window._destroySelection.delete(String(r.id)));
+  renderDestroyList();
+}
+function destroyBatchAction(){
+  const sel=window._destroySelection;
+  if(!sel||!sel.size){ toast('请先勾选要修改的作废记录','error'); return; }
+  const ids=[...sel]; const count=ids.length;
+  document.getElementById('dblCount').textContent=count;
+  document.getElementById('dblStatus').value='';
+  document.getElementById('dblMethod').value='';
+  document.getElementById('dblRemark').value='';
+  window._destroyBatchIds=ids;
+  document.getElementById('destroyBatchListModal').style.display='flex';
+}
+function closeDestroyBatchListModal(){ document.getElementById('destroyBatchListModal').style.display='none'; }
+function confirmDestroyBatchAction(){
+  const ids=window._destroyBatchIds; if(!ids||!ids.length) return;
+  const newStatus=document.getElementById('dblStatus').value;
+  const newMethod=document.getElementById('dblMethod').value;
+  const newRemark=document.getElementById('dblRemark').value.trim();
+  if(!newStatus&&!newMethod&&!newRemark){ toast('请至少填写一项修改内容','error'); return; }
+  let cnt=0;
+  ids.forEach(id=>{
+    const item=DATA.destroys.find(d=>String(d.id)===String(id));
+    if(!item) return;
+    if(newStatus){
+      item.status=newStatus;
+      if(newStatus==='已销毁'&&!item.destroyDate) item.destroyDate=today();
+    }
+    if(newMethod) item.method=newMethod;
+    if(newRemark) item.remark=(item.remark?item.remark+'；':'')+newRemark;
+    cnt++;
+  });
+  saveData('destroys'); closeDestroyBatchListModal();
+  window._destroySelection.clear(); renderDestroyList(); renderSealTable(); updateSealStats(); updateAllBadges();
+  toast(`已批量修改 ${cnt} 条作废记录`,'success');
+  log('批量修改作废',`${cnt}条`);
+}
+function destroyBatchDelete(){
+  const sel=window._destroySelection;
+  if(!sel||!sel.size){ toast('请先勾选要删除的作废记录','error'); return; }
+  if(!confirmDialog(`确定删除选中的 ${sel.size} 条作废记录？`)) return;
+  const cnt=sel.size;
+  DATA.destroys=DATA.destroys.filter(d=>!sel.has(String(d.id)));
+  saveData('destroys'); sel.clear(); renderDestroyList(); updateAllBadges();
+  toast(`已批量删除 ${cnt} 条记录`,'success');
+}
+function exportDestroyCSV(){
+  if(!DATA.destroys.length){ toast('暂无作废记录可导出','warn'); return; }
+  csvExport(DATA.destroys,[
+    {label:'印章名称',key:'sealName'},{label:'申请人',key:'applicant'},{label:'申请日期',key:'applyDate'},
+    {label:'作废原因',key:'reason'},{label:'状态',key:'status'},{label:'销毁日期',key:'destroyDate'},
+    {label:'销毁方式',key:'method'},{label:'证明编号',key:'certNo'},{label:'见证人',key:'witnesses'},{label:'备注',key:'remark'}
+  ],'作废销毁台账');
+  toast('作废销毁台账已导出','success');
 }
 
 // ==================== 归档管理 ====================
@@ -2492,7 +3064,10 @@ function exportUsageReport(){
   toast('使用台账已导出','success');
 }
 function exportLoanReport(){
-  csvExport(DATA.loans,[
+  let list=[...DATA.loans];
+  const f=document.getElementById('loanFilter')?.value||'';
+  if(f){ if(f==='逾期') list=list.filter(r=>r.status==='借出'&&r.expectedDate&&r.expectedDate<today()); else list=list.filter(r=>r.status===f); }
+  csvExport(list,[
     {label:'借用人',key:'borrower'},{label:'部门',key:'dept'},{label:'印章名称',key:'sealName'},
     {label:'借用日期',key:'loanDate'},{label:'预计归还',key:'expectedDate'},{label:'实际归还',key:'returnDate'},
     {label:'去向',key:'destination'},{label:'事由',key:'purpose'},{label:'状态',key:'status'}
@@ -2746,10 +3321,6 @@ function loadSheetJS(cb){
 function quickBackup(){
   exportAllData();
 }
-function restoreBackupPrompt(){
-  importAllDataPrompt();
-}
-
 // ==================== 初始化 ====================
 async function init(){
   const connected = await loadAll();

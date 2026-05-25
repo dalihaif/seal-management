@@ -53,16 +53,16 @@ def init_db():
     );
     CREATE TABLE IF NOT EXISTS loans (
         id TEXT PRIMARY KEY, sealId TEXT DEFAULT '', sealName TEXT DEFAULT '',
-        applicant TEXT DEFAULT '', dept TEXT DEFAULT '', purpose TEXT DEFAULT '',
-        contactPhone TEXT DEFAULT '', loanDate TEXT DEFAULT '', dueDate TEXT DEFAULT '',
-        returnDate TEXT DEFAULT '', status TEXT DEFAULT '待审批',
-        approver TEXT DEFAULT '', approvalDate TEXT DEFAULT ''
+        borrower TEXT DEFAULT '', dept TEXT DEFAULT '', phone TEXT DEFAULT '',
+        loanDate TEXT DEFAULT '', expectedDate TEXT DEFAULT '',
+        destination TEXT DEFAULT '', approver TEXT DEFAULT '',
+        purpose TEXT DEFAULT '', status TEXT DEFAULT '待审批',
+        returnDate TEXT DEFAULT '', approvals TEXT DEFAULT '[]'
     );
     CREATE TABLE IF NOT EXISTS recoveries (
         id TEXT PRIMARY KEY, sealId TEXT DEFAULT '', sealName TEXT DEFAULT '',
-        checker TEXT DEFAULT '', checkDate TEXT DEFAULT '',
-        condition TEXT DEFAULT '', result TEXT DEFAULT '', note TEXT DEFAULT '',
-        status TEXT DEFAULT '已核验'
+        checker TEXT DEFAULT '', date TEXT DEFAULT '',
+        condition TEXT DEFAULT '', result TEXT DEFAULT '', note TEXT DEFAULT ''
     );
     CREATE TABLE IF NOT EXISTS destroys (
         id TEXT PRIMARY KEY, sealId TEXT DEFAULT '', sealName TEXT DEFAULT '',
@@ -84,8 +84,8 @@ def init_db():
         key TEXT PRIMARY KEY, value TEXT DEFAULT '{}'
     );
     -- Default settings
-    INSERT OR IGNORE INTO settings (key, value) VALUES ('departments', '["院办公室","党委办公室","财务科","人事科","医务科","护理部","科研科","教学科","总务科","基建科","保卫科","审计科","纪检监察室","工会","团委"]');
-    INSERT OR IGNORE INTO settings (key, value) VALUES ('approvers', '[{"name":"院长","level":2},{"name":"分管副院长","level":2},{"name":"办公室主任","level":1},{"name":"档案科科长","level":1}]');
+    INSERT OR IGNORE INTO settings (key, value) VALUES ('departments', '["院办公室","党委办公室","财务科","人事科","医务科","护理部","科教科","教学科","总务科","基建科","保卫科","审计科","纪检监察室","工会","团委"]');
+    INSERT OR IGNORE INTO settings (key, value) VALUES ('approvers', '[{"name":"院长","level":2},{"name":"分管副院长","level":2},{"name":"办公室主任","level":1},{"name":"综合档案室","level":1}]');
     INSERT OR IGNORE INTO settings (key, value) VALUES ('default_seals', '[]');
     INSERT OR IGNORE INTO settings (key, value) VALUES ('doc_types', '["证明","合同","报告","申请","函件","其他"]');
     ''')
@@ -426,7 +426,7 @@ def init_status():
 
 @app.route('/api/init', methods=['POST'])
 def initialize_data():
-    """从data.json导入初始印章数据"""
+    """从data.json导入初始印章数据，并生成演示数据"""
     data_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.json')
     if not os.path.exists(data_file):
         return jsonify({'error': 'data.json 文件不存在'}), 404
@@ -435,14 +435,18 @@ def initialize_data():
         seals = json.load(f)
     if not seals:
         return jsonify({'error': 'data.json 中没有数据'}), 400
-    
+
+    # Check if already initialized
+    existing = db.execute('SELECT COUNT(*) as c FROM seals').fetchone()['c']
+    if existing > 0:
+        return jsonify({'success': True, 'count': existing, 'message': '已初始化'})
+
     # Get valid columns from the seals table
     cols_info = db.execute('PRAGMA table_info(seals)').fetchall()
     valid_cols = {row['name'] for row in cols_info}
-    
+
     count = 0
     for s in seals:
-        # Filter to only valid columns
         filtered = {k: v for k, v in s.items() if k in valid_cols}
         if not filtered.get('name'):
             continue
@@ -456,8 +460,98 @@ def initialize_data():
             print(f'  skip row: {e}')
     db.commit()
     total = db.execute('SELECT COUNT(*) as c FROM seals').fetchone()['c']
+
+    # ===== 演示数据 =====
+    now_str = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+
+    # 使用登记演示 (10条)
+    demo_usages = [
+        {'id': 'u001', 'sealId': '1', 'sealName': seals[0]['name'], 'user': '张明华', 'dept': '院办公室', 'docType': '证明', 'purpose': '开具在职证明', 'approver': '办公室主任', 'checkOut': '2026-05-20 09:30', 'checkIn': '2026-05-20 10:15', 'status': '已归还', 'copies': '3', 'usageType': 'stamp', 'batchId': 'B20260520001', 'contactPhone': '', 'expectedReturn': ''},
+        {'id': 'u002', 'sealId': '5', 'sealName': seals[4]['name'], 'user': '李红梅', 'dept': '财务科', 'docType': '合同', 'purpose': '医疗器械采购合同盖章', 'approver': '分管副院长', 'checkOut': '2026-05-21 14:00', 'checkIn': '2026-05-21 15:30', 'status': '已归还', 'copies': '2', 'usageType': 'stamp', 'batchId': 'B20260521001', 'contactPhone': '', 'expectedReturn': ''},
+        {'id': 'u003', 'sealId': '1', 'sealName': seals[0]['name'], 'user': '王建国', 'dept': '人事科', 'docType': '报告', 'purpose': '年度考核报告盖章', 'approver': '办公室主任', 'checkOut': '2026-05-22 10:00', 'checkIn': '2026-05-22 11:00', 'status': '已归还', 'copies': '5', 'usageType': 'stamp', 'batchId': 'B20260522001', 'contactPhone': '', 'expectedReturn': ''},
+        {'id': 'u004', 'sealId': '9', 'sealName': seals[8]['name'], 'user': '赵丽萍', 'dept': '医务科', 'docType': '申请', 'purpose': '科研项目申请材料', 'approver': '院长', 'checkOut': '2026-05-23 08:45', 'checkIn': '2026-05-23 09:20', 'status': '已归还', 'copies': '1', 'usageType': 'stamp', 'batchId': 'B20260523001', 'contactPhone': '', 'expectedReturn': ''},
+        {'id': 'u005', 'sealId': '14', 'sealName': seals[13]['name'] if len(seals) > 13 else '财务专用章', 'user': '陈志强', 'dept': '财务科', 'docType': '证明', 'purpose': '财务审计证明盖章', 'approver': '办公室主任', 'checkOut': '2026-05-24 09:00', 'checkIn': '', 'status': '使用中', 'copies': '2', 'usageType': 'stamp', 'batchId': 'B20260524001', 'contactPhone': '', 'expectedReturn': ''},
+        {'id': 'u006', 'sealId': '1', 'sealName': seals[0]['name'], 'user': '刘芳', 'dept': '护理部', 'docType': '函件', 'purpose': '护理培训邀请函', 'approver': '分管副院长', 'checkOut': '2026-05-24 14:00', 'checkIn': '', 'status': '借出中', 'copies': '1', 'usageType': 'loan', 'batchId': 'B20260524002', 'contactPhone': '13988123456', 'expectedReturn': '2026-05-27'},
+        {'id': 'u007', 'sealId': '3', 'sealName': seals[2]['name'], 'user': '杨建华', 'dept': '总务科', 'docType': '合同', 'purpose': '物业合同续签盖章', 'approver': '院长', 'checkOut': '2026-05-25 10:30', 'checkIn': '', 'status': '使用中', 'copies': '4', 'usageType': 'stamp', 'batchId': 'B20260525001', 'contactPhone': '', 'expectedReturn': ''},
+        {'id': 'u008', 'sealId': '10', 'sealName': seals[9]['name'] if len(seals) > 9 else '党办公章', 'user': '周丽华', 'dept': '党委办公室', 'docType': '报告', 'purpose': '党建工作年度报告', 'approver': '院长', 'checkOut': '2026-05-18 09:00', 'checkIn': '2026-05-18 10:30', 'status': '已归还', 'copies': '2', 'usageType': 'stamp', 'batchId': 'B20260518001', 'contactPhone': '', 'expectedReturn': ''},
+        {'id': 'u009', 'sealId': '4', 'sealName': seals[3]['name'], 'user': '吴国平', 'dept': '基建科', 'docType': '申请', 'purpose': '基建维修申请盖章', 'approver': '分管副院长', 'checkOut': '2026-05-19 15:00', 'checkIn': '2026-05-19 16:00', 'status': '已归还', 'copies': '1', 'usageType': 'stamp', 'batchId': 'B20260519001', 'contactPhone': '', 'expectedReturn': ''},
+        {'id': 'u010', 'sealId': '7', 'sealName': seals[6]['name'] if len(seals) > 6 else '财务科公章', 'user': '孙秀英', 'dept': '审计科', 'docType': '其他', 'purpose': '内部审计文件盖章', 'approver': '办公室主任', 'checkOut': '2026-05-25 08:30', 'checkIn': '', 'status': '使用中', 'copies': '3', 'usageType': 'stamp', 'batchId': 'B20260525002', 'contactPhone': '', 'expectedReturn': ''},
+    ]
+    for u in demo_usages:
+        insert_item(db, 'usages', 'usages', u)
+    db.commit()
+
+    # 借用管理演示 (10条)
+    demo_loans = [
+        {'id': 'l001', 'sealId': '1', 'sealName': seals[0]['name'], 'borrower': '张明华', 'dept': '院办公室', 'phone': '13988531234', 'loanDate': '2026-05-15', 'expectedDate': '2026-05-18', 'destination': '州卫健委', 'approver': '办公室主任', 'purpose': '办理医疗许可变更', 'status': '已归还', 'returnDate': '2026-05-17', 'approvals': '[{"name":"办公室主任","result":"approved","time":"2026-05-14","note":"同意"}]'},
+        {'id': 'l002', 'sealId': '9', 'sealName': seals[8]['name'], 'borrower': '李红梅', 'dept': '医务科', 'phone': '13988234567', 'loanDate': '2026-05-18', 'expectedDate': '2026-05-20', 'destination': '州卫健委', 'approver': '分管副院长', 'purpose': '医师资格考试材料盖章', 'status': '已归还', 'returnDate': '2026-05-19', 'approvals': '[{"name":"分管副院长","result":"approved","time":"2026-05-17","note":"同意"}]'},
+        {'id': 'l003', 'sealId': '3', 'sealName': seals[2]['name'], 'borrower': '王建国', 'dept': '人事科', 'phone': '13988345678', 'loanDate': '2026-05-20', 'expectedDate': '2026-05-25', 'destination': '州人社局', 'approver': '院长', 'purpose': '人才引进材料办理', 'status': '借出', 'returnDate': '', 'approvals': '[{"name":"院长","result":"approved","time":"2026-05-19","note":"同意"}]'},
+        {'id': 'l004', 'sealId': '1', 'sealName': seals[0]['name'], 'borrower': '赵丽萍', 'dept': '科教科', 'phone': '13988456789', 'loanDate': '2026-05-22', 'expectedDate': '2026-05-24', 'destination': '大理大学', 'approver': '分管副院长', 'purpose': '科研合作协议签署', 'status': '借出', 'returnDate': '', 'approvals': '[{"name":"分管副院长","result":"approved","time":"2026-05-21","note":"同意"}]'},
+        {'id': 'l005', 'sealId': '14', 'sealName': seals[13]['name'] if len(seals) > 13 else '财务专用章', 'borrower': '陈志强', 'dept': '财务科', 'phone': '13988567890', 'loanDate': '2026-05-23', 'expectedDate': '2026-05-28', 'destination': '州财政局', 'approver': '院长', 'purpose': '财政检查配合材料', 'status': '借出', 'returnDate': '', 'approvals': '[{"name":"院长","result":"approved","time":"2026-05-22","note":"同意，注意保密"}]'},
+        {'id': 'l006', 'sealId': '5', 'sealName': seals[4]['name'], 'borrower': '刘芳', 'dept': '护理部', 'phone': '13988678901', 'loanDate': '2026-05-24', 'expectedDate': '2026-05-26', 'destination': '州卫健委', 'approver': '分管副院长', 'purpose': '护士执照注册材料', 'status': '待审批', 'returnDate': '', 'approvals': '[]'},
+        {'id': 'l007', 'sealId': '10', 'sealName': seals[9]['name'] if len(seals) > 9 else '党办公章', 'borrower': '杨建华', 'dept': '党委办公室', 'phone': '13988789012', 'loanDate': '2026-05-10', 'expectedDate': '2026-05-13', 'destination': '州委组织部', 'approver': '院长', 'purpose': '干部考察材料', 'status': '已归还', 'returnDate': '2026-05-12', 'approvals': '[{"name":"院长","result":"approved","time":"2026-05-09","note":"同意"}]'},
+        {'id': 'l008', 'sealId': '4', 'sealName': seals[3]['name'], 'borrower': '周丽华', 'dept': '基建科', 'phone': '13988890123', 'loanDate': '2026-05-12', 'expectedDate': '2026-05-15', 'destination': '州住建局', 'approver': '分管副院长', 'purpose': '工程验收资料盖章', 'status': '已归还', 'returnDate': '2026-05-14', 'approvals': '[{"name":"分管副院长","result":"approved","time":"2026-05-11","note":"同意"}]'},
+        {'id': 'l009', 'sealId': '2', 'sealName': seals[1]['name'], 'borrower': '吴国平', 'dept': '保卫科', 'phone': '13988901234', 'loanDate': '2026-05-25', 'expectedDate': '2026-05-30', 'destination': '州公安局', 'approver': '办公室主任', 'purpose': '安保备案材料', 'status': '待审批', 'returnDate': '', 'approvals': '[]'},
+        {'id': 'l010', 'sealId': '7', 'sealName': seals[6]['name'] if len(seals) > 6 else '财务科公章', 'borrower': '孙秀英', 'dept': '审计科', 'phone': '13988012345', 'loanDate': '2026-05-08', 'expectedDate': '2026-05-10', 'destination': '州审计局', 'approver': '分管副院长', 'purpose': '审计配合材料', 'status': '已归还', 'returnDate': '2026-05-10', 'approvals': '[{"name":"分管副院长","result":"approved","time":"2026-05-07","note":"同意"}]'},
+    ]
+    for l in demo_loans:
+        insert_item(db, 'loans', 'loans', l)
+    db.commit()
+
+    # 刻制管理演示 (10条)
+    demo_carvings = [
+        {'id': 'c001', 'name': '大理大学第一附属医院工会委员会', 'type': '公章', 'dept': '工会', 'material': '橡胶', 'shape': '圆形', 'applicant': '刘芳', 'applyDate': '2026-05-01', 'expectedDate': '2026-05-15', 'vendor': '大理市刻章中心', 'status': '已完成', 'completeDate': '2026-05-12', 'remark': '工会换届重新刻制', 'approvals': '[{"name":"分管副院长","result":"approved","time":"2026-05-02"}]', 'reason': '', 'quantity': 1},
+        {'id': 'c002', 'name': '大理大学第一附属医院营养科', 'type': '公章', 'dept': '总务科', 'material': '橡胶', 'shape': '圆形', 'applicant': '杨建华', 'applyDate': '2026-05-05', 'expectedDate': '2026-05-20', 'vendor': '大理市刻章中心', 'status': '已完成', 'completeDate': '2026-05-18', 'remark': '科室搬迁更换新章', 'approvals': '[{"name":"办公室主任","result":"approved","time":"2026-05-06"}]', 'reason': '', 'quantity': 1},
+        {'id': 'c003', 'name': '大理大学第一附属医院体检专用章', 'type': '体检专用章', 'dept': '院办公室', 'material': '橡胶', 'shape': '圆形', 'applicant': '张明华', 'applyDate': '2026-05-10', 'expectedDate': '2026-05-25', 'vendor': '大理市刻章中心', 'status': '刻制中', 'completeDate': '', 'remark': '原章磨损严重', 'approvals': '[{"name":"办公室主任","result":"approved","time":"2026-05-11"}]', 'reason': '', 'quantity': 1},
+        {'id': 'c004', 'name': '大理大学第一附属医院医疗证明章', 'type': '医疗证明章', 'dept': '医务科', 'material': '牛角', 'shape': '圆形', 'applicant': '李红梅', 'applyDate': '2026-05-18', 'expectedDate': '2026-06-01', 'vendor': '下关刻印社', 'status': '已批准', 'completeDate': '', 'remark': '', 'approvals': '[{"name":"分管副院长","result":"approved","time":"2026-05-19"}]', 'reason': '原章字迹模糊', 'quantity': 1},
+        {'id': 'c005', 'name': '大理大学第一附属医院收费专用章', 'type': '收费专用章', 'dept': '财务科', 'material': '牛角', 'shape': '椭圆', 'applicant': '陈志强', 'applyDate': '2026-05-20', 'expectedDate': '', 'vendor': '', 'status': '待审批', 'completeDate': '', 'remark': '配合财务系统升级', 'approvals': '[]', 'reason': '旧章规格不符', 'quantity': 1},
+        {'id': 'c006', 'name': '大理大学第一附属医院出生医学证明专用章', 'type': '出生医学证明专用章', 'dept': '院办公室', 'material': '橡胶', 'shape': '圆形', 'applicant': '赵丽萍', 'applyDate': '2026-05-15', 'expectedDate': '2026-05-30', 'vendor': '大理市刻章中心', 'status': '刻制中', 'completeDate': '', 'remark': '', 'approvals': '[{"name":"院长","result":"approved","time":"2026-05-16"}]', 'reason': '省卫健委要求更换新版本', 'quantity': 1},
+        {'id': 'c007', 'name': '大理大学第一附属医院继续医学教育委员会', 'type': '公章', 'dept': '教学科', 'material': '橡胶', 'shape': '圆形', 'applicant': '周丽华', 'applyDate': '2026-05-22', 'expectedDate': '', 'vendor': '', 'status': '待审批', 'completeDate': '', 'remark': '', 'approvals': '[]', 'reason': '原章遗失需补刻', 'quantity': 1},
+        {'id': 'c008', 'name': '大理大学第一附属医院医务科', 'type': '公章', 'dept': '医务科', 'material': '橡胶', 'shape': '圆形', 'applicant': '王建国', 'applyDate': '2026-04-25', 'expectedDate': '2026-05-10', 'vendor': '大理市刻章中心', 'status': '已完成', 'completeDate': '2026-05-08', 'remark': '机构更名重刻', 'approvals': '[{"name":"院长","result":"approved","time":"2026-04-26"}]', 'reason': '', 'quantity': 1},
+        {'id': 'c009', 'name': '大理大学第一附属医院护理部', 'type': '公章', 'dept': '护理部', 'material': '橡胶', 'shape': '圆形', 'applicant': '吴国平', 'applyDate': '2026-05-08', 'expectedDate': '2026-05-22', 'vendor': '下关刻印社', 'status': '已完成', 'completeDate': '2026-05-20', 'remark': '', 'approvals': '[{"name":"分管副院长","result":"approved","time":"2026-05-09"}]', 'reason': '', 'quantity': 1},
+        {'id': 'c010', 'name': '大理大学第一附属医院病历复印专用章', 'type': '病历复印专用章', 'dept': '院办公室', 'material': '橡胶', 'shape': '长方形', 'applicant': '孙秀英', 'applyDate': '2026-05-24', 'expectedDate': '', 'vendor': '', 'status': '待审批', 'completeDate': '', 'remark': '', 'approvals': '[]', 'reason': '病案管理要求更换', 'quantity': 1},
+    ]
+    for c in demo_carvings:
+        insert_item(db, 'carvings', 'carvings', c)
+    db.commit()
+
+    # 回收核验演示 (10条)
+    demo_recoveries = [
+        {'id': 'r001', 'sealId': '86', 'sealName': '大理学院附属医院医疗管理办公室', 'checker': '张明华', 'date': '2026-05-10', 'condition': '磨损', 'result': '归档', 'note': '机构更名后旧章收回'},
+        {'id': 'r002', 'sealId': '90', 'sealName': '大理学院附属医院医务科', 'checker': '李红梅', 'date': '2026-05-12', 'condition': '完好', 'result': '需更换', 'note': '机构更名需重刻'},
+        {'id': 'r003', 'sealId': '91', 'sealName': '大理学院附属医院财务科', 'checker': '王建国', 'date': '2026-05-14', 'condition': '损坏', 'result': '直接报废', 'note': '印章裂纹无法继续使用'},
+        {'id': 'r004', 'sealId': '92', 'sealName': '大理学院附属医院人力资源部', 'checker': '赵丽萍', 'date': '2026-05-15', 'condition': '完好', 'result': '归档', 'note': '机构调整旧章归档'},
+        {'id': 'r005', 'sealId': '1', 'sealName': seals[0]['name'], 'checker': '陈志强', 'date': '2026-05-18', 'condition': '完好', 'result': '通过', 'note': '年度常规核验'},
+        {'id': 'r006', 'sealId': '9', 'sealName': seals[8]['name'], 'checker': '刘芳', 'date': '2026-05-20', 'condition': '完好', 'result': '通过', 'note': '年度常规核验'},
+        {'id': 'r007', 'sealId': '14', 'sealName': seals[13]['name'] if len(seals) > 13 else '财务专用章', 'checker': '杨建华', 'date': '2026-05-22', 'condition': '轻微磨损', 'result': '通过', 'note': '建议下次核验时考虑更换'},
+        {'id': 'r008', 'sealId': '4', 'sealName': seals[3]['name'], 'checker': '周丽华', 'date': '2026-05-23', 'condition': '完好', 'result': '通过', 'note': '状态良好'},
+        {'id': 'r009', 'sealId': '10', 'sealName': seals[9]['name'] if len(seals) > 9 else '党办公章', 'checker': '吴国平', 'date': '2026-05-24', 'condition': '完好', 'result': '通过', 'note': '年度常规核验'},
+        {'id': 'r010', 'sealId': '3', 'sealName': seals[2]['name'], 'checker': '孙秀英', 'date': '2026-05-25', 'condition': '完好', 'result': '通过', 'note': '状态良好'},
+    ]
+    for r in demo_recoveries:
+        insert_item(db, 'recoveries', 'recoveries', r)
+    db.commit()
+
+    # 归档记录演示 (10条)
+    demo_archives = [
+        {'id': 'a001', 'sealId': '86', 'sealName': '大理学院附属医院医疗管理办公室', 'endDate': '2013-02-27', 'archiveDate': '2026-05-10', 'handler': '张明华', 'reason': '机构更名废止', 'note': '医疗管理办公室更名为医务科'},
+        {'id': 'a002', 'sealId': '90', 'sealName': '大理学院附属医院医务科（旧）', 'endDate': '2014-04-11', 'archiveDate': '2026-05-12', 'handler': '李红梅', 'reason': '机构更名废止', 'note': ''},
+        {'id': 'a003', 'sealId': '91', 'sealName': '大理学院附属医院财务科（旧）', 'endDate': '2014-04-11', 'archiveDate': '2026-05-14', 'handler': '王建国', 'reason': '机构调整废止', 'note': ''},
+        {'id': 'a004', 'sealId': '92', 'sealName': '大理学院附属医院人力资源部', 'endDate': '2014-04-11', 'archiveDate': '2026-05-15', 'handler': '赵丽萍', 'reason': '机构调整废止', 'note': ''},
+        {'id': 'a005', 'sealId': '1', 'sealName': seals[0]['name'], 'endDate': '2020-01-01', 'archiveDate': '2026-03-01', 'handler': '陈志强', 'reason': '使用年限到期', 'note': '正常归档'},
+        {'id': 'a006', 'sealId': '2', 'sealName': seals[1]['name'], 'endDate': '2019-12-31', 'archiveDate': '2026-03-05', 'handler': '刘芳', 'reason': '使用年限到期', 'note': ''},
+        {'id': 'a007', 'sealId': '6', 'sealName': seals[5]['name'], 'endDate': '2021-06-30', 'archiveDate': '2026-03-10', 'handler': '杨建华', 'reason': '科室合并废止', 'note': ''},
+        {'id': 'a008', 'sealId': '8', 'sealName': seals[7]['name'], 'endDate': '2022-03-15', 'archiveDate': '2026-04-01', 'handler': '周丽华', 'reason': '机构调整废止', 'note': ''},
+        {'id': 'a009', 'sealId': '40', 'sealName': seals[9]['name'] if len(seals) > 9 else '筹备组基建科', 'endDate': '2015-12-31', 'archiveDate': '2026-04-15', 'handler': '吴国平', 'reason': '筹备组撤销', 'note': ''},
+        {'id': 'a010', 'sealId': '16', 'sealName': seals[15]['name'] if len(seals) > 15 else '计生委公章', 'endDate': '2023-01-01', 'archiveDate': '2026-05-01', 'handler': '孙秀英', 'reason': '职能调整废止', 'note': ''},
+    ]
+    for a in demo_archives:
+        insert_item(db, 'archives', 'archives', a)
+    db.commit()
+
+    # 操作日志
     db.execute("INSERT INTO logs (time, action, detail, user_name) VALUES (?,?,?,?)",
-               (datetime.now().strftime('%Y/%m/%d %H:%M:%S'), '系统初始化', f'从data.json导入{total}条印章数据', '系统'))
+               (now_str, '系统初始化', f'从data.json导入{total}条印章数据及演示数据', '系统'))
     db.commit()
     return jsonify({'success': True, 'count': total})
 
@@ -544,8 +638,8 @@ def reset_data():
         db.execute(f'DELETE FROM {table}')
     db.commit()
     # Re-insert default settings
-    db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('departments', '[\"院办公室\",\"党委办公室\",\"财务科\",\"人事科\",\"医务科\",\"护理部\",\"科研科\",\"教学科\",\"总务科\",\"基建科\",\"保卫科\",\"审计科\",\"纪检监察室\",\"工会\",\"团委\"]')")
-    db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('approvers', '[{\"name\":\"院长\",\"level\":2},{\"name\":\"分管副院长\",\"level\":2},{\"name\":\"办公室主任\",\"level\":1},{\"name\":\"档案科科长\",\"level\":1}]')")
+    db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('departments', '[\"院办公室\",\"党委办公室\",\"财务科\",\"人事科\",\"医务科\",\"护理部\",\"科教科\",\"教学科\",\"总务科\",\"基建科\",\"保卫科\",\"审计科\",\"纪检监察室\",\"工会\",\"团委\"]')")
+    db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('approvers', '[{\"name\":\"院长\",\"level\":2},{\"name\":\"分管副院长\",\"level\":2},{\"name\":\"办公室主任\",\"level\":1},{\"name\":\"综合档案室\",\"level\":1}]')")
     db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('default_seals', '[]')")
     db.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('doc_types', '[\"证明\",\"合同\",\"报告\",\"申请\",\"函件\",\"其他\"]')")
     db.commit()
